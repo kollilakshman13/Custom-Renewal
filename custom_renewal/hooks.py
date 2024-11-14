@@ -9,8 +9,15 @@ app_license = "MIT"
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/custom_renewal/css/custom_renewal.css"
+app_include_css = "/assets/custom_renewal/css/custom_renewal.css"
 # app_include_js = "/assets/custom_renewal/js/custom_renewal.js"
+app_include_js = "/assets/custom_renewal/js/page.js"
+# app_include_css = ["/assets/custom_renewal/css/theme.css","/assets/custom_module/css/menu.css"]
+# app_include_js = ["/assets/custom_renewal/js/theme.js",
+#                     "/assets/custom_renewal/js/menu/router.js",
+#                     "/assets/custom_renewal/js/menu/page.js",
+#                     "/assets/custom_renewal/js/menu/workspace.js"
+# ]
 
 # include js, css files in header of web template
 # web_include_css = "/assets/custom_renewal/css/custom_renewal.css"
@@ -124,6 +131,29 @@ app_license = "MIT"
 # 	}
 # }
 
+
+doc_events = {
+    # "Event Registration": {
+        
+    #     "on_update":"custom_renewal.custom_module.doctype.event_registration.event_registration.email_on_approval",
+    #     #"autoname":"custom_renewal.custom_module.doctype.event_registration.event_registration.autoname"
+    
+    # },
+    # "Quotation":{ 
+    #     "on_update":"custom_renewal.api.update_margin_table"
+    # },
+    "Event Registration":{
+        "before_save":"custom_renewal.custom_module.doctype.event_registration.event_registration.set_event_times"
+    }
+}
+# doc_events = {
+#     "Event Registration": {
+        
+#         "on_update":"custom_renewal.api.email_on_approval"
+#     }
+# }
+
+
 # Scheduled Tasks
 # ---------------
 
@@ -157,6 +187,9 @@ app_license = "MIT"
 # 	"frappe.desk.doctype.event.event.get_events": "custom_renewal.event.get_events"
 # }
 #
+override_whitelisted_methods = {
+    "frappe.core.doctype.user.user.switch_theme": "custom_renewal.overrides.switch_theme.switch_theme"
+}
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps

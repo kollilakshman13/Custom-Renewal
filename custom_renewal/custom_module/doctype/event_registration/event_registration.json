@@ -1,0 +1,213 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:[naming_series]",
+ "creation": "2024-11-02 15:47:52.214945",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "event",
+  "event_name",
+  "column_break_9h6nj",
+  "status",
+  "section_break_qrzbc",
+  "person_name",
+  "email",
+  "phone_number",
+  "column_break_zby1r",
+  "company_name",
+  "sales_user",
+  "address",
+  "section_break_ti0ya",
+  "sales_team",
+  "captcha",
+  "naming_series",
+  "email_sent",
+  "section_break_gi9vj",
+  "event_start_date",
+  "event_start_time",
+  "event_end_date",
+  "event_end_time",
+  "column_break_3kd4f",
+  "event_mode",
+  "event_link",
+  "event_venue"
+ ],
+ "fields": [
+  {
+   "fieldname": "event",
+   "fieldtype": "Link",
+   "label": "Event",
+   "options": "Event"
+  },
+  {
+   "depends_on": "eval:doc.event",
+   "fetch_from": "event.subject",
+   "fieldname": "event_name",
+   "fieldtype": "Small Text",
+   "label": "Event Name"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nDraft\nSubmit"
+  },
+  {
+   "fieldname": "person_name",
+   "fieldtype": "Data",
+   "label": "Person Name"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "phone_number",
+   "fieldtype": "Data",
+   "label": "Phone Number",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "company_name",
+   "fieldtype": "Data",
+   "label": "Company Name"
+  },
+  {
+   "fieldname": "sales_user",
+   "fieldtype": "Link",
+   "label": "Sales User",
+   "options": "User"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "sales_team",
+   "fieldtype": "Table",
+   "label": "Sales Team",
+   "options": "Sales Team"
+  },
+  {
+   "fieldname": "captcha",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Captcha"
+  },
+  {
+   "default": "{event}.-####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "{event}.-####"
+  },
+  {
+   "fetch_from": "event.starts_on",
+   "fieldname": "event_start_date",
+   "fieldtype": "Date",
+   "label": "Event Start Date"
+  },
+  {
+   "fieldname": "event_start_time",
+   "fieldtype": "Time",
+   "label": "Event Start Time"
+  },
+  {
+   "fetch_from": "event.ends_on",
+   "fieldname": "event_end_date",
+   "fieldtype": "Date",
+   "label": "Event End Date"
+  },
+  {
+   "fieldname": "event_end_time",
+   "fieldtype": "Time",
+   "label": "Event End Time"
+  },
+  {
+   "fetch_from": "event.custom_event_mode",
+   "fieldname": "event_mode",
+   "fieldtype": "Data",
+   "label": "Event Mode"
+  },
+  {
+   "depends_on": "eval:doc.event_mode == 'Online'",
+   "fetch_from": "event.custom_link_",
+   "fieldname": "event_link",
+   "fieldtype": "Small Text",
+   "label": "Event Link"
+  },
+  {
+   "depends_on": "eval:doc.event_mode ==\"Offline\"",
+   "fetch_from": "event.custom_venue",
+   "fieldname": "event_venue",
+   "fieldtype": "Small Text",
+   "label": "Event Venue"
+  },
+  {
+   "fieldname": "column_break_9h6nj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_qrzbc",
+   "fieldtype": "Section Break",
+   "label": "Participant Details"
+  },
+  {
+   "fieldname": "column_break_zby1r",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_ti0ya",
+   "fieldtype": "Section Break",
+   "label": "Sales Team Details"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_gi9vj",
+   "fieldtype": "Section Break",
+   "label": "Event Details"
+  },
+  {
+   "fieldname": "column_break_3kd4f",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "email_sent",
+   "fieldtype": "Check",
+   "label": "Email Sent"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-11-02 16:41:22.663878",
+ "modified_by": "Administrator",
+ "module": "Custom Module",
+ "name": "Event Registration",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,36 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "condition": "doc.workflow_state == \"Approved\" and doc.email_sent == 0 and frappe.utils.getdate(doc.event_start_date) >= frappe.utils.getdate(nowdate())\r\n",
+ "creation": "2024-11-02 16:39:35.818310",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Event Registration",
+ "enabled": 1,
+ "event": "Method",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<div style=\"font-family:Arial,sans-serif;margin:20px;padding:10px;background-color:#f4f4f4;text-align:center;\">\n        <div\n            style=\"width:85%;margin:20px auto;background-color:#ffffff;padding:20px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);\">\n            <div style=\"margin:20px 0;\">\n                <h1 style=\"text-algn:center\"><img src=\"https://cdn-icons-png.freepik.com/256/15649/15649403.png?ga=GA1.1.973524378.1729854330&semt=ais_hybrid\" style=\"width:40px;height:40px;\"></h1>\n                <h3 style=\"color:#333333;text-align:center;font-size:18px;\">Thank you for registering!</h3>\n                <p style=\"color:#666666;line-height:1.5;text-align:center;\">\n                    <img src=\"https://cdn-icons-png.freepik.com/256/2886/2886665.png?semt=ais_hybrid\" style=\"width:16px;height:16px;\"> {{ frappe.utils.formatdate(doc.event_start_date, \"dd-mm-yyyy\") }}\n                </p>\n                <p style=\"color:#666666;line-height:1.5;text-align:center;\">\n                    <img src=\"https://cdn-icons-png.freepik.com/256/17383/17383062.png?ga=GA1.1.973524378.1729854330&semt=ais_hybrid\" style=\"width:16px;height:16px;\"> {{ frappe.utils.format_time(doc.event_start_time, \"HH:mm:ss\") }}\n to {{ frappe.utils.format_time(doc.event_end_time, \"HH:mm:ss\") }}\n                </p>\n            </div>\n        </div>\n\n        <div\n            style=\"width:85%;margin:20px auto;background-color:#ffffff;padding:20px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);\">\n            {% if doc.event_mode == \"Online\" %}\n            <p style=\"color:#666666;line-height:1.5;text-align:center;\">Online</p>\n            <p style=\"color:#666666;line-height:1.5;text-align:center;\">\n                <a href=\"{{doc.event_link}}\"\n                    style=\"color:#1a73e8;text-decoration:none;\">Event Link - Click Here\n                </a>\n            </p>\n            {% endif %}\n            {% if doc.event_mode == \"Offline\" %}\n                <p style=\"color:#666666;line-height:1.5;text-align:center;\">Offline</p>\n                <p style=\"color:#666666;line-height:1.5;text-align:center;\">{{doc.event_venue}}</p>\n            {% endif %}\n        </div>\n\n        <div\n            style=\"width:85%;margin:20px auto;background-color:#ffffff;padding:20px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);\">\n            <div\n                style=\"padding:10px 20px;background-color:#f4f4f4;border-bottom-left-radius:8px;border-bottom-right-radius:8px;text-align:center;color:#888888;font-size:12px;\">\n                <p style=\"margin:0;\">&copy; 2024 64 Network Pvt Ltd. All rights reserved.</p>\n            </div>\n        </div>\n    </div>",
+ "message_type": "HTML",
+ "method": "on_update",
+ "modified": "2024-11-02 17:00:56.132301",
+ "modified_by": "Administrator",
+ "module": "Custom Module",
+ "name": "Event Registration Conformation mail",
+ "owner": "Administrator",
+ "property_value": "1",
+ "recipients": [
+  {
+   "cc": "",
+   "receiver_by_document_field": "email",
+   "receiver_by_role": ""
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "sender": "Support1",
+ "sender_email": "kollilakshman13@gmail.com",
+ "set_property_after_alert": "email_sent",
+ "subject": "Event Registration for {{doc.event_name}}"
+}
