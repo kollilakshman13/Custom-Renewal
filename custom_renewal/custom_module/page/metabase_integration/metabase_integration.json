@@ -1,0 +1,26 @@
+{
+ "content": null,
+ "creation": "2024-12-02 15:29:28.820372",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2024-12-02 17:44:31.415022",
+ "modified_by": "Administrator",
+ "module": "Custom Module",
+ "name": "metabase-integration",
+ "owner": "Administrator",
+ "page_name": "metabase-integration",
+ "roles": [
+  {
+   "role": "Administrator"
+  },
+  {
+   "role": "Sales User"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Dash Board"
+}

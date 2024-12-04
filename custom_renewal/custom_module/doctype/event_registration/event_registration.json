@@ -65,7 +65,8 @@
    "fieldname": "email",
    "fieldtype": "Data",
    "label": "Email",
-   "options": "Email"
+   "options": "Email",
+   "permlevel": 1
   },
   {
    "fieldname": "phone_number",
@@ -187,7 +188,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-11-02 16:41:22.663878",
+ "modified": "2024-11-23 12:47:05.524334",
  "modified_by": "Administrator",
  "module": "Custom Module",
  "name": "Event Registration",
@@ -209,5 +210,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_changes": 1
 }
