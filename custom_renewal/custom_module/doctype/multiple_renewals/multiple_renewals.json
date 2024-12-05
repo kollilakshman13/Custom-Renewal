@@ -1,0 +1,31 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-12-05 07:21:52.333725",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "renewal_list"
+ ],
+ "fields": [
+  {
+   "fieldname": "renewal_list",
+   "fieldtype": "Link",
+   "label": "Renewal List",
+   "options": "Renewal List"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-12-05 07:21:52.333725",
+ "modified_by": "Administrator",
+ "module": "Custom Module",
+ "name": "Multiple Renewals",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

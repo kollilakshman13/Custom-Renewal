@@ -1,0 +1,225 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2024-12-04 22:54:06.783977",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "renewal_summary_section",
+  "naming_series",
+  "customer",
+  "total_quantity",
+  "invoice_no",
+  "column_break_uxvza",
+  "company",
+  "total_amount",
+  "status",
+  "note",
+  "product_name",
+  "start_date",
+  "domain_name",
+  "end_date",
+  "sla",
+  "item_details_section",
+  "items",
+  "contact_details_section",
+  "contact_list",
+  "sales_user",
+  "renewal_owner",
+  "sales_team",
+  "renewal_attachment",
+  "amount_details_section",
+  "rate",
+  "description",
+  "column_break_bs5rz",
+  "serial_nos",
+  "subject"
+ ],
+ "fields": [
+  {
+   "fieldname": "renewal_summary_section",
+   "fieldtype": "Section Break",
+   "label": "Renewal Summary"
+  },
+  {
+   "default": "RN-.YYYY.-.####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Series",
+   "options": "RN-.YYYY.-.####\nRN-.YY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "sales_user",
+   "fieldtype": "Link",
+   "label": "Sales User",
+   "options": "Sales Person"
+  },
+  {
+   "fieldname": "product_name",
+   "fieldtype": "Data",
+   "label": "Product Name"
+  },
+  {
+   "fieldname": "invoice_no",
+   "fieldtype": "Data",
+   "label": "Invoice No"
+  },
+  {
+   "fieldname": "total_quantity",
+   "fieldtype": "Data",
+   "label": "Total Quantity"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "column_break_uxvza",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "New Opp\nActive\nDraft\nAwaiting Response\nCofed\nDuplicate\nRenewed\nUpgraded\nVoid\nLost\nCancelled\nCompetitor Sales\nAuto Created\nOut Of Business\nProduct Changed"
+  },
+  {
+   "fieldname": "sales_team",
+   "fieldtype": "Data",
+   "label": "Sales Team"
+  },
+  {
+   "fieldname": "domain_name",
+   "fieldtype": "Data",
+   "label": "Domain Name"
+  },
+  {
+   "fieldname": "sla",
+   "fieldtype": "Link",
+   "label": "SLA",
+   "options": "Service Level Agreement"
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Float",
+   "label": "Total Amount"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "note",
+   "fieldtype": "Small Text",
+   "label": "Note"
+  },
+  {
+   "fieldname": "item_details_section",
+   "fieldtype": "Section Break",
+   "label": "Item Details"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Renewal Item"
+  },
+  {
+   "fieldname": "contact_details_section",
+   "fieldtype": "Section Break",
+   "label": "Contact Details"
+  },
+  {
+   "fieldname": "contact_list",
+   "fieldtype": "Table",
+   "label": "Contact List",
+   "options": "Renewal Contacts"
+  },
+  {
+   "fieldname": "amount_details_section",
+   "fieldtype": "Section Break",
+   "label": "Amount Details"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Link",
+   "label": "Rate",
+   "options": "Item Price"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "column_break_bs5rz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "serial_nos",
+   "fieldtype": "Long Text",
+   "label": "Serial Nos"
+  },
+  {
+   "fieldname": "subject",
+   "fieldtype": "Small Text",
+   "label": "Subject"
+  },
+  {
+   "fieldname": "renewal_owner",
+   "fieldtype": "Link",
+   "label": "Renewal Owner",
+   "options": "User"
+  },
+  {
+   "fieldname": "renewal_attachment",
+   "fieldtype": "Attach",
+   "label": "Renewal Attachment"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-12-05 07:41:12.768468",
+ "modified_by": "Administrator",
+ "module": "Custom Module",
+ "name": "Renewal List",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
