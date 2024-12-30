@@ -1,0 +1,322 @@
+* {
+    font-weight: 400 !important;
+}
+
+@media (min-width: 992px) {
+    .navbar {
+        display: none !important;
+    }
+}
+
+.container {
+    width: 100% !important;
+    height: 100% !important;
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+    margin-right: 5px !important;
+    margin-left: 5px !important;
+    font-size: 12px !important;
+}
+
+.row {
+    height: 100% !important;
+    width: 100% !important;
+}
+
+
+@media (min-width: 576px) {
+    .sidebar-column {
+        display: block;
+        height: 100% !important;
+        background-color: whitesmoke !important;
+        border-right: 1px solid #e0e0e0 !important;
+        width: 18% !important;
+    }
+
+    .main-column {
+        width: 82% !important;
+        height: 100% !important;
+        padding: 0rem !important;
+        margin: 0rem !important;
+    }
+}
+
+.web-sidebar {
+    padding: 5px !important;
+    margin: 0rem !important;
+}
+
+li .sidebar-item {
+    border-radius: 2px !important;
+}
+
+.sidebar-item a.active {
+    color: black !important;
+    background-color: white !important;
+    border-radius: 10px !important;
+}
+
+.sidebar-item:hover {
+    /* background-color: white !important; */
+    background-color: white !important;
+    border-radius: 10px !important;
+}
+
+.main-column .page-content-wrapper {
+    margin: 0rem !important;
+}
+
+.sidebar-item .material-symbols-outlined {
+    font-size: 18px !important;
+    font-weight: 0 !important;
+    color: blue !important;
+}
+
+
+
+/* Profile Dropdown */
+.profile-container {
+    display: flex;
+    margin-bottom: 2px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.profile-container:hover {
+    background-color: white;
+}
+
+.profile-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.profile-row:hover {
+    background-color: white !important;
+    border-radius: 10px;
+}
+
+.profile-avatar {
+    width: 25%;
+    margin: 1px;
+}
+
+.profile-avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.profile-name {
+    font-size: 16px;
+    font-weight: 800;
+    margin: 0;
+    color: #333;
+}
+
+.profile-role {
+    font-size: 12px;
+    color: #777;
+    margin: 0;
+}
+
+.profile-dropdown {
+    margin-left: auto;
+    margin-right: 5px;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    color: #333;
+    width: 5%;
+}
+
+.relative {
+    position: relative;
+}
+
+.object-cover {
+    object-fit: cover;
+}
+
+.rounded-full {
+    border-radius: 9999px;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.h-full {
+    height: 100%;
+}
+
+
+.dropdown-icon {
+    display: flex;
+    align-items: right;
+    justify-content: right;
+}
+
+.dropdown-card {
+    display: none;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 100%;
+}
+
+.dropdown-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: black;
+}
+
+.dropdown-card .title {
+    padding: 5px 10px;
+    color: black;
+}
+
+.dropdown-card .title a {
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 400;
+    color: black;
+}
+
+/*collapse sidebar*/
+.sidebar-column.collapsed {
+    width: 5% !important;
+}
+
+.sidebar-column.collapsed .web-sidebar {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0px !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.sidebar-column.collapsed .sidebar-item {
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    width: 25px !important;
+    height: 25px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    overflow: hidden !important;
+    margin: 8px 8px 8px 5px !important;
+}
+
+.sidebar-column.collapsed .sidebar-item:hover {
+    background-color: white !important;
+    border-radius: 50% !important;
+}
+
+.sidebar-column.collapsed .sidebar-item a .material {
+    align-items: center !important;
+    display: inline-block !important;
+    width: 100% !important;
+    height: 100% !important;
+    justify-content: center !important;
+}
+
+.sidebar-column.collapsed .sidebar-item .label {
+    display: none;
+}
+
+.sidebar-column .collapse-toggle {
+    position: fixed;
+    bottom: 2%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.collapse-toggle:hover {
+    background-color: white;
+    border-radius: 10px;
+}
+
+.collapse-toggle .icons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+.collapse-toggle .start {
+    display: none;
+}
+
+.sidebar-column.collapsed .profile-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+    background-color: transparent !important;
+    margin-top: 2px !important;
+    margin-bottom: 10px !important;
+    cursor: pointer !important;
+}
+
+.sidebar-column.collapsed .profile-container:hover {
+    background-color: white !important;
+    border-radius: 50% !important;
+}
+
+.sidebar-column.collapsed .profile-container .profile-avatar {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+}
+
+.sidebar-column.collapsed .profile-container .profile-avatar img {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    display: block !important;
+}
+
+.sidebar-column.collapsed .dropdown-card {
+    width: 150px !important;
+}
+
+.sidebar-column.collapsed .profile-container .profile-info,
+.sidebar-column.collapsed .profile-container .profile-dropdown {
+    display: none;
+}
+
+.sidebar-column.collapsed .sidebar-item .label {
+    display: none;
+}
+
+.sidebar-column.collapsed .collapse-toggle .icons {
+    display: none;
+}
+
+.sidebar-column.collapsed .collapse-toggle .start {
+    display: block;
+}

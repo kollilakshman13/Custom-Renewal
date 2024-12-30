@@ -65,6 +65,7 @@ class MetabaseDashboard {
 		);
 	}
 
+
 	getSettings() {
 		return frappe.call({
 			'method': 'metabase_integration.metabase_integration.doctype.metabase_dashboard.get_url',

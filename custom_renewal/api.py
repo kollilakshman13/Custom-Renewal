@@ -237,6 +237,71 @@ def get_comments(reference_doctype, reference_name):
 
 
 
+# ~/frappe-bench/apps/custom_renewal/api.py
+import frappe
+
+@frappe.whitelist()
+def get_sales_manager_quotations():
+    user = frappe.session.user
+    user_doc = frappe.get_doc('User', user)
+    sales_person = frappe.get_all(
+        'Sales Person',
+        filters={"sales_person_name": user_doc.full_name},
+        fields=['name']
+    )
+
+    if sales_person:
+        sales_person_name = sales_person[0]['name']
+        child_sales_persons = frappe.get_all(
+            'Sales Person',
+            filters={'parent_sales_person': sales_person_name},
+            fields=['name']
+        )
+        all_sales_persons = [sales_person_name]
+        if child_sales_persons:
+            all_sales_persons.extend([child['name'] for child in child_sales_persons])
+
+        quotations = frappe.get_all(
+            'Quotation',
+            fields=['name']
+        )
+        quotation_names = [quotation['name'] for quotation in quotations]
+
+        quotation_sales = frappe.get_all(
+            "Sales Team",
+            filters={
+                'sales_person': ['in', all_sales_persons],
+                'parent': ['in', quotation_names]
+            },
+            fields=['parent']
+        )
+
+        if quotation_sales:
+            return [sales['parent'] for sales in quotation_sales]
+        else:
+            return []
+    # else:
+    #     frappe.throw("No Sales Person record found for the current user.")
+
+@frappe.whitelist()
+def filter_sales_manager_quotations():
+    # Check if user has the Sales Manager role
+    user = frappe.session.user
+    if "Sales Manager" in frappe.get_roles(user):
+        # Get the filtered quotation list for the current user
+        quotation_list = get_sales_manager_quotations()
+        return quotation_list
+    # else:
+    #     # If not a Sales Manager, return an empty list
+    #     return []        
+
+
+
+
+
+
+
+
 
 
 

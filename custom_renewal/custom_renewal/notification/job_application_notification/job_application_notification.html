@@ -1,0 +1,46 @@
+
+
+
+
+<h1>Job Applicant Details </h1>
+
+<p><b>Applicant Name :</b> {{doc.applicant_name}}</p>
+
+<p><b>Job Title :</b>  
+    {% set job = frappe.get_all("Job Opening", filters={"name": doc.job_title}, fields=["job_title"]) %}
+    {% if job and job[0].job_title %}
+        {{ job[0].job_title }}
+    {% else %}
+        No job title found.
+    {% endif %}
+</p>
+
+<p><b>Email ID :</b>  {{ doc.email_id }}</p>
+
+<p><b>Phone Number :</b> {{ doc.phone_number or '' }}</p>
+
+
+
+<p>
+{% if doc.resume_attachment %}
+    <strong>Resume Attachment:</strong>
+    <a href="{{ frappe.utils.get_url(doc.resume_attachment) }}" target="_blank">View Resume</a>
+{% else %}
+    <strong>Resume Attachment:</strong> No resume uploaded.
+{% endif %}
+</p>
+
+<p>
+{% if doc.custom_aadhar_attach %}
+    <strong>Aadhar Attachment:</strong>
+    <a href="{{ frappe.utils.get_url(doc.custom_aadhar_attach) }}" target="_blank">View Aadhar</a>
+{% else %}
+    <strong>Resume Attachment:</strong> No aadhar uploaded.
+{% endif %}
+</p>
+
+
+
+
+
+

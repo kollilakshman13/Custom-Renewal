@@ -10,6 +10,7 @@ app_license = "MIT"
 
 # include js, css files in header of desk.html
 app_include_css = "/assets/custom_renewal/css/custom_renewal.css"
+app_include_css = "/assets/css/font-awesome.css"
 # app_include_js = "/assets/custom_renewal/js/custom_renewal.js"
 app_include_js = "/assets/custom_renewal/js/page.js"
 # app_include_css = ["/assets/custom_renewal/css/theme.css","/assets/custom_module/css/menu.css"]
@@ -20,11 +21,40 @@ app_include_js = "/assets/custom_renewal/js/page.js"
 # ]
 
 # include js, css files in header of web template
-# web_include_css = "/assets/custom_renewal/css/custom_renewal.css"
+web_include_css = "/assets/custom_renewal/css/custom_renewal_website.css"
 # web_include_js = "/assets/custom_renewal/js/custom_renewal.js"
 
 # include custom scss in every website theme (without file extension ".scss")
 # website_theme_scss = "custom_renewal/public/scss/website"
+
+website_route_rules = [
+    { "from_route":"/renewal-list","to_route":"Renewal List" },
+    {
+        "from_route":"/renewal-list/<path:name>",
+        "to_route":"/renewal-list",
+        "defaults":{
+            "doctype":"Renewal List",
+            "parents":[{"label":"Renewal List","route":"renewal-list"}]
+        }
+    }
+    
+]
+website_context = {
+    "web_sidebar": "custom_renewal/templates/includes/web_sidebar.html",
+    "override_doctype_templates": {
+        "me": "custom_renewal/www/me.html"
+    }
+}
+
+# standard_portal_menu_items = [
+# 	{
+#         "title": "Renewal List",
+#          "route": "/renewal-list",
+#           "reference_doctype": "Renewal List",
+#            "role": "Customer"},
+	
+# ]        
+
 
 # include js, css files in header of web form
 # webform_include_js = {"doctype": "public/js/doctype.js"}
@@ -110,6 +140,10 @@ app_include_js = "/assets/custom_renewal/js/page.js"
 # has_permission = {
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
+# has_permission = {
+#     "Quotation": "custom_renewal.api.has_permission"
+# }
+
 
 # DocType Class
 # ---------------

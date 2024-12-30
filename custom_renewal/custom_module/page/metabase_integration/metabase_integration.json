@@ -4,7 +4,7 @@
  "docstatus": 0,
  "doctype": "Page",
  "idx": 0,
- "modified": "2024-12-02 17:44:31.415022",
+ "modified": "2024-12-16 11:38:53.402692",
  "modified_by": "Administrator",
  "module": "Custom Module",
  "name": "metabase-integration",
@@ -16,6 +16,9 @@
   },
   {
    "role": "Sales User"
+  },
+  {
+   "role": "Sales Manager"
   }
  ],
  "script": null,

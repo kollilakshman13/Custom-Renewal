@@ -1,0 +1,37 @@
+{
+ "attach_print": 1,
+ "channel": "Email",
+ "condition": "doc.status == \"Open\" and doc.custom_email_sent == 0",
+ "creation": "2024-12-19 14:17:45.231617",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Job Applicant",
+ "enabled": 0,
+ "event": "Save",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "\n\n\n\n<h1>Job Applicant Details </h1>\n\n<p><b>Applicant Name :</b> {{doc.applicant_name}}</p>\n\n<p><b>Job Title :</b>  \n    {% set job = frappe.get_all(\"Job Opening\", filters={\"name\": doc.job_title}, fields=[\"job_title\"]) %}\n    {% if job and job[0].job_title %}\n        {{ job[0].job_title }}\n    {% else %}\n        No job title found.\n    {% endif %}\n</p>\n\n<p><b>Email ID :</b>  {{ doc.email_id }}</p>\n\n<p><b>Phone Number :</b> {{ doc.phone_number or '' }}</p>\n\n\n\n<p>\n{% if doc.resume_attachment %}\n    <strong>Resume Attachment:</strong>\n    <a href=\"{{ frappe.utils.get_url(doc.resume_attachment) }}\" target=\"_blank\">View Resume</a>\n{% else %}\n    <strong>Resume Attachment:</strong> No resume uploaded.\n{% endif %}\n</p>\n\n<p>\n{% if doc.custom_aadhar_attach %}\n    <strong>Aadhar Attachment:</strong>\n    <a href=\"{{ frappe.utils.get_url(doc.custom_aadhar_attach) }}\" target=\"_blank\">View Aadhar</a>\n{% else %}\n    <strong>Resume Attachment:</strong> No aadhar uploaded.\n{% endif %}\n</p>\n\n\n\n\n\n\n",
+ "message_type": "HTML",
+ "method": "on_update",
+ "modified": "2024-12-20 11:43:02.086700",
+ "modified_by": "Administrator",
+ "module": "Custom Renewal",
+ "name": "Job Application notification",
+ "owner": "Administrator",
+ "print_format": "Job Application Pdf",
+ "property_value": "1",
+ "recipients": [
+  {
+   "cc": "kollilakshman07@gmail.com",
+   "receiver_by_document_field": "",
+   "receiver_by_role": "HR Manager"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "sender": "Support1",
+ "sender_email": "kollilakshman13@gmail.com",
+ "set_property_after_alert": "custom_email_sent",
+ "subject": "New Job Application Form"
+}
