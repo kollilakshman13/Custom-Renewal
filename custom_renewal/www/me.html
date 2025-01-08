@@ -8,12 +8,30 @@
     <h3 class="my-account-header">{{_("My Account") }}</h3>
     <div class="row account-info d-flex flex-column">
         <div class="col d-flex justify-content-between align-items-center">
-            <div>
+            <div style="display: flex;justify-content: center;align-items: center;">
                 <span class="my-account-avatar">
                     {{avatar(current_user.name)}}
                 </span>
                 <span class="my-account-name ml-4">
-                    {{current_user.full_name }}
+                    <div>
+                        {% if current_user.full_name not in ["Guest", "Administrator"] %}
+                        {% set contact = frappe.get_doc("Contact", {"user": current_user.email}) %}
+                        {% if contact and contact.company_name %}
+                        <div style="font-size: 18px;">{{ contact.company_name }}</div>
+                        {%else%}
+                        {% set company = frappe.get_all("Company", fields=["name"]) %}
+                        {% if company %}
+                        <div style="font-size: 18px;">{{ company[0].name }}</div>
+                        {% endif %}
+                        {% endif %}
+                        {%else%}
+                        {% set company = frappe.get_all("Company", fields=["name"]) %}
+                        {% if company %}
+                        <div style="font-size: 18px;">{{ company[0].name }}</div>
+                        {% endif %}
+                        {% endif %}
+                        <span>{{ current_user.full_name }}</span>
+                    </div>
                 </span>
             </div>
             <div>

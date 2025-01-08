@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="website-list-filters">
+    <div class="row">
+        <div class="col-6 col-lg-11 col-md-6">
+            <form class="form-inline form-search" action="/{{ pathname }}">
+                <div class="input-group">
+                    <input class="form-control" doctype="text" name="txt" placeholder="Search..."
+                        value="{{ txt or '' }}">
+                    <span class="input-group-btn ml-2">
+                        <button class="btn btn-light" type="submit">
+                            <i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% if txt %}
+    <div>
+        <div class="filter-message small text-muted">Results filtered by <b>{{ txt }}</b>.
+            <a href="/{{ pathname }}" class="text-muted">( <span class="close-inline">&times;</span> {{ _("clear") }}
+                )</a>
+        </div>
+    </div>
+    {% endif %}
+</div>

@@ -56,6 +56,8 @@
   {
    "fieldname": "customer",
    "fieldtype": "Link",
+   "in_filter": 1,
+   "in_global_search": 1,
    "label": "Customer",
    "options": "Customer"
   },
@@ -198,7 +200,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-12-26 15:47:56.047914",
+ "modified": "2025-01-03 14:36:28.117690",
  "modified_by": "Administrator",
  "module": "Custom Module",
  "name": "Renewal List",

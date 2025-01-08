@@ -1,0 +1,304 @@
+{% extends "templates/web.html" %}
+import frappe
+{% block page_content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="container">
+    <div class="row" id="page-list" data-path="renewal_list">
+        <div class="sidebar-column col-sm-2">
+            <div class="web-sidebar">
+                {% include web_sidebar %}
+            </div>
+        </div>
+        <div class="main-column col-sm-10">
+            <div class="page-content-wrapper">
+                <div class="page-breadcrumbs">
+
+                </div>
+                <main class="container ml-2">
+                    <div class="page-header-wrapper">
+                        <div class="page-head">
+                            <h3 class="my-account-header">Issue</h3>
+                        </div>
+                        <div class="page-header-actions-block">
+                            <!-- <input type="text" id="search-bar" class="form-control" placeholder="Search..."
+                                onkeyup="filterRows()"> -->
+                            <a class="btn btn-primary btn-sm button-new" href="/issues/new">create</a>
+                        </div>
+                    </div>
+                    <div class="page_content" style="background-color: white;min-height:90vh;">
+
+                        <div class="website-list" data-doctype="Issue" data-txt="None">
+                            <div class="website-list-filters pt-2">
+                                <!-- <input type="text" id="search-bar" class="form-control" placeholder="Search..."
+                                    onkeyup="filterRows()" style="width:150px;"> -->
+                                <div class="dropdown-container" style="position: relative; width: 150px;">
+                                    <select id="status-filter" class="form-control mb-3" onchange="filterRows()"
+                                        style="width:100%;">
+                                        <option value=""></option>
+                                        <option value="Open">Open</option>
+                                        <option value="Replied">Replied</option>
+                                        <option value="Pending">On Hold</option>
+                                        <option value="Resolved">Resolved</option>
+                                        <option value="Closed">Closed</option>
+                                    </select>
+                                    <span class="dropdown-icon"
+                                        style="position: absolute;top: 50%;right: 10px;transform: translateY(-50%);pointer-events: none;">
+                                        ▼
+                                    </span>
+                                </div>
+                            </div>
+                            <div id="row-container" class="result ml-5"
+                                style="background-color: white;box-sizing: border-box;">
+                                <div class="web-list-item transaction-list-item ml-5">
+                                    <div class="row align-items-center">
+                                        <div class="col-sm-3">
+                                            <span class="list-item-name font-weight-bold">Subject</span>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <span class="list-item-status font-weight-bold">Status</span>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <span class="items-name font-weight-bold">Raised By</span>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <span class="items-priority font-weight-bold">Priority</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% for d in doc %}
+                                <div class="web-list-item transaction-list-item ml-5">
+                                    <div class="row align-items-center">
+                                        <div class="col-sm-3">
+                                            <span class="list-item-name font-weight-bold">{{d.subject}}</span>
+                                            <div class="small text-muted transaction-time" title="">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <span class="indicator-pill red list-item-status">{{d.status}}</span>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <div
+                                                class="small text-muted items-preview ellipsis ellipsis-width items-name">
+                                                {{ d.raised_by }}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div
+                                                class="small text-muted items-preview ellipsis ellipsis-width items-priority">
+                                                {{ d.priority }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a class="transaction-item-link" href="ticket?d_name={{ d.name }}">Link</a>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="pagination-controls text-left mt-4"
+                            style="position:absolute; bottom: 15px; z-index: 1000; background-color: white; padding: 10px; border-radius: 5px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); width:99%; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <button class="btn btn-sm btn-primary ml-5" onclick="setRowsLimit()">20</button>
+                            </div>
+                            <button class="btn btn-sm btn-secondary" style="text-align: right;"
+                                onclick="loadMoreRows()">Load More</button>
+                        </div>
+                        <script>
+                            function filterRows() {
+                                const selectedStatus = document.getElementById("status-filter").value.toLowerCase();
+                                const rows = document.querySelectorAll("#row-container .web-list-item");
+
+                                rows.forEach(row => {
+                                    const status = row.querySelector(".list-item-status").textContent.toLowerCase();
+
+                                    // Show the row if the status matches the selected value or if "All" is selected
+                                    if (selectedStatus === "" || status === selectedStatus) {
+                                        row.style.display = "block"; // Show matching row
+                                    } else {
+                                        row.style.display = "none"; // Hide non-matching row
+                                    }
+                                });
+                            }
+                        </script>
+
+
+                    </div>
+                </main>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+<script>
+    // let currentLimit = 20; // Default limit
+    // let currentPage = 1;  // Start from the first page
+
+    // function loadRows(limit) {
+    //     currentLimit = limit;
+    //     currentPage = 1; // Reset to the first page when the limit changes
+    //     fetchRows();
+    // }
+
+    // function fetchRows() {
+    //     const container = document.getElementById('row-container');
+    //     container.innerHTML = '<p>Loading...</p>'; // Show loading text
+
+    //     fetch(`/api/method/custom_renewal.api.get_renewal_list?page=${currentPage}&limit=${currentLimit}`)
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             container.innerHTML = ''; // Clear previous content
+    //             data.message.forEach(d => {
+    //                 container.innerHTML += `
+    //                     <div class="web-list-item transaction-list-item ml-5">
+    //                         <div class="row align-items-center">
+    //                             <div class="col-sm-4">
+    //                                 <span class="list-item-name font-weight-bold">${d.name}</span>
+    //                             </div>
+    //                             <div class="col-sm-2">
+    //                                 <span class="indicator-pill red list-item-status">${d.status}</span>
+    //                             </div>
+    //                             <div class="col-sm-2">
+    //                                 <div class="small text-muted items-preview ellipsis ellipsis-width">
+    //                                     ${d.item_name}
+    //                                 </div>
+    //                             </div>
+    //                             <div class="col-sm-4 text-right font-weight-bold item-total">
+    //                                 ${d.total_amount}
+    //                             </div>
+    //                         </div>
+    //                         <a class="transaction-item-link" href="renewal_lists?d_name=${d.name}">Link</a>
+    //                     </div>
+    //                 `;
+    //             });
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching rows:', error);
+    //             container.innerHTML = '<p>Error loading rows</p>';
+    //         });
+    // }
+
+    // // Initial load
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     fetchRows();
+    // });
+
+
+
+
+    let currentPage = 1; // Start from the first page
+    let rowsPerPage = 20; // Default rows per page
+    let totalRows = 0; // Total number of rows available
+    let totalPages = 0; // Total number of pages
+    let searchQuery = ""; // Search query
+
+    // Function to calculate rows and divide into 4 parts
+    function calculatePagination(dataLength) {
+        totalRows = dataLength;
+        totalPages = Math.ceil(totalRows / 4);
+        rowsPerPage = Math.ceil(totalRows / 4);
+        currentPage = 1; // Reset to first page
+    }
+
+    // Function to load more rows
+    function loadMoreRows() {
+        if (currentPage < totalPages) {
+            currentPage += 1; // Increment the page number
+            fetchRows(true); // Append rows
+        } else {
+            alert("All rows are loaded!");
+        }
+    }
+
+    // Function to fetch rows
+    function fetchRows(append = false) {
+        const container = document.getElementById("row-container");
+        if (!append) {
+            container.innerHTML = "<p>Loading...</p>"; // Show loading text if not appending
+        }
+
+        const searchInput = document.querySelector("input[name='txt']")?.value || searchQuery;
+        searchQuery = searchInput; // Save the current search query
+
+        fetch(
+            `/api/method/custom_renewal.api.get_renewal_list?page=${currentPage}&limit=${rowsPerPage}&search=${encodeURIComponent(
+                searchQuery
+            )}`
+        )
+            .then((response) => response.json())
+            .then((data) => {
+                if (currentPage === 1) {
+                    calculatePagination(data.total_rows); // Calculate pagination once on the first load
+                }
+
+                if (!append) {
+                    container.innerHTML = ""; // Clear content if not appending
+                }
+
+                // Append new rows to the container
+                data.message.forEach((d) => {
+                    container.innerHTML += `
+                    <div class="web-list-item transaction-list-item ml-5">
+                        <div class="row align-items-center">
+                            <div class="col-sm-2">
+                                <span class="list-item-name font-weight-bold">${d.name}</span>
+                                <div class="small text-muted transaction-time" title="">
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <span class="indicator-pill red list-item-status">${d.status}</span>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="small text-muted items-preview ellipsis ellipsis-width">
+                                    ${d.start_date || ""}
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="small text-muted items-preview ellipsis ellipsis-width">
+                                    ${d.end_date || ""}
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="small text-muted items-preview ellipsis ellipsis-width">
+                                    ${d.item_name || ""}
+                                </div>
+                            </div>
+                            <div class="col-sm-2 text-right font-weight-bold item-total">
+                                ${d.total_amount || ""}
+                            </div>
+                        </div>
+                        <a class="transaction-item-link" href="renewal_lists?d_name=${d.name}">Link</a>
+                    </div>
+                `;
+                });
+
+                // If no data is returned
+                if (!data.message.length && append) {
+                    alert("No more rows to load!");
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching rows:", error);
+                if (!append) {
+                    container.innerHTML = "<p>Error loading rows</p>";
+                }
+            });
+    }
+
+    // Trigger search on form submit
+    document.querySelector(".form-search").addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent form submission
+        currentPage = 1; // Reset to the first page for a new search
+        fetchRows();
+    });
+
+    // Initial load
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchRows();
+    });
+
+
+</script>

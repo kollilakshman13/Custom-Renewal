@@ -298,6 +298,49 @@ def filter_sales_manager_quotations():
 
 
 
+@frappe.whitelist()
+def get_renewal_list(page=1, limit=20):
+    page = int(page)
+    limit = int(limit)
+    start = (page - 1) * limit
+
+    # Fetch records from the database
+    renewals = frappe.get_all(
+        "Renewal List",
+        fields=["*"],
+        start=start,
+        page_length=limit,
+    )
+    return renewals
+
+
+# @frappe.whitelist()
+# def get_renewal_list(page=1, limit=20, search=None):
+#     offset = (int(page) - 1) * int(limit)
+#     conditions = []
+
+#     # Add search conditions
+#     if search:
+#         search = f"%{search}%"
+#         conditions.append(
+#             "(name LIKE %(search)s OR status LIKE %(search)s OR item_name LIKE %(search)s)"
+#         )
+
+#     condition_str = " AND ".join(conditions)
+#     query = f"""
+#         SELECT name, status, start_date, end_date, item_name, total_amount
+#         FROM `tabRenewal List`
+#         WHERE {condition_str if condition_str else '1=1'}
+#         LIMIT %(limit)s OFFSET %(offset)s
+#     """
+
+#     data = frappe.db.sql(query, {"limit": limit, "offset": offset, "search": search}, as_dict=True)
+
+#     # Count total rows for pagination
+#     total_query = f"SELECT COUNT(*) FROM `tabRenewal List` WHERE {condition_str if condition_str else '1=1'}"
+#     total = frappe.db.sql(total_query, {"search": search})[0][0]
+
+#     return {"message": data, "total": total}
 
 
 

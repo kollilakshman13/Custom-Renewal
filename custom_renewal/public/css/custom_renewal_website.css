@@ -1,11 +1,38 @@
-* {
-    font-weight: 400 !important;
-}
+/* * {
+    font-weight: 600 !important;
+} */
 
 @media (min-width: 992px) {
     .navbar {
         display: none !important;
     }
+
+    .web-footer {
+        display: none !important;
+    }
+}
+
+@media (min-width:300px) {
+    .web-footer {
+        display: none !important;
+    }
+
+}
+
+main.my-4 {
+    margin-top: 0rem !important;
+    margin-bottom: 1rem !important;
+}
+
+body[data-path="renewal_list"],
+body[data-path="renewal_lists"],
+body[data-path="sales_order"],
+body[data-path="sales_orders"],
+body[data-path="sales_invoice"],
+body[data-path="sales_invoices"],
+body[data-path="issue"],
+body[data-path="ticket"] {
+    background-color: #F9FAFA !important;
 }
 
 .container {
@@ -13,9 +40,10 @@
     height: 100% !important;
     padding-right: 5px !important;
     padding-left: 5px !important;
-    margin-right: 5px !important;
-    margin-left: 5px !important;
+    margin-right: 0px !important;
+    margin-left: 0px !important;
     font-size: 12px !important;
+    /* background-color: whitesmoke !important; */
 }
 
 .row {
@@ -24,20 +52,23 @@
 }
 
 
-@media (min-width: 576px) {
+@media (min-width: 992px) {
     .sidebar-column {
         display: block;
         height: 100% !important;
         background-color: whitesmoke !important;
         border-right: 1px solid #e0e0e0 !important;
-        width: 18% !important;
+        width: 16% !important;
+        position: fixed !important;
+        height: 100vh !important;
     }
 
     .main-column {
-        width: 82% !important;
-        height: 100% !important;
+        width: 84% !important;
+        height: 100vh !important;
         padding: 0rem !important;
-        margin: 0rem !important;
+        margin-left: 19% !important;
+        flex-grow: 1 !important;
     }
 }
 
@@ -203,6 +234,11 @@ li .sidebar-item {
 /*collapse sidebar*/
 .sidebar-column.collapsed {
     width: 5% !important;
+}
+
+.sidebar-column.collapsed+.main-column {
+    width: 90% !important;
+    margin-left: 10% !important;
 }
 
 .sidebar-column.collapsed .web-sidebar {

@@ -28,30 +28,96 @@ web_include_css = "/assets/custom_renewal/css/custom_renewal_website.css"
 # website_theme_scss = "custom_renewal/public/scss/website"
 
 website_route_rules = [
-    { "from_route":"/renewal-list","to_route":"Renewal List" },
+    { "from_route":"/renewal_list","to_route":"renewal_list" },
     {
-        "from_route":"/renewal-list/<path:name>",
-        "to_route":"/renewal-list",
+        "from_route":"/renewal_list/<path:name>",
+        "to_route":"/renewal_list",
         "defaults":{
             "doctype":"Renewal List",
-            "parents":[{"label":"Renewal List","route":"renewal-list"}]
+            "parents":[{"label":"Renewal List","route":"renewal_list"}]
         }
-    }
+    },
+    {
+        "from_route": "/sales_order", "to_route": "sales_order"
+    },
+    {
+        "from_route": "/sales_order/<path:name>",
+        "to_route": "sales_order",
+        "defaults": {
+            "doctype": "Sales Order",
+            "parents": [
+                {
+                    "label": "Sales Order",
+                    "route": "sales_order"
+                }
+            ]
+        }
+    },
+    {
+        "from_route": "/sales_invoice", "to_route": "sales_invoice"
+    },
+    {
+        "from_route": "/sales_invoice/<path:name>",
+        "to_route": "sales_invoice",
+        "defaults": {
+            "doctype": "Sales Invoice",
+            "parents": [
+                {
+                    "label": "Sales Invoice",
+                    "route": "sales_invoice"
+                }
+            ]
+        }
+    },
+    {
+        "from_route": "/issue", "to_route": "issue"
+    },
+    {
+        "from_route": "/isssue/<path:name>",
+        "to_route": "issue",
+        "defaults": {
+            "doctype": "Issue",
+            "parents": [
+                {
+                    "label": "Issue",
+                    "route": "issue"
+                }
+            ]
+        }
+    },
     
 ]
 website_context = {
     "web_sidebar": "custom_renewal/templates/includes/web_sidebar.html",
     "override_doctype_templates": {
-        "me": "custom_renewal/www/me.html"
-    }
+        "me": "custom_renewal/www/me.html",
+        "order": "custom_renewal/templates/pages/order.html",
+        "filters":"custom_renewal/templates/list/filters.html"
+    },
 }
+
+
+# website_context = {
+#     "web_sidebar": "custom_renewal/templates/includes/web_sidebar.html",
+#     "override_doctype_templates": {
+#         "Order": "custom_renewal/templates/pages/order.html",
+#     },
+#     "templates": {
+#         "me": "custom_renewal/www/me.html",
+#         "invoices":"custom_renewal/templates/includes/sales_invoice/invoicess.html",
+#         # "list":"custom_renewal/templates/list/list.html"
+#     }
+# }
+
 
 # standard_portal_menu_items = [
 # 	{
 #         "title": "Renewal List",
-#          "route": "/renewal-list",
-#           "reference_doctype": "Renewal List",
-#            "role": "Customer"},
+#         "route": "/renewal-list",
+#         "reference_doctype": "Renewal List",
+#         "role": "Customer",
+#         "show_sidebar":True
+#     },
 	
 # ]        
 
