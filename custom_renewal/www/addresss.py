@@ -1,30 +1,64 @@
+
 import frappe
 
 def get_context(context):
     user_email = frappe.session.user
 
-    # Check if the user is not a guest
-    if user_email != "Guest":
-        # If the user is Administrator, show all issues
-        if user_email == "Administrator":
-            context.doc = frappe.get_all(
-                "Issue",
-                fields=["*"],
-                order_by="creation desc",
-                limit_page_length=20
-            )
-        else:
-            # If the user is not Administrator, filter by raised_by
-            context.doc = frappe.get_all(
-                "Issue",
-                fields=["*"],
-                filters={"raised_by": user_email},
-                order_by="creation desc",
-                limit_page_length=20
-            )
-        context.message = "Showing all issues."
-    else:     
-        context.doc = []
-        context.message = "Please log in to view issues."   
+    # Administrator logic
+    if user_email == "Administrator":
+        context.doc = frappe.get_all(
+            "Address",
+            fields=["*"],
+            order_by="creation desc",
+            limit_page_length=20
+        )
+        context.message = "Showing all Address lists as Administrator."
+        return context
 
-    return context       
+    # Guest logic
+    if user_email == "Guest":
+        context.doc = []
+        context.message = "Please log in to view address lists."
+        return context
+
+    # Logic for logged-in users
+    contact_name = frappe.db.get_value("Contact", {"email_id": user_email}, "name")
+    if contact_name:
+        # Fetch the linked Customer for the logged-in Contact
+        customer = frappe.db.get_value(
+            "Dynamic Link",
+            {"parenttype": "Contact", "parent": contact_name, "link_doctype": "Customer"},
+            "link_name"
+        )
+    else:
+        customer = None
+
+    if customer:
+        # Fetch addresses specifically linked to the Customer
+        query = """
+            SELECT 
+                addr.name,addr.address_title, addr.address_line1, addr.address_line2, addr.city, 
+                addr.state, addr.country, addr.pincode,addr.email_id,addr.phone,addr.fax,addr.tax_category
+            FROM 
+                `tabAddress` AS addr
+            INNER JOIN 
+                `tabDynamic Link` AS dl 
+            ON 
+                dl.parent = addr.name
+            WHERE 
+                dl.link_doctype = 'Customer' AND dl.link_name = %s
+            ORDER BY 
+                addr.creation DESC
+            LIMIT 20
+        """
+        context.doc = frappe.db.sql(query, (customer,), as_dict=True)
+        context.message = f"Showing address lists for customer: {customer}."
+    else:
+        context.doc = []
+        context.message = "You are not authorized to view address lists."
+
+    return context
+
+
+
+

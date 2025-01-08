@@ -50,49 +50,170 @@ import frappe
                             </div>
                             <div id="row-container" class="result ml-5"
                                 style="background-color: white;box-sizing: border-box;">
-                                <div class="web-list-items transaction-list-item ml-5">
-                                    <div class="row align-items-center">
-                                        <div class="col-sm-3">
-                                            <span class="list-item-names font-weight-bold">Subject</span>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <span class="list-item-statuss font-weight-bold">Status</span>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <span class="items-names font-weight-bold">Raised By</span>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <span class="items-prioritys font-weight-bold">Priority</span>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 {% for d in doc %}
                                 <div class="web-list-item transaction-list-item ml-5">
                                     <div class="row align-items-center">
                                         <div class="col-sm-3">
-                                            <span class="list-item-name">{{d.subject}}</span>
-                                            <div class="small text-muted transaction-time" title="">
-                                            </div>
+                                            <p class="address-title font-weight-bold">{{ d.name }}</p>
+                                            <p class="address-title">{{d.address_title}}</p>
+                                            <p class="address-line">
+                                                {{ d.address_line1 }}, {{ d.address_line2 or '' }}
+                                            </p>
+                                            <p class="address-location">
+                                                {{ d.city or '' }}, {{ d.state or '' }}, {{ d.country or '' }}, {{
+                                                d.pincode
+                                                }}
+                                            </p>
+                                            <a class="transaction-item-link" href="ticket?d_name={{ d.name }}">Link</a>
                                         </div>
                                         <div class="col-sm-3">
-                                            <span class="indicator-pill red list-item-status">{{d.status}}</span>
-                                        </div>
+                                            <!-- <button class="btn btn-primary">Edit</button> -->
+                                            <div class="col-sm-3">
+                                                <button class="btn btn-primary" onclick="openEditModal(
+                                                        '{{ d.name }}',
+                                                        '{{ d.address_title }}',
+                                                        '{{d.address_type}}',
+                                                        '{{ d.address_line1 }}',
+                                                        '{{ d.address_line2 or '' }}',
+                                                        '{{ d.city or '' }}',
+                                                        '{{ d.state or '' }}',
+                                                        '{{ d.pincode }}'
+                                                    )">
+                                                    Edit
+                                                </button>
+                                            </div>
 
-                                        <div class="col-sm-3">
-                                            <div class="items-preview ellipsis ellipsis-width items-name">
-                                                {{ d.raised_by }}
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="items-preview ellipsis ellipsis-width items-priority">
-                                                {{ d.priority }}
-                                            </div>
                                         </div>
                                     </div>
-                                    <a class="transaction-item-link" href="ticket?d_name={{ d.name }}">Link</a>
+
                                 </div>
                                 {% endfor %}
+
                             </div>
+                            <div id="editModal" class="modal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Edit Address</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="editForm">
+                                                <input type="hidden" id="editName" name="name">
+                                                <div class="form-group">
+                                                    <label for="addressTitle">Address Title</label>
+                                                    <input type="text" class="form-control" id="addressTitle"
+                                                        name="address_title">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="addressType">Address Type</label>
+                                                    <select class="form-control" id="addressType" name="address_type">
+                                                        <option value="Billing">Billing</option>
+                                                        <option value="Shipping">Shipping</option>
+                                                        <option value="Home">Home</option>
+                                                        <!-- Add more types as needed -->
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="addressLine1">Address Line 1</label>
+                                                    <input type="text" class="form-control" id="addressLine1"
+                                                        name="address_line1">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="addressLine2">Address Line 2</label>
+                                                    <input type="text" class="form-control" id="addressLine2"
+                                                        name="address_line2">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="city">City</label>
+                                                    <input type="text" class="form-control" id="city" name="city">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="state">State</label>
+                                                    <input type="text" class="form-control" id="state" name="state">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="pincode">Pincode</label>
+                                                    <input type="text" class="form-control" id="pincode" name="pincode">
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" onclick="saveChanges()">Save
+                                                changes</button>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                function openEditModal(name, addressTitle, addressLine1, addressLine2, city, state, country, pincode) {
+                                    // Populate the form with existing data
+                                    document.getElementById('editName').value = name;
+                                    document.getElementById('addressTitle').value = addressTitle;
+                                    document.getElementById('addressType').value = addressType || 'Billing';
+                                    document.getElementById('addressLine1').value = addressLine1;
+                                    document.getElementById('addressLine2').value = addressLine2 || '';
+                                    document.getElementById('city').value = city || '';
+                                    document.getElementById('state').value = state || '';
+                                    document.getElementById('pincode').value = pincode || '';
+
+                                    // Show the modal
+                                    $('#editModal').modal('show');
+                                }
+
+                                function saveChanges() {
+                                    // Get the form data
+                                    const formData = {
+                                        name: document.getElementById('editName').value,
+                                        address_title: document.getElementById('addressTitle').value,
+                                        address_type: document.getElementById('addressType').value,
+                                        address_line1: document.getElementById('addressLine1').value,
+                                        address_line2: document.getElementById('addressLine2').value,
+                                        city: document.getElementById('city').value,
+                                        state: document.getElementById('state').value,
+                                        country: "India",  // Add default value or fetch from form if needed
+                                        pincode: document.getElementById('pincode').value
+                                    };
+
+                                    // Call Frappe API to update the record
+                                    frappe.call({
+                                        method: "frappe.client.save",
+                                        args: {
+                                            doc: {
+                                                doctype: "Address",
+                                                name: formData.name,
+                                                address_title: formData.address_title,
+                                                address_type: formData.address_type,
+                                                address_line1: formData.address_line1,
+                                                address_line2: formData.address_line2,
+                                                city: formData.city,
+                                                state: formData.state,
+                                                country: formData.country,
+                                                pincode: formData.pincode
+                                            }
+                                        },
+                                        callback: function (response) {
+                                            if (!response.exc) {
+                                                // Hide the modal and refresh the page or data
+                                                $('#editModal').modal('hide');
+                                                location.reload();
+                                            } else {
+                                                alert("An error occurred while saving changes.");
+                                            }
+                                        }
+                                    });
+                                }
+                            </script>
+
+
+
                         </div>
                         <div class="list-paging-area level" style="padding:5px">
                             <div class="level-left">
