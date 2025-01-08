@@ -15,7 +15,7 @@
 	{% if item.type != 'input' %}
 	{%- set item_route = item.route[1:] if item.route[0] == '/' else item.route -%}
 	<a href="{{ item.route }}" class="{{ 'active' if pathname == item.route else '' }}" {% if item.target
-		%}target="{{ item.target }}" {% endif %} style="display: flex; align-items: center; gap: 0.5rem;">
+		%}target="{{ item.target }}" {%endif%} style="display: flex; align-items: center; gap: 0.5rem;">
 		{% if item.icon %}
 		<span class="material-symbols-outlined material">
 			{{ item.icon }}
@@ -25,9 +25,10 @@
 	</a>
 
 	{% else %}
-	<form action='{{ item.route }}' class="mr-4">
+	<form action="{{ item.route }}" class="mr-4">
 		<input name='q' class='form-control' type='text' style="outline: none"
 			placeholder="{{ _(item.title) or _(item.label) }}">
+
 	</form>
 	{% endif %}
 
@@ -68,13 +69,12 @@
 	<div class="profile-container mb-1" onclick="toggleDropdown(event)">
 		<div class="profile-row">
 			<div class="profile-avatar rounded-full">
-				<!-- {% set image = frappe.db.get_value('User', frappe.session.user, 'user_image') %}
+				{% set image = frappe.db.get_value('User', frappe.session.user, 'user_image') %}
 				{% if image %}
 				<img src="{{ image }}" class="rounded-full h-full w-full">
 				{% else %}
 				<img src="/files/64-Network-PNG-Logo3.png" class="rounded-full h-full w-full">
-				{% endif %} -->
-				<img src="/files/64-Network-PNG-Logo3.png" class="rounded-full h-full w-full">
+				{% endif %}
 			</div>
 			<div class="profile-info">
 				<p class="profile-name">Helpdesk</p>
@@ -116,6 +116,28 @@
 
 
 <script>
+	frappe.ready(function () {
+		$('.sidebar-item a').each(function (index) {
+			const active_class = 'active'
+			const non_active_class = ''
+			let page_href = window.location.href;
+			if (page_href.indexOf('#') !== -1) {
+				page_href = page_href.slice(0, page_href.indexOf('#'));
+			}
+			if (this.href.trim() == page_href) {
+				$(this).removeClass(non_active_class).addClass(active_class);
+			} else {
+				$(this).removeClass(active_class).addClass(non_active_class);
+			}
+		});
+
+		// scroll the active sidebar item into view
+		let active_sidebar_item = $('.sidebar-item a.active');
+		if (active_sidebar_item.length > 0) {
+			active_sidebar_item.get(0)
+				.scrollIntoView({ behavior: "auto", block: "center", inline: "nearest" });
+		}
+	});
 
 	function logout() {
 		frappe.call({

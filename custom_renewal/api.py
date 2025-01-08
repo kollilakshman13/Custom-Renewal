@@ -344,8 +344,60 @@ def get_renewal_list(page=1, limit=20):
 
 
 
+## issue 
 
 
+import frappe
+import base64
 
+@frappe.whitelist(allow_guest=True)
+def create_issue():
+    try:
+        data = frappe.local.form_dict
+        attachment = frappe.request.files.get("attachment")
 
+        # Validate mandatory fields
+        if not data.get("subject") or not data.get("customer"):
+            frappe.throw("Subject and Customer are mandatory fields.")
 
+        # Create the Issue document
+        issue = frappe.get_doc({
+            "doctype": "Issue",
+            "subject": data.get("subject"),
+            "status": data.get("status", "Open"),
+            "customer": data.get("customer"),
+            "description": data.get("description"),
+            "priority":data.get("priority")
+        })
+        issue.insert()
+
+        # Save attachment if provided
+        if attachment:
+            _file = frappe.get_doc({
+                "doctype": "File",
+                "file_name": attachment.filename,
+                "attached_to_doctype": "Issue",
+                "attached_to_name": issue.name,
+                "content": attachment.stream.read(),
+                "is_private": 0,
+            })
+            _file.save()
+
+        frappe.db.commit()
+        return {"message": f"Issue {issue.name} created successfully."}
+
+    except Exception as e:
+        frappe.log_error(frappe.get_traceback(), "Issue Creation Failed")
+        frappe.throw(f"An error occurred: {str(e)}")
+
+# In your Python controller or API endpoint
+# from frappe import _
+
+# @frappe.whitelist()
+# def get_issues():
+#     issues = frappe.get_all(
+#         "Issue",
+#         fields=["subject", "status", "priority", "raised_by", "name"],
+#         order_by="creation desc"
+#     )
+#     return issues

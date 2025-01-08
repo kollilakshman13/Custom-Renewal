@@ -7,121 +7,121 @@
 // }
 
 
-// frappe.pages['metabase-integration'].on_page_load = (wrapper) => {
-// 	// init page
-// 	const page = frappe.ui.make_app_page({
-// 		'parent': wrapper,
-// 		'title': 'Dash Board',
-// 		'single_column': true,
-// 	});
+frappe.pages['metabase-integration'].on_page_load = (wrapper) => {
+	// init page
+	const page = frappe.ui.make_app_page({
+		'parent': wrapper,
+		'title': 'Dash Board',
+		'single_column': true,
+	});
 
-// 	new MetabaseDashboard(page, wrapper);
-// };
+	new MetabaseDashboard(page, wrapper);
+};
 
-// class MetabaseDashboard {
-// 	constructor(page, wrapper) {
-// 		this.currentDashboard = false;
-// 		this.wrapper = wrapper;
-// 		this.pageMain = $(page.main);
-// 		this.pageAction = (
-// 			$(this.wrapper)
-// 				.find('div.page-head div.page-actions')
-// 		);
-// 		this.pageTitle = $(this.wrapper).find('div.title-text');
+class MetabaseDashboard {
+	constructor(page, wrapper) {
+		this.currentDashboard = false;
+		this.wrapper = wrapper;
+		this.pageMain = $(page.main);
+		this.pageAction = (
+			$(this.wrapper)
+				.find('div.page-head div.page-actions')
+		);
+		this.pageTitle = $(this.wrapper).find('div.title-text');
 
-// 		this.init();
-// 	}
+		this.init();
+	}
 
-// 	init() {
-// 		this.createSelectionField();
-// 	}
+	init() {
+		this.createSelectionField();
+	}
 
-// 	showIframe() {
-// 		this.getSettings().then(
-// 			(r) => {
-// 				// set variable
-// 				this.settings = r.message;
-// 				this.resizer = this.settings.resizer;
-// 				this.iframeUrl = this.settings.iframeUrl;
-// 				this.name = this.settings.name;
+	showIframe() {
+		this.getSettings().then(
+			(r) => {
+				// set variable
+				this.settings = r.message;
+				this.resizer = this.settings.resizer;
+				this.iframeUrl = this.settings.iframeUrl;
+				this.name = this.settings.name;
 
-// 				if (this.iframeUrl && this.resizer) {
-// 					// prepare html
-// 					const iFrameHtml = `
-// 						<script id="resizer" src="${this.resizer}"></script>
-// 						<iframe
-// 							src="${this.iframeUrl}"
-// 							frameborder="0"
-// 							width=100%
-// 							onload="iFrameResize({}, this)"
-// 							allowtransparency
-// 						></iframe>
-// 					`;
+				if (this.iframeUrl && this.resizer) {
+					// prepare html
+					const iFrameHtml = `
+						<script id="resizer" src="${this.resizer}"></script>
+						<iframe
+							src="${this.iframeUrl}"
+							frameborder="0"
+							width=100%
+							onload="iFrameResize({}, this)"
+							allowtransparency
+						></iframe>
+					`;
 
-// 					// append html to page
-// 					this.iFrame = $(iFrameHtml).appendTo(this.pageMain);
-// 				}
-// 			}
-// 		);
-// 	}
+					// append html to page
+					this.iFrame = $(iFrameHtml).appendTo(this.pageMain);
+				}
+			}
+		);
+	}
 
 
-// 	getSettings() {
-// 		return frappe.call({
-// 			'method': 'metabase_integration.metabase_integration.doctype.metabase_dashboard.get_url',
-// 			'args': {
-// 				'dashboard': this.dashboardName,
-// 			},
-// 		});
-// 	}
+	getSettings() {
+		return frappe.call({
+			'method': 'metabase_integration.metabase_integration.doctype.metabase_dashboard.get_url',
+			'args': {
+				'dashboard': this.dashboardName,
+			},
+		});
+	}
 
-// 	createSelectionField() {
-// 		// create dashboard selection field
-// 		this.selectionField = frappe.ui.form.make_control({
-// 			'parent': this.pageAction,
-// 			'df': {
-// 				'fieldname': 'Dashboard',
-// 				'fieldtype': 'Link',
-// 				'options': 'Metabase Dashboard',
-// 				'onchange': () => {
-// 					const dashboardName = this.selectionField.get_value();
-// 					if (dashboardName) {
-// 						this.dashboardName = dashboardName;
-// 						if (this.currentDashboard != this.dashboardName) {
-// 							// clear page html
-// 							this.pageMain.empty();
+	createSelectionField() {
+		// create dashboard selection field
+		this.selectionField = frappe.ui.form.make_control({
+			'parent': this.pageAction,
+			'df': {
+				'fieldname': 'Dashboard',
+				'fieldtype': 'Link',
+				'options': 'Metabase Dashboard',
+				'onchange': () => {
+					const dashboardName = this.selectionField.get_value();
+					if (dashboardName) {
+						this.dashboardName = dashboardName;
+						if (this.currentDashboard != this.dashboardName) {
+							// clear page html
+							this.pageMain.empty();
 
-// 							this.showIframe();
-// 							this.changeTitle();
+							this.showIframe();
+							this.changeTitle();
 
-// 							// set current dashboard
-// 							this.currentDashboard = this.dashboardName;
-// 						}
-// 						// clear input
-// 						this.selectionField.set_input('');
-// 					}
-// 				},
-// 				'get_query': () => {
-// 					return {
-// 						'filters': {
-// 							'is_active': 1,
-// 						},
-// 					};
-// 				},
-// 				'placeholder': 'Select Dashboard',
-// 			},
-// 			'render_input': true,
-// 		});
+							// set current dashboard
+							this.currentDashboard = this.dashboardName;
+						}
+						// clear input
+						this.selectionField.set_input('');
+					}
+				},
+				'get_query': () => {
+					return {
+						'filters': {
+							'is_active': 1,
+						},
+					};
+				},
+				'placeholder': 'Select Dashboard',
+			},
+			'render_input': true,
+		});
 
-// 		// change css
-// 		this.pageAction.removeClass('page-actions');
-// 		this.selectionField.$wrapper.css('text-align', 'left');
-// 	}
+		// change css
+		this.pageAction.removeClass('page-actions');
+		this.selectionField.$wrapper.css('text-align', 'left');
+	}
 
-// 	changeTitle() {
-// 		this.pageTitle.text(`${this.dashboardName} Dashboard`);
-// 	}
-// }
+	changeTitle() {
+		this.pageTitle.text(`${this.dashboardName} Dashboard`);
+	}
+}
 
 
 
@@ -915,61 +915,48 @@
 // }
 
 
-frappe.pages['metabase-integration'].on_page_load = (wrapper) => {
-	// init page
-	const page = frappe.ui.make_app_page({
-
-		'parent': wrapper,
-
-		'title': 'Dashboard',
-
-		'single_column': true,
-
-	});
-	new MetabaseDashboard(page, wrapper);
-};
 
 // class MetabaseDashboard {
-// 	constructor(page, wrapper) {
-// 		this.currentDashboard = false;
-// 		this.wrapper = wrapper;
-// 		this.pageMain = $(page.main);
-// 		this.pageAction = $(this.wrapper).find('div.page-head div.page-actions');
-// 		this.pageTitle = $(this.wrapper).find('div.title-text');
-// 		this.iframeLoaded = false; // Track if iframe has been loaded
-// 		this.defaultSalesPerson = 'kavitha.p@64network.com'; // Set the default Sales Person here
-// 		this.init();
-// 	}
+//     constructor(page, wrapper) {
+//         this.currentDashboard = false;
+//         this.wrapper = wrapper;
+//         this.pageMain = $(page.main);
+//         this.pageAction = $(this.wrapper).find('div.page-head div.page-actions');
+//         this.pageTitle = $(this.wrapper).find('div.title-text');
+//         this.iframeLoaded = false; // Track if iframe has been loaded
+//         this.defaultSalesPerson = 'kavitha.p@64network.com'; // Default Sales Person
+//         this.init();
+//     }
 
-// 	init() {
-// 		this.createDashboardSelectionField(); // Create dashboard selection dropdown
-// 		this.createStaticSalesPersonField(); // Create static Sales Person field
-// 	}
+//     init() {
+//         this.createDashboardSelectionField(); // Create dashboard selection dropdown
+//         this.createNonEditableSalesPersonField(); // Create static Sales Person field
+//     }
 
-// 	showIframe() {
-// 		if (this.iframeLoaded) return; // Prevent loading iframe if it already exists
+//     showIframe() {
+//         if (this.iframeLoaded) return; // Prevent loading iframe if it already exists
 
-// 		this.getSettings().then((r) => {
-// 			this.settings = r.message;
-// 			this.resizer = this.settings.resizer;
-// 			this.iframeUrl = this.settings.iframeUrl;
-// 			this.name = this.settings.name;
+//         this.getSettings().then((r) => {
+//             this.settings = r.message;
+//             this.resizer = this.settings.resizer;
+//             this.iframeUrl = this.settings.iframeUrl;
+//             this.name = this.settings.name;
 
-// 			if (this.iframeUrl && this.resizer) {
-// 				// Apply default Sales Person filter
-// 				const defaultFilters = { sales_person: this.defaultSalesPerson };
-// 				const filterParams = new URLSearchParams(defaultFilters).toString();
+//             if (this.iframeUrl && this.resizer) {
+//                 // Apply default Sales Person filter
+//                 const defaultFilters = { sales_person: this.defaultSalesPerson };
+//                 const filterParams = new URLSearchParams(defaultFilters).toString();
 
-// 				// Handle URLs with or without fragments (#)
-// 				if (this.iframeUrl.includes('#')) {
-// 					const [baseUrl, fragment] = this.iframeUrl.split('#');
-// 					this.iframeUrl = `${baseUrl}?${filterParams}#${fragment}`;
-// 				} else {
-// 					this.iframeUrl = `${this.iframeUrl}?${filterParams}`;
-// 				}
+//                 // Handle URLs with or without fragments (#)
+//                 if (this.iframeUrl.includes('#')) {
+//                     const [baseUrl, fragment] = this.iframeUrl.split('#');
+//                     this.iframeUrl = `${baseUrl}?${filterParams}#${fragment}`;
+//                 } else {
+//                     this.iframeUrl = `${this.iframeUrl}?${filterParams}`;
+//                 }
 
-// 				// Append iframe to the page
-// 				const iFrameHtml = `
+//                 // Append iframe to the page
+//                 const iFrameHtml = `
 //                     <script id="resizer" src="${this.resizer}"></script>
 //                     <iframe
 //                         src="${this.iframeUrl}"
@@ -980,69 +967,69 @@ frappe.pages['metabase-integration'].on_page_load = (wrapper) => {
 //                     ></iframe>
 //                 `;
 
-// 				this.iFrame = $(iFrameHtml).appendTo(this.pageMain);
-// 				this.iframeLoaded = true;
-// 			}
-// 		});
-// 	}
+//                 this.iFrame = $(iFrameHtml).appendTo(this.pageMain);
+//                 this.iframeLoaded = true;
+//             }
+//         });
+//     }
 
-// 	getSettings() {
-// 		return frappe.call({
-// 			method: 'metabase_integration.metabase_integration.doctype.metabase_dashboard.get_url',
-// 			args: {
-// 				dashboard: this.dashboardName,
-// 			},
-// 		});
-// 	}
+//     getSettings() {
+//         return frappe.call({
+//             method: 'metabase_integration.metabase_integration.doctype.metabase_dashboard.get_url',
+//             args: {
+//                 dashboard: this.dashboardName,
+//             },
+//         });
+//     }
 
-// 	createDashboardSelectionField() {
-// 		// Create dashboard selection field
-// 		this.selectionField = frappe.ui.form.make_control({
-// 			parent: this.pageAction,
-// 			df: {
-// 				fieldname: 'Dashboard',
-// 				fieldtype: 'Link',
-// 				options: 'Metabase Dashboard',
-// 				onchange: () => {
-// 					const dashboardName = this.selectionField.get_value();
-// 					if (dashboardName) {
-// 						this.dashboardName = dashboardName;
-// 						if (this.currentDashboard != this.dashboardName) {
-// 							// Clear page HTML
-// 							this.pageMain.empty();
-// 							this.iframeLoaded = false; // Reset iframe load status
-// 							this.showIframe();
-// 							this.changeTitle();
-// 							// Set current dashboard
-// 							this.currentDashboard = this.dashboardName;
-// 						}
-// 						// Clear input
-// 						this.selectionField.set_input('');
-// 					}
-// 				},
-// 				get_query: () => {
-// 					return {
-// 						filters: {
-// 							is_active: 1,
-// 						},
-// 					};
-// 				},
-// 				placeholder: 'Select Dashboard',
-// 			},
-// 			render_input: true,
-// 		});
+//     createDashboardSelectionField() {
+//         // Create dashboard selection field
+//         this.selectionField = frappe.ui.form.make_control({
+//             parent: this.pageAction,
+//             df: {
+//                 fieldname: 'Dashboard',
+//                 fieldtype: 'Link',
+//                 options: 'Metabase Dashboard',
+//                 onchange: () => {
+//                     const dashboardName = this.selectionField.get_value();
+//                     if (dashboardName) {
+//                         this.dashboardName = dashboardName;
+//                         if (this.currentDashboard != this.dashboardName) {
+//                             // Clear page HTML
+//                             this.pageMain.empty();
+//                             this.iframeLoaded = false; // Reset iframe load status
+//                             this.showIframe();
+//                             this.changeTitle();
+//                             // Set current dashboard
+//                             this.currentDashboard = this.dashboardName;
+//                         }
+//                         // Clear input
+//                         this.selectionField.set_input('');
+//                     }
+//                 },
+//                 get_query: () => {
+//                     return {
+//                         filters: {
+//                             is_active: 1,
+//                         },
+//                     };
+//                 },
+//                 placeholder: 'Select Dashboard',
+//             },
+//             render_input: true,
+//         });
 
-// 		// Set the default dashboard
-// 		this.setDefaultDashboard();
+//         // Set the default dashboard
+//         this.setDefaultDashboard();
 
-// 		// Adjust CSS
-// 		this.pageAction.removeClass('page-actions');
-// 		this.selectionField.$wrapper.css('text-align', 'left');
-// 	}
+//         // Adjust CSS
+//         this.pageAction.removeClass('page-actions');
+//         this.selectionField.$wrapper.css('text-align', 'left');
+//     }
 
-// 	createStaticSalesPersonField() {
-// 		// Create a non-editable field for the Sales Person
-// 		const staticFieldHtml = `
+//     createNonEditableSalesPersonField() {
+//         // Create a non-editable Sales Person field
+//         const staticFieldHtml = `
 //             <div style="display: flex; align-items: center; margin-top: 10px;">
 //                 <label style="margin-right: 10px; font-weight: bold;">Sales Person:</label>
 //                 <span style="background: #f0f0f0; padding: 5px 10px; border-radius: 5px;">
@@ -1051,166 +1038,24 @@ frappe.pages['metabase-integration'].on_page_load = (wrapper) => {
 //             </div>
 //         `;
 
-// 		// Append the field to the page actions
-// 		this.pageAction.append(staticFieldHtml);
-// 	}
+//         // Append the field to the page actions
+//         this.pageAction.append(staticFieldHtml);
+//     }
 
-// 	setDefaultDashboard() {
-// 		// Set a default dashboard if available in your system
-// 		const defaultDashboardName = 'Sales Dashboard'; // Replace with actual default name
-// 		if (this.selectionField && defaultDashboardName) {
-// 			this.selectionField.set_value(defaultDashboardName); // Manually set the value
-// 			this.dashboardName = defaultDashboardName; // Update the dashboard name
-// 			this.showIframe(); // Refresh the iframe with default filters
-// 			this.changeTitle(); // Update title with default dashboard
-// 		}
-// 	}
+//     setDefaultDashboard() {
+//         // Set a default dashboard if available in your system
+//         const defaultDashboardName = 'Sales Dashboard'; // Replace with actual default name
+//         if (this.selectionField && defaultDashboardName) {
+//             this.selectionField.set_value(defaultDashboardName); // Manually set the value
+//             this.dashboardName = defaultDashboardName; // Update the dashboard name
+//             this.showIframe(); // Refresh the iframe with default filters
+//             this.changeTitle(); // Update title with default dashboard
+//         }
+//     }
 
-// 	changeTitle() {
-// 		this.pageTitle.text(`${this.dashboardName} Dashboard`);
-// 	}
+//     changeTitle() {
+//         this.pageTitle.text(`${this.dashboardName} Dashboard`);
+//     }
 // }
-
-class MetabaseDashboard {
-	constructor(page, wrapper) {
-		this.currentDashboard = false;
-		this.wrapper = wrapper;
-		this.pageMain = $(page.main);
-		this.pageAction = $(this.wrapper).find('div.page-head div.page-actions');
-		this.pageTitle = $(this.wrapper).find('div.title-text');
-		this.iframeLoaded = false; // Track if iframe has been loaded
-		this.defaultSalesPerson = 'kavitha.p@64network.com'; // Default Sales Person
-		this.init();
-	}
-
-	init() {
-		this.createDashboardSelectionField(); // Create dashboard selection dropdown
-		this.createNonEditableSalesPersonField(); // Create static Sales Person field
-	}
-
-	showIframe() {
-		if (this.iframeLoaded) return; // Prevent loading iframe if it already exists
-
-		this.getSettings().then((r) => {
-			this.settings = r.message;
-			this.resizer = this.settings.resizer;
-			this.iframeUrl = this.settings.iframeUrl;
-			this.name = this.settings.name;
-
-			if (this.iframeUrl && this.resizer) {
-				// Apply default Sales Person filter
-				const defaultFilters = { sales_person: this.defaultSalesPerson };
-				const filterParams = new URLSearchParams(defaultFilters).toString();
-
-				// Handle URLs with or without fragments (#)
-				if (this.iframeUrl.includes('#')) {
-					const [baseUrl, fragment] = this.iframeUrl.split('#');
-					this.iframeUrl = `${baseUrl}?${filterParams}#${fragment}`;
-				} else {
-					this.iframeUrl = `${this.iframeUrl}?${filterParams}`;
-				}
-
-				// Append iframe to the page
-				const iFrameHtml = `
-                    <script id="resizer" src="${this.resizer}"></script>
-                    <iframe
-                        src="${this.iframeUrl}"
-                        frameborder="0"
-                        width="100%"
-                        onload="iFrameResize({}, this)"
-                        allowtransparency
-                    ></iframe>
-                `;
-
-				this.iFrame = $(iFrameHtml).appendTo(this.pageMain);
-				this.iframeLoaded = true;
-			}
-		});
-	}
-
-	getSettings() {
-		return frappe.call({
-			method: 'metabase_integration.metabase_integration.doctype.metabase_dashboard.get_url',
-			args: {
-				dashboard: this.dashboardName,
-			},
-		});
-	}
-
-	createDashboardSelectionField() {
-		// Create dashboard selection field
-		this.selectionField = frappe.ui.form.make_control({
-			parent: this.pageAction,
-			df: {
-				fieldname: 'Dashboard',
-				fieldtype: 'Link',
-				options: 'Metabase Dashboard',
-				onchange: () => {
-					const dashboardName = this.selectionField.get_value();
-					if (dashboardName) {
-						this.dashboardName = dashboardName;
-						if (this.currentDashboard != this.dashboardName) {
-							// Clear page HTML
-							this.pageMain.empty();
-							this.iframeLoaded = false; // Reset iframe load status
-							this.showIframe();
-							this.changeTitle();
-							// Set current dashboard
-							this.currentDashboard = this.dashboardName;
-						}
-						// Clear input
-						this.selectionField.set_input('');
-					}
-				},
-				get_query: () => {
-					return {
-						filters: {
-							is_active: 1,
-						},
-					};
-				},
-				placeholder: 'Select Dashboard',
-			},
-			render_input: true,
-		});
-
-		// Set the default dashboard
-		this.setDefaultDashboard();
-
-		// Adjust CSS
-		this.pageAction.removeClass('page-actions');
-		this.selectionField.$wrapper.css('text-align', 'left');
-	}
-
-	createNonEditableSalesPersonField() {
-		// Create a non-editable Sales Person field
-		const staticFieldHtml = `
-            <div style="display: flex; align-items: center; margin-top: 10px;">
-                <label style="margin-right: 10px; font-weight: bold;">Sales Person:</label>
-                <span style="background: #f0f0f0; padding: 5px 10px; border-radius: 5px;">
-                    ${this.defaultSalesPerson}
-                </span>
-            </div>
-        `;
-
-		// Append the field to the page actions
-		this.pageAction.append(staticFieldHtml);
-	}
-
-	setDefaultDashboard() {
-		// Set a default dashboard if available in your system
-		const defaultDashboardName = 'Sales Dashboard'; // Replace with actual default name
-		if (this.selectionField && defaultDashboardName) {
-			this.selectionField.set_value(defaultDashboardName); // Manually set the value
-			this.dashboardName = defaultDashboardName; // Update the dashboard name
-			this.showIframe(); // Refresh the iframe with default filters
-			this.changeTitle(); // Update title with default dashboard
-		}
-	}
-
-	changeTitle() {
-		this.pageTitle.text(`${this.dashboardName} Dashboard`);
-	}
-}
 
 

@@ -1,4 +1,5 @@
 {% extends "templates/web.html" %}
+{% from "frappe/templates/includes/avatar_macro.html" import avatar %}
 import frappe
 {% block page_content %}
 <div class="container">
@@ -9,7 +10,7 @@ import frappe
             </div>
         </div>
         <div class="main-column col-sm-10 ml-1">
-            <div class="page-content-wrapper">
+            <div class="page-content-wrapper pl-2">
                 <div class="page-breadcrumbs">
                     <div class="breadcrumb-container container">
                         <nav aria-label="breadcrumb">
@@ -25,7 +26,7 @@ import frappe
                                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"
                                     class="breadcrumb-item active" aria-current="page">
                                     <span itemprop="item">
-                                        <span itemprop="name">{{d_name.name}}</span>
+                                        <span itemprop="name">{{d_name.name or ""}}</span>
                                         <meta itemprop="position" content="2" />
                                     </span>
                                 </li>
@@ -33,125 +34,162 @@ import frappe
                         </nav>
                     </div>
                 </div>
-                <main class="container ml-5 " style="background-color: white;min-height: 90vh;padding-left: 5px;">
-                    <div class="page-header-wrapper ml-5">
-                        <div class="page-header">
-                            <h3 class="m-0">{{d_name.name}}</h3>
-                        </div>
-                        <!-- <div class="page-header-actions-block">
-                            <div class="row">
-                                <div class="dropdown">
-                                    <button class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown"
-                                        aria-expanded="false">
-                                        <span class="font-md">Actions</span>
-                                        <b class="caret"></b>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
 
-                                        <a class="dropdown-item"
-                                            href='/printview?doctype=Renewal List&name={{d_name.name}}&format=Standard'
-                                            target="_blank" rel="noopener noreferrer">
-                                            Print
-                                        </a> 
-                                    </ul>
-                                </div>
-                            </div>
-                        </div> -->
+                <main class="container" style="background-color: white; min-height: 80vh; padding-left: 5px;">
+                    <div class="page-header-wrapper">
+                        <div class="page-header">
+                            <h3 class="m-1">{{d_name.name or ""}}</h3>
+                        </div>
                     </div>
-                    <div class="page_content ml-5">
+                    <div class="page_content m-1">
                         <div>
-                            <div class="row transaction-subheading  mt-1">
-                                <div class="col-6 text-muted small mt-1">
-                                </div>
+                            <div class="row transaction-subheading mt-1">
+                                <div class="col-6 text-muted small mt-1"></div>
                             </div>
                             <div class="row indicator-container mt-2">
                                 <div class="col-10">
-                                    <span class="indicator-pill red">
-                                        {{d_name.status}}
-                                    </span>
+                                    <span class="indicator-pill red">{{d_name.status or ""}}</span>
                                 </div>
-                                <div class="text-right col-2">
-                                    <b>{{d_name.customer}}</b>
-
-
+                                <div class="col-2 text-right">
+                                    <b>{{d_name.customer or ""}}</b>
                                 </div>
                             </div>
-                            <!-- <div class="order-container mt-4">
-                                <div class="w-100">
-                                    <div class="order-items order-item-header mb-1 row text-muted">
-                                        <span class="col-4">
-                                            Item
-                                        </span>
-                                        <span class="d-s-n col-1">
-                                            Quantity
-                                        </span>
-                                        <span class="col-2 pl-10">
-                                            Start Date
-                                        </span>
-                                        <span class="col-1 text">
-                                            End Date
-                                        </span>
-                                        <span class="col-2 pl-10">
-                                            Rate
-                                        </span>
-                                        <span class="col-2 text-right">
-                                            Amount
-                                        </span>
-                                    </div>
-                                </div>
-                                {% for item in items %}
-                                <div class="order-items row align-items-center">
-                                    <span class="order-item-name col-4 pr-0">
 
-                                        <div class="row item_name_and_description">
-                                            <div class="col-xs-8 col-sm-10">
-                                                {{item.item_name}}
-                                                <div class="text-muted small item-description">
-                                                    {{item.item_code}}
+                            <div class="order-container mt-4 ml-1">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <div class="clearfix">
+                                                <label class="control-label reqd">Subject</label>
+                                                <span class="help"></span>
+                                            </div>
+                                            <div class="control-input-wrapper">
+                                                <div class="control-value like-disabled-input bold">
+                                                    {{d_name.subject or ""}}
                                                 </div>
-                                                <span class="text-muted mt-2 d-l-n order-qty">
-                                                    Qty ({{item.quantity}})
-                                                </span>
                                             </div>
                                         </div>
-
-                                    </span>
-
-                                    <span class="d-s-n col-1 pl-10">
-                                        {{item.quantity}}
-                                    </span>
-                                    <span class="order-rate pl-4 col-2">
-                                        {{frappe.utils.format_date(d_name.start_date, "dd-MM-yyyy")}}
-                                    </span>
-                                    <span class="order-rate pl-4 col-1">
-                                        {{frappe.utils.format_date(d_name.end_date, "dd-MM-yyyy")}}
-                                    </span>
-                                    <span class="order-rate pl-4 col-2">
-                                        {{item.rate}}
-                                    </span>
-                                    <span class="col-2 text-right">
-                                        {{item.amount}}
-                                    </span>
+                                    </div>
                                 </div>
-                                {% endfor %}
-                            </div> -->
-                        </div>
-                        <div>
-                            <!-- <div class="">
-                                <div class="w-100 mt-5 order-taxes font-weight-bold">
-                                    <div class="col-4 d-flex">
-                                        <div class="item-grand-total col-8">
-                                            Grand Total
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="clearfix">
+                                                <label class="control-label">Status</label>
+                                                <span class="help"></span>
+                                            </div>
+                                            <div class="control-input-wrapper">
+                                                <div class="control-value like-disabled-input">
+                                                    {{d_name.status or ""}}
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="item-grand-total col-4 text-right pr-0">
-                                            {{d_name.total_amount}}
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="clearfix">
+                                                <label class="control-label">Attachment</label>
+                                                <span class="help"></span>
+                                            </div>
+                                            <div class="control-input-wrapper">
+                                                <div class="control-value like-disabled-input">
+                                                    {% if file %}
+                                                    <a href="{{file[0].file_url}}">
+                                                        {{file[0].file_url or ""}}
+                                                    </a>
+                                                    {%endif%}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div> -->
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="clearfix">
+                                                <label class="control-label">Customer</label>
+                                                <span class="help"></span>
+                                            </div>
+                                            <div class="control-input-wrapper">
+                                                <div class="control-value like-disabled-input">
+                                                    {{d_name.customer or ""}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="clearfix">
+                                                <label class="control-label reqd">Priority</label>
+                                                <span class="help"></span>
+                                            </div>
+                                            <div class="control-input-wrapper">
+                                                <div class="control-value like-disabled-input bold">
+                                                    {{d_name.priority or ""}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <div class="clearfix">
+                                                <label class="control-label">Description</label>
+                                                <span class="help"></span>
+                                            </div>
+                                            <div class="control-input-wrapper">
+                                                <div class="control-value like-disabled-input for-description">
+                                                    <div class="ql-editor read-mode">
+                                                        <p>{{d_name.description or ""}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </main>
+
+
+                <div class="mt-2 pl-2 mb-1" style="background-color: white;">
+                    <h3>Comment</h3>
+                    <div class="comment-text-area">
+                        <div class="form-label mb-1">{{ _("Add a comment") }}</div>
+                        <textarea class="form-control" name="comment" row="1"></textarea>
+                        <div class="text-muted small mt-1 mb-4">{{ _("Ctrl+Enter to add comment") }}</div>
+                    </div>
+                    <button class="btn btn-sm small" id="submit-comment">{{ _("Comment") }}</button>
+                </div>
+
+                <div class="comment-list" style="background-color: white;">
+                    {% for comment in comments %}
+                    <div class="my-5 comment-row media ml-2">
+                        <div class="comment-avatar">
+                            {{ avatar(user_id=(frappe.utils.strip_html(comment.comment_email or comment.sender or "")),
+                            size='avatar-medium') }}
+                        </div>
+                        <div class="comment-content">
+                            <div class="mb-2 head">
+                                <span class="mr-2 title font-weight-bold">
+                                    {{ frappe.utils.strip_html(comment.sender_full_name or comment.comment_by or "") | e }}
+                                </span>
+                                <span class="time small text-muted">
+                                    {{ frappe.utils.pretty_date(comment.creation) }}
+                                </span>
+                            </div>
+                            <div id="{{ comment.name }}" class="content">{{ frappe.utils.strip_html(comment.content or "") |
+                                markdown }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
 
             </div>
         </div>
@@ -160,3 +198,188 @@ import frappe
 </div>
 
 {% endblock %}
+
+
+<script>
+    frappe.ready(function () {
+        // Add click event listener to the submit button
+        $("#submit-comment").click(function () {
+            // Collect input data
+            let comment_by = frappe.get_cookie("full_name"); // Get the logged-in user's full name
+            let comment_email = frappe.get_cookie("user_id"); // Get the logged-in user's email/ID
+            let comment_content = $("[name='comment']").val(); // Get the comment content
+            let reference_doctype = "Issue"; // Static value
+            let reference_name = "{{ d_name.name }}"; // Pass the reference name dynamically
+
+            // Validation
+            if (!comment_content || !comment_content.trim()) {
+                frappe.msgprint(__("Please add a valid comment."));
+                return false;
+            }
+
+            if (!comment_by || !comment_email) {
+                frappe.msgprint(__("You must be logged in to add a comment."));
+                return false;
+            }
+
+            // Prepare data for the Frappe backend
+            let args = {
+                comment_by: comment_by,
+                comment_email: comment_email,
+                content: comment_content.trim(),
+                reference_doctype: reference_doctype,
+                reference_name: reference_name,
+                comment_type: "Comment", // Static value for comment type
+            };
+
+            // Call the Frappe backend to save the comment
+            frappe.call({
+                method: "frappe.client.insert",
+                args: {
+                    doc: {
+                        doctype: "Comment",
+                        ...args,
+                    },
+                },
+                callback: function (response) {
+                    if (response.message) {
+                        frappe.msgprint(__("Comment added successfully!"));
+
+                        // Clear the comment textarea
+                        $("[name='comment']").val("");
+
+                        // Add the new comment dynamically
+                        // let new_comment = response.message;
+                        // let comment_html = `
+                        //     <div class="my-5 comment-row media">
+                        //         <div class="comment-avatar">
+                        //             ${frappe.avatar(new_comment.comment_email, 'avatar-medium')}
+                        //         </div>
+                        //         <div class="comment-content">
+                        //             <div class="mb-2 head">
+                        //                 <span class="mr-2 title font-weight-bold">${frappe.utils.escape_html(new_comment.comment_by)}</span>
+                        //                 <span class="time small text-muted">${frappe.utils.pretty_date(new_comment.creation)}</span>
+                        //             </div>
+                        //             <div id="${new_comment.name}" class="content">${frappe.utils.markdown(new_comment.content)}</div>
+                        //         </div>
+                        //     </div>
+                        // `;
+                        // $(".comment-list").prepend(comment_html); // Add the new comment at the top of the list
+                    } else {
+                        frappe.msgprint(__("Failed to add comment. Please try again."));
+                    }
+                },
+                error: function (error) {
+                    frappe.msgprint(__("Error: Unable to add comment."));
+                    console.error(error);
+                },
+            });
+
+            return false;
+        });
+    });
+</script>
+
+
+
+<style>
+    .add-comment-button {
+        margin-left: 35px;
+    }
+
+    .timeline-dot {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        position: absolute;
+        top: 8px;
+        left: 22px;
+        background-color: var(--fg-color);
+        border: 1px solid var(--dark-border-color);
+    }
+
+    .timeline-dot::before {
+        content: ' ';
+        background: var(--gray-600);
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        border-radius: 50%;
+        height: 4px;
+        width: 4px;
+    }
+
+    .comment-form-wrapper {
+        display: none;
+    }
+
+    .login-required {
+        padding: var(--padding-sm);
+        border-radius: var(--border-radius-sm);
+        box-shadow: var(--card-shadow);
+    }
+
+    .new-comment {
+        display: flex;
+        padding: var(--padding-lg);
+        box-shadow: var(--card-shadow);
+        border-radius: var(--border-radius-md);
+        background-color: var(--fg-color);
+    }
+
+    .new-comment-fields {
+        flex: 1;
+    }
+
+    .new-comment .form-label {
+        font-weight: var(--text-bold);
+    }
+
+    .new-comment .comment-text-area textarea {
+        resize: none;
+    }
+
+    @media (min-width: 576px) {
+        .comment-by {
+            padding-right: 0px !important;
+            padding-bottom: 0px !important;
+        }
+    }
+
+    #comment-list {
+        position: relative;
+        padding-left: var(--padding-xl);
+    }
+
+    #comment-list::before {
+        content: " ";
+        position: absolute;
+        top: var(--comment-timeline-top);
+        bottom: var(--comment-timeline-bottom);
+        border-left: 1px solid var(--dark-border-color);
+    }
+
+    .comment-row {
+        position: relative;
+        padding: 5px;
+    }
+
+    .comment-avatar {
+        position: absolute;
+        top: 10px;
+        left: -17px;
+    }
+
+    .comment-content {
+        box-shadow: var(--card-shadow);
+        background-color: var(--fg-color);
+        border-radius: var(--border-radius-md);
+        padding: var(--padding-md);
+        margin-left: 35px;
+        flex: 1;
+    }
+
+    .comment-content .content p {
+        margin-bottom: 0px;
+    }
+</style>

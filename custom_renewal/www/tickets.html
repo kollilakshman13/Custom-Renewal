@@ -1,0 +1,236 @@
+{% extends "templates/web.html" %}
+{% from "frappe/templates/includes/avatar_macro.html" import avatar %}
+import frappe
+{% block page_content %}
+<div class="container">
+    <div class="row" id="page-list" data-path="renewal_list">
+        <div class="sidebar-column col-sm-2">
+            <div class="web-sidebar">
+                {% include web_sidebar %}
+            </div>
+        </div>
+        <div class="main-column col-sm-10">
+            <div class="page-content-wrapper">
+                <!-- breadcrumbs -->
+                <div class="page-breadcrumbs">
+                </div>
+                <main class="container my-4">
+                    <div class="page-header-wrapper">
+                        <div class="page-header">
+                        </div>
+                    </div>
+
+                    <div class="page_content ml-3" style="background-color: white;">
+                        <!-- web form container -->
+                        <div class="web-form-container ml-2 pl-2 pt-2">
+                            <!-- breadcrumb -->
+                            <div class="breadcrumb-container container">
+                                <!-- <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+
+                                        <li itemprop="itemListElement" itemscope=""
+                                            itemtype="http://schema.org/ListItem" class="breadcrumb-item">
+                                            <a itemprop="item" href="/issues">
+                                                <span itemprop="name">Issues</span>
+                                                <meta itemprop="position" content="1">
+                                            </a>
+                                        </li>
+
+                                        <li itemprop="itemListElement" itemscope=""
+                                            itemtype="http://schema.org/ListItem" class="breadcrumb-item active"
+                                            aria-current="page">
+                                            <span itemprop="item">
+                                                <span itemprop="name">New Issue</span>
+                                                <meta itemprop="position" content="2">
+                                            </span>
+                                        </li>
+                                    </ol>
+                                </nav> -->
+                            </div>
+
+                            <!-- header -->
+                            <div class="web-form-header mb-3">
+                                <div class="web-form-head">
+                                    <div class="title">
+                                        <div class="web-form-title ellipsis">
+                                            <h5 class="ellipsis">New Issue</h5>
+                                        </div>
+                                        <span class="indicator-pill orange hidden">Not Saved</span>
+                                        <div class="web-form-actions">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- main card -->
+
+                            <form role="form" class="web-form" id="ticket-form">
+                                <div class="web-form-body">
+                                    <div class="web-form-wrapper">
+                                        <div class="form-layout">
+                                            <div class="form-page">
+                                                <div class="row form-section">
+                                                    <div class="section-body">
+                                                        <div class="form-column col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="subject">Subject</label>
+                                                                <textarea id="subject" name="subject"
+                                                                    class="form-control" rows="1"
+                                                                    placeholder="Enter subject"></textarea>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="status">Status</label>
+                                                                <input type="text" id="status" name="status"
+                                                                    value="Open" class="form-control" readonly>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="customer">Customer</label>
+                                                                <input type="text" id="customer" name="customer"
+                                                                    class="form-control" placeholder="Enter customer">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="description">Description</label>
+                                                                <textarea id="description" name="description"
+                                                                    class="form-control" rows="5"
+                                                                    placeholder="Enter description"></textarea>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="attachment">Attachment</label>
+                                                                <input type="file" id="attachment" name="attachment"
+                                                                    class="form-control-file">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="priority">Priority</label>
+                                                                <select id="priority" name="priority" class="form-control" required>
+                                                                    <option value="Medium" selected>Medium</option>
+                                                                    <option value="Low">Low</option>
+                                                                    <option value="High">High</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <button type="button" class="btn btn-warm"
+                                                                id="discard-button">Discard</button>
+                                                            <button type="submit"
+                                                                class="btn btn-primary">Submit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <script>
+
+                                document.getElementById("ticket-form").addEventListener("submit", async function (e) {
+                                    e.preventDefault(); // Prevent default form submission
+
+                                    const formData = new FormData(this); // Collect form data
+                                    const payload = {
+                                        subject: formData.get("subject"),
+                                        status: formData.get("status"),
+                                        customer: formData.get("customer"),
+                                        description: formData.get("description"),
+                                        priority: formData.get("priority"),
+                                    };
+
+                                    if (!payload.subject || !payload.customer || !payload.priority) {
+                                        alert("Subject, Customer, and Priority are mandatory fields.");
+                                        return;
+                                    }
+
+                                    const attachment = formData.get("attachment");
+                                    if (attachment && attachment.size > 0) {
+                                        formData.append("attachment", attachment); // Include the file in FormData
+                                    }
+
+                                    await submitIssue(formData); // Send FormData instead of a JSON object
+                                });
+
+                                async function submitIssue(formData) {
+                                    try {
+                                        const csrfToken = frappe.csrf_token || document.querySelector("meta[name='csrf-token']").content;
+
+                                        const response = await fetch("/api/method/custom_renewal.api.create_issue", {
+                                            method: "POST",
+                                            headers: {
+                                                "X-Frappe-CSRF-Token": csrfToken, // Include CSRF token
+                                            },
+                                            body: formData, // Send FormData directly
+                                        });
+
+                                        if (!response.ok) {
+                                            const error = await response.text();
+                                            console.error("API Error Response:", error);
+                                            alert("Failed to create Issue: " + response.statusText);
+                                            return;
+                                        }
+
+                                        const result = await response.json();
+                                        if (result.message) {
+                                            alert("Issue created successfully: " + result.message);
+                                            //window.location.reload(); // Reload after successful submission
+                                            window.location.href = "/issue";
+                                        } else {
+                                            alert("Failed to create Issue: " + (result.message || "Unknown error"));
+                                        }
+                                    } catch (error) {
+                                        console.error("Submission Error:", error);
+                                        alert("An error occurred while submitting the form.");
+                                    }
+                                }
+
+                                // Discard button functionality
+                                document.getElementById("discard-button").addEventListener("click", () => {
+                                    document.getElementById("ticket-form").reset();
+                                });
+
+                            </script>
+
+
+
+
+                            <!-- attachments -->
+
+
+                            <!-- comments -->
+                            <div style="height: 3rem"></div>
+                        </div>
+
+                        <!-- success page -->
+                        <div class="success-page hide">
+                            <div class="success-header">
+                                <svg class="success-icon icon">
+                                    <use href="#icon-solid-success"></use>
+                                </svg>
+                                <h2 class="success-title">Submitted</h2>
+                            </div>
+
+                            <div class="success-body">
+                                <p class="success-message">Thank you for spending your valuable time to fill this form
+                                </p>
+                            </div>
+
+                            <div class="success-footer">
+
+                                <div class="success_url_message">
+                                    <p>
+                                        <a href="/issue">Click here</a> if you are not redirected within <span
+                                            class="time">5</span> seconds
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </main>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{%endblock%}

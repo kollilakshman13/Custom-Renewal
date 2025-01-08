@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {% extends "templates/web.html" %}
 import frappe
 {% block page_content %}
@@ -17,16 +18,16 @@ import frappe
                 <main class="container ml-2">
                     <div class="page-header-wrapper">
                         <div class="page-head">
-                            <h3 class="my-account-header">Sales Order</h3>
+                            <h3 class="my-account-header ml-1">Sales Order</h3>
                         </div>
                         <div class="page-header-actions-block">
                             <input type="text" id="search-bar" class="form-control" placeholder="Search..."
-                                onkeyup="filterRows()">
+                                onkeyup="filterRows()" style="border-radius:10px;">
                         </div>
                     </div>
-                    <div class="page_content" style="background-color: white;min-height:90vh;">
+                    <!-- <div class="page_content" style="background-color: white;">
 
-                        <div class="website-list" data-doctype="Renewal List" data-txt="None">
+                        <div class="website-list" data-doctype="Renewal List" data-txt="None" style="min-height:90vh;">
                             <div class="website-list-filters">
                             </div>
                             <div id="row-container" class="result ml-5"
@@ -59,15 +60,78 @@ import frappe
                                 {% endfor %}
                             </div>
                         </div>
-                        <div class="pagination-controls text-left mt-4"
-                            style="position:absolute; bottom: 15px; z-index: 1000; background-color: white; padding: 10px; border-radius: 5px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); width:99%; display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <button class="btn btn-sm btn-primary ml-5" onclick="setRowsLimit()">20</button>
+                        <div class="list-paging-area level" style="padding:5px">
+                            <div class="level-left">
+                                <div class="btn-group">
+                                    <button class="btn btn-sm b1 mr-2" onclick="showRows(20, this)">20
+                                    </button>
+                                    <button class="btn btn-sm bl mr-2" onclick="showRows(100, this)">100
+                                    </button>
+                                    <button class="btn btn-sm b1 mr-2" onclick="showRows(500, this)">500
+                                    </button>
+                                    <button class="btn btn-sm b1" onclick="showRows(1500, this)">1500
+                                    </button>
+                                </div>
                             </div>
-                            <button class="btn btn-sm btn-secondary" style="text-align: right;"
-                                onclick="loadMoreRows()">Load More</button>
+                            <div class="level-right">
+                                <button class="btn " onclick="loadMoreRows()">
+                                    Load More
+                                </button>
+                            </div>
                         </div>
                         <script>
+                            rowsPerPage = 20; // Default number of rows to show
+                            let currentlyVisibleRows = 0; // Counter to track how many rows are visible
+
+                            // Function to show a specific number of rows and highlight the active button
+                            function showRows(count, button = null) {
+                                const rows = document.querySelectorAll("#row-container .web-list-item");
+                                rows.forEach((row, index) => {
+                                    if (index < count) {
+                                        row.style.display = "block"; // Show the row
+                                    } else {
+                                        row.style.display = "none"; // Hide the row
+                                    }
+                                });
+
+                                currentlyVisibleRows = count;
+
+                                // Highlight the active button
+                                if (button) {
+                                    const buttons = document.querySelectorAll(".btn-group .btn");
+                                    buttons.forEach(btn => btn.classList.remove("active"));
+                                    button.classList.add("active");
+                                }
+
+                                // Reset the "Load More" button visibility based on remaining rows
+                                const loadMoreButton = document.getElementById("load-more-btn");
+                                if (currentlyVisibleRows >= rows.length) {
+                                    loadMoreButton.style.display = "none";
+                                } else {
+                                    loadMoreButton.style.display = "block";
+                                }
+                            }
+
+                            // Function to load more rows incrementally
+                            function loadMoreRows() {
+                                const rows = document.querySelectorAll("#row-container .web-list-item");
+                                const newVisibleRows = currentlyVisibleRows + rowsPerPage;
+
+                                rows.forEach((row, index) => {
+                                    if (index < newVisibleRows) {
+                                        row.style.display = "block"; // Show additional rows
+                                    }
+                                });
+
+                                // Update the counter
+                                currentlyVisibleRows = newVisibleRows;
+
+                                // Hide the "Load More" button if all rows are visible
+                                if (currentlyVisibleRows >= rows.length) {
+                                    document.getElementById("load-more-btn").style.display = "none";
+                                }
+                            }
+
                             function filterRows() {
                                 const searchInput = document.getElementById("search-bar").value.toLowerCase();
                                 const rows = document.querySelectorAll("#row-container .web-list-item");
@@ -89,10 +153,126 @@ import frappe
                                         row.style.display = "none";
                                     }
                                 });
+                                // Reset the visible rows counter and "Load More" button when filtering
+                                currentlyVisibleRows = rowsPerPage;
+                                document.getElementById("load-more-btn").style.display = "block";
                             }
+                            document.addEventListener("DOMContentLoaded", () => {
+                                const defaultButton = document.querySelector(".btn-group .btn");
+                                showRows(rowsPerPage, defaultButton);
+                            });
                         </script>
 
+                    </div> -->
+
+                    <div class="page_content" style="background-color: white;">
+
+                        <div class="website-list" data-doctype="Renewal List" data-txt="None" style="min-height:90vh;">
+                            <div class="website-list-filters">
+                            </div>
+                            <div id="row-container" class="result ml-5"
+                                style="background-color: white;box-sizing: border-box;">
+                                {% for d in doc %}
+                                <div class="web-list-item transaction-list-item ml-5">
+                                    <div class="row align-items-center">
+                                        <div class="col-sm-3">
+                                            <span class="list-item-name font-weight-bold">{{d.name}}</span>
+                                            <div class="small text-muted transaction-time" title="{{transaction_date}}">
+                                                {{frappe.utils.format_date(d.transaction_date,"dd-MM-yyyy")}}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <span class="indicator-pill red list-item-status">{{d.status}}</span>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div
+                                                class="small text-muted items-preview ellipsis ellipsis-width items-name">
+                                                {{ d.item_name }}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3 text-right font-weight-bold item-total">
+                                            {{d.rounded_total}}
+                                        </div>
+                                    </div>
+                                    <a class="transaction-item-link" href="sales_orders?d_name={{ d.name }}">Link</a>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="list-paging-area level" style="padding:5px">
+                            <div class="level-left">
+                                <div class="btn-group">
+                                    <button class="btn btn-sm b1 mr-2" onclick="setRowsPerPage(20, this)">20</button>
+                                    <button class="btn btn-sm bl mr-2" onclick="setRowsPerPage(100, this)">100</button>
+                                    <button class="btn btn-sm b1 mr-2" onclick="setRowsPerPage(500, this)">500</button>
+                                    <button class="btn btn-sm b1" onclick="setRowsPerPage(1500, this)">1500</button>
+                                </div>
+                            </div>
+                            <div class="level-right">
+                                <button id="load-more-btn" class="btn" onclick="loadMoreRows()">Load More</button>
+                            </div>
+                        </div>
+
+                        <script>
+                            rowsPerPage = 20;
+                            let currentlyVisibleRows = 0;
+                            totalRows = 0;
+
+                            function updateRowsVisibility(limit) {
+                                const rows = document.querySelectorAll("#row-container .web-list-item");
+                                rows.forEach((row, index) => {
+                                    row.style.display = index < limit ? "block" : "none";
+                                });
+                                currentlyVisibleRows = Math.min(limit, rows.length);
+                                document.getElementById("load-more-btn").style.display = currentlyVisibleRows < rows.length ? "block" : "none";
+                            }
+
+                            function setRowsPerPage(count, button) {
+                                rowsPerPage = count;
+                                updateRowsVisibility(rowsPerPage);
+
+                                const buttons = document.querySelectorAll(".btn-group .btn");
+                                buttons.forEach(btn => btn.classList.remove("active"));
+                                if (button) button.classList.add("active");
+                            }
+
+                            function loadMoreRows() {
+                                updateRowsVisibility(currentlyVisibleRows + rowsPerPage);
+                            }
+
+                            function filterRows() {
+                                const searchInput = document.getElementById("search-bar").value.toLowerCase();
+                                const rows = document.querySelectorAll("#row-container .web-list-item");
+                                totalRows = 0;
+
+                                rows.forEach(row => {
+                                    const name = row.querySelector(".list-item-name").textContent.toLowerCase();
+                                    const status = row.querySelector(".list-item-status").textContent.toLowerCase();
+                                    const itemName = row.querySelector(".items-name").textContent.toLowerCase();
+                                    const totalAmount = row.querySelector(".item-total").textContent.toLowerCase();
+
+                                    const matches = name.includes(searchInput) ||
+                                        status.includes(searchInput) ||
+                                        itemName.includes(searchInput) ||
+                                        totalAmount.includes(searchInput);
+
+                                    row.style.display = matches ? "block" : "none";
+                                    if (matches) totalRows++;
+                                });
+
+                                currentlyVisibleRows = Math.min(rowsPerPage, totalRows);
+                                document.getElementById("load-more-btn").style.display = currentlyVisibleRows < totalRows ? "block" : "none";
+                            }
+
+                            document.addEventListener("DOMContentLoaded", () => {
+                                totalRows = document.querySelectorAll("#row-container .web-list-item").length;
+                                setRowsPerPage(rowsPerPage);
+                            });
+                        </script>
                     </div>
+
+
                 </main>
 
             </div>

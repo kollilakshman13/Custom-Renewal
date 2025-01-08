@@ -85,6 +85,22 @@ website_route_rules = [
             ]
         }
     },
+    {
+        "from_route": "/addresss", "to_route": "addresss"
+    },
+    {
+        "from_route": "/addresss/<path:name>",
+        "to_route": "addresss",
+        "defaults": {
+            "doctype": "Address",
+            "parents": [
+                {
+                    "label": "Address",
+                    "route": "addresss"
+                }
+            ]
+        }
+    },
     
 ]
 website_context = {
@@ -95,6 +111,16 @@ website_context = {
         "filters":"custom_renewal/templates/list/filters.html"
     },
 }
+
+# hooks.py
+# override_whitelisted_methods = {
+#     "custom_renewal.api.create_issue": "custom_renewal.api.create_issue"
+# }
+
+
+# override_doctype_class = {
+#     "Website Sidebar": "custom_renewal_module.overrides.website_sidebar.CustomWebsiteSidebar"
+# }
 
 
 # website_context = {
@@ -108,18 +134,6 @@ website_context = {
 #         # "list":"custom_renewal/templates/list/list.html"
 #     }
 # }
-
-
-# standard_portal_menu_items = [
-# 	{
-#         "title": "Renewal List",
-#         "route": "/renewal-list",
-#         "reference_doctype": "Renewal List",
-#         "role": "Customer",
-#         "show_sidebar":True
-#     },
-	
-# ]        
 
 
 # include js, css files in header of web form

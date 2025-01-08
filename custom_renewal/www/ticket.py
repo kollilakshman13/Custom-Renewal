@@ -3,7 +3,6 @@ import frappe
 from frappe import _
 
 def get_context(context):
-    # Fetch the d_name parameter from the request
     d_name = frappe.form_dict.get('d_name')
 
     if not d_name:
@@ -11,24 +10,27 @@ def get_context(context):
         context.message = _("No Issue Name provided.")
         return context
 
-    # Fetch the parent record from the relevant Doctype (e.g., Renewal)
-    renewal_doc = frappe.get_doc('Issue', d_name) if frappe.db.exists('Issue', d_name) else None
+    issue_doc = frappe.get_doc('Issue', d_name) if frappe.db.exists('Issue', d_name) else None
 
-    if not renewal_doc:
+    if not issue_doc:
         context.items = []
         context.message = _("No issue found for the provided name.")
         return context
+    
+    # Fetch comments related to the issue
+    comments = frappe.get_all('Comment', filters={'reference_doctype': 'Issue', 'reference_name': d_name}, fields=['*'])
+    
+    context.d_name = issue_doc
+    context.comments = comments  # Add comments to context
 
-    # Fetch Renewal Items filtered by parent = d_name
-    # renewal_items = frappe.get_all(
-    #     'Issue',
-    #     filters={'parent': d_name},
-    #     fields=['*']
-    # )
+    file= frappe.get_all("File",filters={"attached_to_doctype":"Issue","attached_to_name":d_name},fields=['*'])
+    context.file = file
+    
+    # Optionally, set a flag for displaying comments
+    context.allow_comments = True if comments else False
 
-    # Add data to the context for rendering in the template
-    # context.items = renewal_items
-    context.d_name = renewal_doc  # Pass the entire document to the template
+    return context
+
 
 
 

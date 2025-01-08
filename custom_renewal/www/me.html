@@ -49,6 +49,19 @@
             </div>
         </div>
         <div class="col d-flex justify-content-between align-items-center">
+            {% if current_user.full_name not in ["Guest", "Administrator"] %}
+            {% set contact = frappe.get_doc("Contact", {"user": current_user.email}) %}
+                {% if contact and contact.company_name %}
+                {% set customer=frappe.get_doc("Customer",{"name":contact.company_name})%}
+                {% set salesPerson =frappe.get_doc("Sales Team",{"parent":customer.name}) %}
+                <span>
+                    <div class="my-account-item"><b>Salesperson:</b>&nbsp;{{salesPerson.sales_person or "" }}</div>
+                    <div class="my-account-item-desc"><b>Email Id:</b>&nbsp;{{customer.account_manager or ""}}</div>
+                </span>
+                {%endif %}
+            {%endif%}    
+        </div>
+        <div class="col d-flex justify-content-between align-items-center">
             <span>
                 <div class="my-account-item">{{_("Reset Password") }}</div>
                 <div class="my-account-item-desc">{{_("Reset the password for your account") }}</div>
