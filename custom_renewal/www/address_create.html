@@ -26,22 +26,7 @@ import frappe
 
                     <form id="addressForm">
                         <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="address_title">Address Title*</label>
-                                    <input type="text" id="address_title" name="address_title" class="form-control"
-                                        required />
-                                </div>
-                            </div>
-                            <!-- <div class="col-sm-6"></div> -->
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="email_id">Email Address</label>
-                                    <input type="email" id="email_id" name="email_id" class="form-control" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
+
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="address_type">Address Type</label>
@@ -61,6 +46,23 @@ import frappe
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="email_id">Email Address</label>
+                                    <input type="email" id="email_id" name="email_id" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="address_line1">Address Line 1*</label>
+                                    <input type="text" id="address_line1" name="address_line1" class="form-control"
+                                        required />
+                                </div>
+                            </div>
+
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="phone">Phone</label>
@@ -72,9 +74,8 @@ import frappe
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="address_line1">Address Line 1*</label>
-                                    <input type="text" id="address_line1" name="address_line1" class="form-control"
-                                        required />
+                                    <label for="address_line2">Address Line 2</label>
+                                    <input type="text" id="address_line2" name="address_line2" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -87,18 +88,10 @@ import frappe
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="address_line2">Address Line 2</label>
-                                    <input type="text" id="address_line2" name="address_line2" class="form-control" />
+                                    <label for="city">City/Town*</label>
+                                    <input type="text" id="city" name="city" class="form-control" required />
                                 </div>
                             </div>
-                            <!-- <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="tax_category">Tax Category</label>
-                                    <select id="tax_category" name="tax_category" class="form-control" required>
-                                        <option value=""></option>
-                                    </select>
-                                </div>
-                            </div> -->
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <input type="checkbox" id="is_primary_address" name="is_primary_address" />
@@ -110,10 +103,11 @@ import frappe
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="city">City/Town*</label>
-                                    <input type="text" id="city" name="city" class="form-control" required />
+                                    <label for="state">State</label>
+                                    <input type="text" id="state" name="state" class="form-control" />
                                 </div>
                             </div>
+
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <input type="checkbox" id="is_shipping_address" name="is_shipping_address" />
@@ -124,8 +118,8 @@ import frappe
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="state">State</label>
-                                    <input type="text" id="state" name="state" class="form-control" />
+                                    <label for="county">County *</label>
+                                    <input type="text" id="county" name="county" class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -135,15 +129,7 @@ import frappe
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="county">County</label>
-                                    <input type="text" id="county" name="county" class="form-control" required />
-                                </div>
-                            </div>
 
-                        </div>
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -159,35 +145,12 @@ import frappe
                     <div id="responseMessage"></div>
 
                 </div>
+
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
                         const form = document.getElementById("addressForm");
-                        frappe.call({
-                            method: "frappe.client.get_list",
-                            args: {
-                                doctype: "Tax Category",
-                                fields: ["name"], // Fetch only the "name" field
-                                order_by: "name asc", // Optional: Order the list alphabetically
-                            },
-                            callback: function (response) {
-                                const taxCategorySelect = document.getElementById("tax_category");
-                                if (response.message) {
-                                    response.message.forEach((category) => {
-                                        const option = document.createElement("option");
-                                        option.value = category.name;
-                                        option.textContent = category.name;
-                                        taxCategorySelect.appendChild(option);
-                                    });
-                                }
-                            },
-                            error: function () {
-                                console.error("Failed to fetch Tax Categories.");
-                            },
-                        });
-                        form.addEventListener("submit", function (e) {
+                        form.addEventListener("submit", async function (e) {
                             e.preventDefault();
-
-                            // Collect form data
                             const formData = new FormData(form);
                             const addressData = {};
                             formData.forEach((value, key) => {
@@ -196,49 +159,73 @@ import frappe
                             addressData.is_primary_address = document.getElementById("is_primary_address").checked ? 1 : 0;
                             addressData.is_shipping_address = document.getElementById("is_shipping_address").checked ? 1 : 0;
                             addressData.disabled = document.getElementById("disabled").checked ? 1 : 0;
-
-                            // Call Frappe API to create a new Address
-                            frappe.call({
-                                method: "frappe.client.insert",
-                                args: {
-                                    doc: {
-                                        doctype: "Address",
-                                        address_title: addressData.address_title,
-                                        address_type: addressData.address_type,
-                                        address_line1: addressData.address_line1,
-                                        address_line2: addressData.address_line2,
-                                        city: addressData.city,
-                                        state: addressData.state,
-                                        county: addressData.county,
-                                        pincode: addressData.postal_code,
-                                        email_id: addressData.email_id,
-                                        phone: addressData.phone,
-                                        fax: addressData.fax,
-                                        //tax_category: addressData.tax_category,
-                                        is_primary_address: addressData.is_primary_address,
-                                        is_shipping_address: addressData.is_shipping_address,
-                                        disabled: addressData.disabled
+                            try {
+                                const user = frappe.session.user; // Get current user
+                                const customerResponse = await frappe.call({
+                                    method: "frappe.client.get_list",
+                                    args: {
+                                        doctype: "Contact",
+                                        filters: { user: user },
+                                        fields: ["name", "company_name"]
                                     },
-                                },
-                                callback: function (response) {
-                                    if (response.message) {
-                                        document.getElementById("responseMessage").innerHTML =
-                                            `<div class="alert alert-success">Address created successfully!</div>`;
-                                        form.reset();
-                                    } else {
-                                        document.getElementById("responseMessage").innerHTML =
-                                            `<div class="alert alert-danger">Failed to create address.</div>`;
-                                    }
-                                },
-                                error: function () {
+                                });
+                                if (customerResponse.message.length > 0) {
+                                    const customer = customerResponse.message[0];
+                                    addressData.link_document_type = "Customer";
+                                    addressData.link_name = customer.company_name;
+                                    frappe.call({
+                                        method: "frappe.client.insert",
+                                        args: {
+                                            doc: {
+                                                doctype: "Address",
+                                                address_type: addressData.address_type,
+                                                address_line1: addressData.address_line1,
+                                                address_line2: addressData.address_line2,
+                                                city: addressData.city,
+                                                state: addressData.state,
+                                                county: addressData.county,
+                                                pincode: addressData.postal_code,
+                                                email_id: addressData.email_id,
+                                                phone: addressData.phone,
+                                                fax: addressData.fax,
+                                                is_primary_address: addressData.is_primary_address,
+                                                is_shipping_address: addressData.is_shipping_address,
+                                                disabled: addressData.disabled,
+                                                links: [
+                                                    {
+                                                        link_doctype: "Customer",
+                                                        link_name: customer.company_name,
+                                                    },
+                                                ],
+                                            },
+                                        },
+                                        callback: function (response) {
+                                            if (response.message) {
+                                                document.getElementById("responseMessage").innerHTML =
+                                                    `<div class="alert alert-success">Address created successfully!</div>`;
+                                                form.reset();
+                                            } else {
+                                                document.getElementById("responseMessage").innerHTML =
+                                                    `<div class="alert alert-danger">Failed to create address.</div>`;
+                                            }
+                                        },
+                                        error: function () {
+                                            document.getElementById("responseMessage").innerHTML =
+                                                `<div class="alert alert-danger">An error occurred.</div>`;
+                                        },
+                                    });
+                                } else {
                                     document.getElementById("responseMessage").innerHTML =
-                                        `<div class="alert alert-danger">An error occurred.</div>`;
-                                },
-                            });
+                                        `<div class="alert alert-danger">No customer linked to this user.</div>`;
+                                }
+                            } catch (error) {
+                                document.getElementById("responseMessage").innerHTML =
+                                    `<div class="alert alert-danger">An error occurred while fetching customer details.</div>`;
+                            }
                         });
                     });
-
                 </script>
+
 
             </main>
         </div>

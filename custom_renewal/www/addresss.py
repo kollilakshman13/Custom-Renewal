@@ -52,6 +52,7 @@ def get_context(context):
             LIMIT 20
         """
         context.doc = frappe.db.sql(query, (customer,), as_dict=True)
+        context.customer_name = customer
         context.message = f"Showing address lists for customer: {customer}."
     else:
         context.doc = []

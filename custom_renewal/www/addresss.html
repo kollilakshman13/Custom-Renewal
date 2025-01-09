@@ -30,6 +30,7 @@
                     <div class="page_content" style="background-color: white;">
                         <div class="website-list" data-doctype="Issue" data-txt="None" style="min-height:90vh;">
                             <div class="website-list-filters pt-2">
+
                             </div>
 
                             <div id="row-container" class="result ml-5"
@@ -80,6 +81,71 @@
     </div>
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const rows = document.querySelectorAll(".web-list-item");
+        const searchBar = document.getElementById("search-bar");
+        let currentRows = 20; // Default number of rows to show
+
+        // Function to show the first 'n' rows
+        function showRows(count, button = null) {
+            rows.forEach((row, index) => {
+                row.style.display = index < count ? "block" : "none";
+            });
+            currentRows = count;
+
+            // Highlight the active button
+            if (button) {
+                const buttons = document.querySelectorAll(".btn-group .btn");
+                buttons.forEach(btn => btn.classList.remove("active"));
+                if (button) button.classList.add("active");
+            }
+        }
+
+        // Initial setup: show default number of rows
+        showRows(currentRows);
+
+        // Function to filter rows based on search input
+        function filterRows() {
+            const searchTerm = searchBar.value.toLowerCase();
+
+            let visibleCount = 0;
+            rows.forEach(row => {
+                const textContent = row.textContent.toLowerCase();
+                if (textContent.includes(searchTerm)) {
+                    if (visibleCount < currentRows) {
+                        row.style.display = "block";
+                        visibleCount++;
+                    } else {
+                        row.style.display = "none";
+                    }
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        // Event listener for the search bar
+        searchBar.addEventListener("input", filterRows);
+
+        // Function to load more rows incrementally
+        function loadMoreRows() {
+            currentRows += 20;
+            showRows(currentRows);
+        }
+
+        // Attach the loadMoreRows function to the button
+        window.loadMoreRows = loadMoreRows;
+
+        // Attach the showRows function to buttons
+        window.showRows = showRows;
+
+        // Attach the filterRows function to search bar
+        window.filterRows = filterRows;
+    });
+
+</script>
+
 <div class="modal" id="editAddressModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -92,10 +158,6 @@
             <div class="modal-body">
                 <form id="editAddressForm">
                     <input type="hidden" id="addressName">
-                    <div class="form-group">
-                        <label for="addressTitle">Address Title</label>
-                        <input type="text" class="form-control" id="addressTitle" required>
-                    </div>
                     <div class="form-group">
                         <label for="addressType">Address Type *</label>
                         <select class="form-control" id="addressType" name="address_type" required>
@@ -145,18 +207,6 @@
                         <label for="phone">Phone</label>
                         <input type="text" class="form-control" id="phone">
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="fax">Fax</label>
-                        <input type="text" class="form-control" id="fax">
-                    </div> -->
-                    <!-- <div class="form-group">
-                        <label for="tax_category">Tax Category</label>
-                        <select class="form-control" id="tax_category">
-                            {% for category in frappe.get_list("Tax Category", fields=["name"]) %}
-                            <option value="{{ category.name }}">{{ category.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div> -->
                     <div class="form-group form-check">
                         <input type="checkbox" class="form-check-input" id="is_primary_address">
                         <label class="form-check-label" for="is_primary_address">Is Primary Address</label>
@@ -180,8 +230,6 @@
     document.querySelectorAll(".edit-button").forEach(button => {
         button.addEventListener("click", function () {
             const addressName = this.closest(".web-list-item").querySelector(".address-title").textContent.trim();
-
-            // Fetch address details
             frappe.call({
                 method: "frappe.client.get",
                 args: {
@@ -192,7 +240,6 @@
                     if (response.message) {
                         const address = response.message;
                         document.getElementById("addressName").value = address.name;
-                        document.getElementById("addressTitle").value = address.address_title;
                         document.getElementById("addressType").value = address.address_type;
                         document.getElementById("addressLine1").value = address.address_line1;
                         document.getElementById("addressLine2").value = address.address_line2 || "";
@@ -202,12 +249,9 @@
                         document.getElementById("pincode").value = address.pincode;
                         document.getElementById("email_id").value = address.email_id;
                         document.getElementById("phone").value = address.phone;
-                        // document.getElementById("fax").value = address.fax;
-                        // document.getElementById("tax_category").value = address.tax_category;
                         document.getElementById("is_primary_address").value = address.is_primary_address;
                         document.getElementById("is_shipping_address").value = address.is_shipping_address;
                         document.getElementById("disabled").value = address.disabled;
-
                         // Show modal
                         $("#editAddressModal").modal("show");
                     }
@@ -218,7 +262,6 @@
 
     document.getElementById("saveAddress").addEventListener("click", function () {
         const addressName = document.getElementById("addressName").value;
-
         if (!addressName) {
             frappe.msgprint({
                 title: "Error",
@@ -227,7 +270,6 @@
             });
             return;
         }
-
         // Fetch the latest document
         frappe.call({
             method: "frappe.client.get",
@@ -238,9 +280,7 @@
             callback: function (response) {
                 if (response.message) {
                     const latestAddress = response.message;
-
                     // Update the address fields with the form data
-                    latestAddress.address_title = document.getElementById("addressTitle").value;
                     latestAddress.address_type = document.getElementById("addressType").value;
                     latestAddress.address_line1 = document.getElementById("addressLine1").value;
                     latestAddress.address_line2 = document.getElementById("addressLine2").value || "";
@@ -250,13 +290,9 @@
                     latestAddress.pincode = document.getElementById("pincode").value;
                     latestAddress.email_id = document.getElementById("email_id").value || "";
                     latestAddress.phone = document.getElementById("phone").value || "";
-                    //latestAddress.fax = document.getElementById("fax").value || "";
-                    // latestAddress.tax_category = document.getElementById("tax_category").value || "";
                     latestAddress.is_primary_address = document.getElementById("is_primary_address").checked ? 1 : 0;
                     latestAddress.is_shipping_address = document.getElementById("is_shipping_address").checked ? 1 : 0;
                     latestAddress.disabled = document.getElementById("disabled").checked ? 1 : 0;
-
-
                     // Save the updated document
                     frappe.call({
                         method: "frappe.client.save",
@@ -288,11 +324,9 @@
         });
     });
 
-
     // Utility function to clear form fields in the modal
     function clearModalFields() {
         document.getElementById("addressName").value = "";
-        document.getElementById("addressTitle").value = "";
         document.getElementById("addressType").value = "";
         document.getElementById("addressLine1").value = "";
         document.getElementById("addressLine2").value = "";
@@ -302,8 +336,6 @@
         document.getElementById("pincode").value = "";
         document.getElementById("email_id").value = "";
         document.getElementById("phone").value = "";
-        //document.getElementById("fax").value = "";
-        // document.getElementById("tax_category").value = "";
         document.getElementById("is_primary_address").value = "";
         document.getElementById("is_shipping_address").value = "";
         document.getElementById("disabled").value = "";
@@ -319,7 +351,6 @@
         document.querySelectorAll(".edit-button").forEach(button => {
             button.addEventListener("click", function () {
                 const addressName = this.closest(".web-list-item").querySelector(".address-title").textContent.trim();
-
                 // Fetch address details
                 frappe.call({
                     method: "frappe.client.get",
@@ -331,7 +362,6 @@
                         if (response.message) {
                             const address = response.message;
                             document.getElementById("addressName").value = address.name;
-                            document.getElementById("addressTitle").value = address.address_title;
                             document.getElementById("addressType").value = address.address_type;
                             document.getElementById("addressLine1").value = address.address_line1;
                             document.getElementById("addressLine2").value = address.address_line2 || "";
@@ -341,8 +371,6 @@
                             document.getElementById("pincode").value = address.pincode;
                             document.getElementById("email_id").value = address.email_id;
                             document.getElementById("phone").value = address.phone;
-                            //document.getElementById("fax").value = address.fax;
-                            // document.getElementById("tax_category").value = address.tax_category;
                             document.getElementById("is_primary_address").value = address.is_primary_address;
                             document.getElementById("is_shipping_address").value = address.is_shipping_address;
                             document.getElementById("disabled").value = address.disabled;
@@ -362,11 +390,7 @@
             });
         });
     }
-
     // Call the initialization function on page load
     document.addEventListener("DOMContentLoaded", initializeEditButtons);
-
-
-
 </script>
 {%endblock%}
