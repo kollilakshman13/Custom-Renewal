@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+{% extends "templates/web.html" %}
+import frappe
+{% block page_content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="container">
+    <div class="row" id="page-list" data-path="address_create">
+        <div class="sidebar-column col-sm-2">
+            <div class="web-sidebar">
+                {% include web_sidebar %}
+            </div>
+        </div>
+        <div class="main-column col-sm-10">
+            <div class="page-content-wrapper">
+                <div class="page-breadcrumbs">
+
+                </div>
+            </div>
+            <main class="container ml-2">
+                <div class="page-header-wrapper">
+                    <div class="page-head">
+                        <h3 class="my-account-header ml-1">Address</h3>
+                    </div>
+                </div>
+                <div class="page_content" style="background-color: white;margin:2px;padding:2px;">
+
+                    <form id="addressForm">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="address_title">Address Title*</label>
+                                    <input type="text" id="address_title" name="address_title" class="form-control"
+                                        required />
+                                </div>
+                            </div>
+                            <!-- <div class="col-sm-6"></div> -->
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="email_id">Email Address</label>
+                                    <input type="email" id="email_id" name="email_id" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="address_type">Address Type</label>
+                                    <select class="form-control" id="address_type" name="address_type">
+                                        <option value="Billing">Billing</option>
+                                        <option value="Shipping">Shipping</option>
+                                        <option value="Office">Office</option>
+                                        <option value="Personal">personal</option>
+                                        <option value="Plant">Plant</option>
+                                        <option value="Postal">Postal</option>
+                                        <option value="Shop">Shop</option>
+                                        <option value="Subsidiary">Subsidiary</option>
+                                        <option value="Warehouse">Warehouse</option>
+                                        <option value="Current">Current</option>
+                                        <option value="Permanent">Permanent</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="phone">Phone</label>
+                                    <input type="text" id="phone" name="phone" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="address_line1">Address Line 1*</label>
+                                    <input type="text" id="address_line1" name="address_line1" class="form-control"
+                                        required />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="fax">Fax</label>
+                                    <input type="text" id="fax" name="fax" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="address_line2">Address Line 2</label>
+                                    <input type="text" id="address_line2" name="address_line2" class="form-control" />
+                                </div>
+                            </div>
+                            <!-- <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="tax_category">Tax Category</label>
+                                    <select id="tax_category" name="tax_category" class="form-control" required>
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                            </div> -->
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="checkbox" id="is_primary_address" name="is_primary_address" />
+                                    <label for="is_primary_address">Is Primary Address</label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="city">City/Town*</label>
+                                    <input type="text" id="city" name="city" class="form-control" required />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="checkbox" id="is_shipping_address" name="is_shipping_address" />
+                                    <label for="is_shipping_address">Is Shipping Address</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="state">State</label>
+                                    <input type="text" id="state" name="state" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="checkbox" id="disabled" name="disabled" />
+                                    <label for="disabled">Disabled</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="county">County</label>
+                                    <input type="text" id="county" name="county" class="form-control" required />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="postal_code">Postal Code</label>
+                                    <input type="text" id="postal_code" name="postal_code" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    <div id="responseMessage"></div>
+
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const form = document.getElementById("addressForm");
+                        frappe.call({
+                            method: "frappe.client.get_list",
+                            args: {
+                                doctype: "Tax Category",
+                                fields: ["name"], // Fetch only the "name" field
+                                order_by: "name asc", // Optional: Order the list alphabetically
+                            },
+                            callback: function (response) {
+                                const taxCategorySelect = document.getElementById("tax_category");
+                                if (response.message) {
+                                    response.message.forEach((category) => {
+                                        const option = document.createElement("option");
+                                        option.value = category.name;
+                                        option.textContent = category.name;
+                                        taxCategorySelect.appendChild(option);
+                                    });
+                                }
+                            },
+                            error: function () {
+                                console.error("Failed to fetch Tax Categories.");
+                            },
+                        });
+                        form.addEventListener("submit", function (e) {
+                            e.preventDefault();
+
+                            // Collect form data
+                            const formData = new FormData(form);
+                            const addressData = {};
+                            formData.forEach((value, key) => {
+                                addressData[key] = value;
+                            });
+                            addressData.is_primary_address = document.getElementById("is_primary_address").checked ? 1 : 0;
+                            addressData.is_shipping_address = document.getElementById("is_shipping_address").checked ? 1 : 0;
+                            addressData.disabled = document.getElementById("disabled").checked ? 1 : 0;
+
+                            // Call Frappe API to create a new Address
+                            frappe.call({
+                                method: "frappe.client.insert",
+                                args: {
+                                    doc: {
+                                        doctype: "Address",
+                                        address_title: addressData.address_title,
+                                        address_type: addressData.address_type,
+                                        address_line1: addressData.address_line1,
+                                        address_line2: addressData.address_line2,
+                                        city: addressData.city,
+                                        state: addressData.state,
+                                        county: addressData.county,
+                                        pincode: addressData.postal_code,
+                                        email_id: addressData.email_id,
+                                        phone: addressData.phone,
+                                        fax: addressData.fax,
+                                        //tax_category: addressData.tax_category,
+                                        is_primary_address: addressData.is_primary_address,
+                                        is_shipping_address: addressData.is_shipping_address,
+                                        disabled: addressData.disabled
+                                    },
+                                },
+                                callback: function (response) {
+                                    if (response.message) {
+                                        document.getElementById("responseMessage").innerHTML =
+                                            `<div class="alert alert-success">Address created successfully!</div>`;
+                                        form.reset();
+                                    } else {
+                                        document.getElementById("responseMessage").innerHTML =
+                                            `<div class="alert alert-danger">Failed to create address.</div>`;
+                                    }
+                                },
+                                error: function () {
+                                    document.getElementById("responseMessage").innerHTML =
+                                        `<div class="alert alert-danger">An error occurred.</div>`;
+                                },
+                            });
+                        });
+                    });
+
+                </script>
+
+            </main>
+        </div>
+    </div>
+</div>
+{%endblock%}

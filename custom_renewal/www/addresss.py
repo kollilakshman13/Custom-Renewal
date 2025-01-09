@@ -37,7 +37,7 @@ def get_context(context):
         # Fetch addresses specifically linked to the Customer
         query = """
             SELECT 
-                addr.name,addr.address_title, addr.address_line1, addr.address_line2, addr.city, 
+                addr.name,addr.address_title, addr.address_line1, addr.address_line2, addr.city,addr.disabled, 
                 addr.state, addr.country, addr.pincode,addr.email_id,addr.phone,addr.fax,addr.tax_category
             FROM 
                 `tabAddress` AS addr
@@ -46,7 +46,7 @@ def get_context(context):
             ON 
                 dl.parent = addr.name
             WHERE 
-                dl.link_doctype = 'Customer' AND dl.link_name = %s
+                dl.link_doctype = 'Customer' AND dl.link_name = %s AND addr.disabled = 0
             ORDER BY 
                 addr.creation DESC
             LIMIT 20

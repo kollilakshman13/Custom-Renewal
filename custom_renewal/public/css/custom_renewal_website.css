@@ -38,7 +38,9 @@ body[data-path="sales_invoice"],
 body[data-path="sales_invoices"],
 body[data-path="issue"],
 body[data-path="ticket"],
-body[data-path="tickets"] {
+body[data-path="tickets"],
+body[data-path="addresss"],
+body[data-path="address_create"] {
     background-color: #F9FAFA !important;
 }
 
@@ -517,4 +519,15 @@ li .sidebar-item {
 .btn:focus {
     outline: none !important;
     box-shadow: none !important;
+}
+
+
+
+
+
+@media (min-width:992px) {
+    .modal-content {
+        width: 600px !important;
+
+    }
 }

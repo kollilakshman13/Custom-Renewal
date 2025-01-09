@@ -401,3 +401,65 @@ def create_issue():
 #         order_by="creation desc"
 #     )
 #     return issues
+
+
+# @frappe.whitelist()
+# def update_address(data):
+#     import json
+#     data = json.loads(data)
+    
+#     # Fetch the document
+#     doc = frappe.get_doc("Address", data["name"])
+    
+#     # Update fields
+#     doc.address_title = data.get("address_title", doc.address_title)
+#     doc.address_type = data.get("address_type", doc.address_type)
+#     doc.address_line1 = data.get("address_line1", doc.address_line1)
+#     doc.address_line2 = data.get("address_line2", doc.address_line2)
+#     doc.city = data.get("city", doc.city)
+#     doc.state = data.get("state", doc.state)
+#     doc.pincode = data.get("pincode", doc.pincode)
+    
+#     # Save the document
+#     doc.save()
+#     frappe.db.commit()
+#     return {"status": "success", "message": "Address updated successfully"}
+
+
+
+# @frappe.whitelist()
+# def update_address(data):
+#     import json
+
+#     try:
+#         data = json.loads(data)
+        
+#         # Fetch the document
+#         if not data.get("name"):
+#             return {"status": "error", "message": "Document name is required to update the address."}
+        
+#         doc = frappe.get_doc("Address", data["name"])
+        
+#         # Update fields
+#         doc.address_title = data.get("address_title", doc.address_title)
+#         doc.address_type = data.get("address_type", doc.address_type)
+#         doc.address_line1 = data.get("address_line1", doc.address_line1)
+#         doc.address_line2 = data.get("address_line2", doc.address_line2)
+#         doc.city = data.get("city", doc.city)
+#         doc.state = data.get("state", doc.state)
+#         doc.pincode = data.get("pincode", doc.pincode)
+
+#         # Save the document
+#         doc.save()
+#         frappe.db.commit()
+
+#         return {"status": "success", "message": "Address updated successfully"}
+
+#     except frappe.DoesNotExistError:
+#         return {"status": "error", "message": "Address not found."}
+
+#     except Exception as e:
+#         frappe.log_error(frappe.get_traceback(), "Address Update Error")
+#         return {"status": "error", "message": f"An unexpected error occurred: {str(e)}"}
+
+
