@@ -85,10 +85,24 @@ import frappe
                                                                     value="Open" class="form-control" readonly>
                                                             </div>
                                                             <div class="form-group">
+                                                                {% set current_user=frappe.get_doc("User",
+                                                                frappe.session.user) %}
+                                                                {% if current_user.full_name not in ["Guest",
+                                                                "Administrator"] %}
+                                                                {% set contact = frappe.get_doc("Contact", {"user":
+                                                                current_user.email}) %}
+                                                                <label for="customer">Customer</label>
+                                                                <input type="text" id="customer" name="customer"
+                                                                    class="form-control" {% if contact and
+                                                                    contact.company_name %}
+                                                                    value="{{ contact.company_name }}" {% endif %}>
+                                                                {% else %}
                                                                 <label for="customer">Customer</label>
                                                                 <input type="text" id="customer" name="customer"
                                                                     class="form-control" placeholder="Enter customer">
+                                                                {% endif %}
                                                             </div>
+
                                                             <div class="form-group">
                                                                 <label for="description">Description</label>
                                                                 <textarea id="description" name="description"
@@ -102,7 +116,8 @@ import frappe
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="priority">Priority</label>
-                                                                <select id="priority" name="priority" class="form-control" required>
+                                                                <select id="priority" name="priority"
+                                                                    class="form-control" required>
                                                                     <option value="Medium" selected>Medium</option>
                                                                     <option value="Low">Low</option>
                                                                     <option value="High">High</option>

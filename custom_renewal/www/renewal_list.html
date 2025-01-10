@@ -218,116 +218,116 @@ import frappe
 
 
 
-    let currentPage = 1; // Start from the first page
-    let rowsPerPage = 20; // Default rows per page
-    let totalRows = 0; // Total number of rows available
-    let totalPages = 0; // Total number of pages
-    let searchQuery = ""; // Search query
+    // let currentPage = 1; // Start from the first page
+    // let rowsPerPage = 20; // Default rows per page
+    // let totalRows = 0; // Total number of rows available
+    // let totalPages = 0; // Total number of pages
+    // let searchQuery = ""; // Search query
 
-    // Function to calculate rows and divide into 4 parts
-    function calculatePagination(dataLength) {
-        totalRows = dataLength;
-        totalPages = Math.ceil(totalRows / 4);
-        rowsPerPage = Math.ceil(totalRows / 4);
-        currentPage = 1; // Reset to first page
-    }
+    // // Function to calculate rows and divide into 4 parts
+    // function calculatePagination(dataLength) {
+    //     totalRows = dataLength;
+    //     totalPages = Math.ceil(totalRows / 4);
+    //     rowsPerPage = Math.ceil(totalRows / 4);
+    //     currentPage = 1; // Reset to first page
+    // }
 
-    // Function to load more rows
-    function loadMoreRows() {
-        if (currentPage < totalPages) {
-            currentPage += 1; // Increment the page number
-            fetchRows(true); // Append rows
-        } else {
-            alert("All rows are loaded!");
-        }
-    }
+    // // Function to load more rows
+    // function loadMoreRows() {
+    //     if (currentPage < totalPages) {
+    //         currentPage += 1; // Increment the page number
+    //         fetchRows(true); // Append rows
+    //     } else {
+    //         alert("All rows are loaded!");
+    //     }
+    // }
 
-    // Function to fetch rows
-    function fetchRows(append = false) {
-        const container = document.getElementById("row-container");
-        if (!append) {
-            container.innerHTML = "<p>Loading...</p>"; // Show loading text if not appending
-        }
+    // // Function to fetch rows
+    // function fetchRows(append = false) {
+    //     const container = document.getElementById("row-container");
+    //     if (!append) {
+    //         container.innerHTML = "<p>Loading...</p>"; // Show loading text if not appending
+    //     }
 
-        const searchInput = document.querySelector("input[name='txt']")?.value || searchQuery;
-        searchQuery = searchInput; // Save the current search query
+    //     const searchInput = document.querySelector("input[name='txt']")?.value || searchQuery;
+    //     searchQuery = searchInput; // Save the current search query
 
-        fetch(
-            `/api/method/custom_renewal.api.get_renewal_list?page=${currentPage}&limit=${rowsPerPage}&search=${encodeURIComponent(
-                searchQuery
-            )}`
-        )
-            .then((response) => response.json())
-            .then((data) => {
-                if (currentPage === 1) {
-                    calculatePagination(data.total_rows); // Calculate pagination once on the first load
-                }
+    //     fetch(
+    //         `/api/method/custom_renewal.api.get_renewal_list?page=${currentPage}&limit=${rowsPerPage}&search=${encodeURIComponent(
+    //             searchQuery
+    //         )}`
+    //     )
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             if (currentPage === 1) {
+    //                 calculatePagination(data.total_rows); // Calculate pagination once on the first load
+    //             }
 
-                if (!append) {
-                    container.innerHTML = ""; // Clear content if not appending
-                }
+    //             if (!append) {
+    //                 container.innerHTML = ""; // Clear content if not appending
+    //             }
 
-                // Append new rows to the container
-                data.message.forEach((d) => {
-                    container.innerHTML += `
-                    <div class="web-list-item transaction-list-item ml-5">
-                        <div class="row align-items-center">
-                            <div class="col-sm-2">
-                                <span class="list-item-name font-weight-bold">${d.name}</span>
-                                <div class="small text-muted transaction-time" title="">
-                                </div>
-                            </div>
-                            <div class="col-sm-2">
-                                <span class="indicator-pill red list-item-status">${d.status}</span>
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="small text-muted items-preview ellipsis ellipsis-width">
-                                    ${d.start_date || ""}
-                                </div>
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="small text-muted items-preview ellipsis ellipsis-width">
-                                    ${d.end_date || ""}
-                                </div>
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="small text-muted items-preview ellipsis ellipsis-width">
-                                    ${d.item_name || ""}
-                                </div>
-                            </div>
-                            <div class="col-sm-2 text-right font-weight-bold item-total">
-                                ${d.total_amount || ""}
-                            </div>
-                        </div>
-                        <a class="transaction-item-link" href="renewal_lists?d_name=${d.name}">Link</a>
-                    </div>
-                `;
-                });
+    //             // Append new rows to the container
+    //             data.message.forEach((d) => {
+    //                 container.innerHTML += `
+    //                 <div class="web-list-item transaction-list-item ml-5">
+    //                     <div class="row align-items-center">
+    //                         <div class="col-sm-2">
+    //                             <span class="list-item-name font-weight-bold">${d.name}</span>
+    //                             <div class="small text-muted transaction-time" title="">
+    //                             </div>
+    //                         </div>
+    //                         <div class="col-sm-2">
+    //                             <span class="indicator-pill red list-item-status">${d.status}</span>
+    //                         </div>
+    //                         <div class="col-sm-2">
+    //                             <div class="small text-muted items-preview ellipsis ellipsis-width">
+    //                                 ${d.start_date || ""}
+    //                             </div>
+    //                         </div>
+    //                         <div class="col-sm-2">
+    //                             <div class="small text-muted items-preview ellipsis ellipsis-width">
+    //                                 ${d.end_date || ""}
+    //                             </div>
+    //                         </div>
+    //                         <div class="col-sm-2">
+    //                             <div class="small text-muted items-preview ellipsis ellipsis-width">
+    //                                 ${d.item_name || ""}
+    //                             </div>
+    //                         </div>
+    //                         <div class="col-sm-2 text-right font-weight-bold item-total">
+    //                             ${d.total_amount || ""}
+    //                         </div>
+    //                     </div>
+    //                     <a class="transaction-item-link" href="renewal_lists?d_name=${d.name}">Link</a>
+    //                 </div>
+    //             `;
+    //             });
 
-                // If no data is returned
-                if (!data.message.length && append) {
-                    alert("No more rows to load!");
-                }
-            })
-            .catch((error) => {
-                console.error("Error fetching rows:", error);
-                if (!append) {
-                    container.innerHTML = "<p>Error loading rows</p>";
-                }
-            });
-    }
+    //             // If no data is returned
+    //             if (!data.message.length && append) {
+    //                 alert("No more rows to load!");
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error fetching rows:", error);
+    //             if (!append) {
+    //                 container.innerHTML = "<p>Error loading rows</p>";
+    //             }
+    //         });
+    // }
 
-    // Trigger search on form submit
-    document.querySelector(".form-search").addEventListener("submit", function (e) {
-        e.preventDefault(); // Prevent form submission
-        currentPage = 1; // Reset to the first page for a new search
-        fetchRows();
-    });
+    // // Trigger search on form submit
+    // document.querySelector(".form-search").addEventListener("submit", function (e) {
+    //     e.preventDefault(); // Prevent form submission
+    //     currentPage = 1; // Reset to the first page for a new search
+    //     fetchRows();
+    // });
 
-    // Initial load
-    document.addEventListener("DOMContentLoaded", () => {
-        fetchRows();
-    });
+    // // Initial load
+    // document.addEventListener("DOMContentLoaded", () => {
+    //     fetchRows();
+    // });
 
 
 </script>

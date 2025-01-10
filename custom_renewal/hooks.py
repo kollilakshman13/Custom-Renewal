@@ -86,17 +86,17 @@ website_route_rules = [
         }
     },
     {
-        "from_route": "/addresss", "to_route": "addresss"
+        "from_route": "/address", "to_route": "address"
     },
     {
-        "from_route": "/addresss/<path:name>",
-        "to_route": "addresss",
+        "from_route": "/address/<path:name>",
+        "to_route": "address",
         "defaults": {
             "doctype": "Address",
             "parents": [
                 {
                     "label": "Address",
-                    "route": "addresss"
+                    "route": "address"
                 }
             ]
         }
@@ -107,10 +107,15 @@ website_context = {
     "web_sidebar": "custom_renewal/templates/includes/web_sidebar.html",
     "override_doctype_templates": {
         "me": "custom_renewal/www/me.html",
+        "address":"custom_renewal/www/address.html",
         "order": "custom_renewal/templates/pages/order.html",
         "filters":"custom_renewal/templates/list/filters.html"
     },
 }
+website_route_rules = [
+    {"from_route": "/address", "to_route": "custom_renewal.www.address.html"}
+]
+
 
 # hooks.py
 # override_whitelisted_methods = {
