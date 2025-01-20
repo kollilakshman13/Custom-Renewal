@@ -27,7 +27,7 @@ def get_context(context):
         for renewal in context.doc:
             renewal_item = frappe.get_value("Renewal Item", {"parent": renewal.name}, "item_name")
             renewal.item_name = renewal_item
-            
+            renewal.total_amount = frappe.utils.fmt_money(renewal.total_amount,currency="INR")      
         context.message = "Showing all renewal lists as Administrator."
     elif user_email != "Guest":
         contact_name = frappe.db.get_value("Contact", {"email_id": user_email}, "name")
@@ -59,7 +59,7 @@ def get_context(context):
             for renewal in context.doc:
                 renewal_item = frappe.get_value("Renewal Item", {"parent": renewal.name}, "item_name")
                 renewal.item_name = renewal_item
-
+                renewal.total_amount = frappe.utils.fmt_money(renewal.total_amount,currency="INR")
         else:
             context.doc = []
             context.message = "You are not authorized to view renewal lists."

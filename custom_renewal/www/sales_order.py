@@ -17,6 +17,8 @@ def get_context(context):
                 {"parent": order.name}, 
                 "item_name"
             )
+            order.rounded_total = frappe.utils.fmt_money(order.rounded_total,currency="INR")
+
         context.message = "Showing all renewal lists as Administrator."
         return context
 
@@ -50,7 +52,8 @@ def get_context(context):
                 "Sales Order Item", 
                 {"parent": order.name}, 
                 "item_name"
-            )   
+            )  
+            order.rounded_total = frappe.utils.fmt_money(order.rounded_total,currency="INR") 
         context.message = f"Showing renewal lists for customer: {customer}."
     else:
         context.doc = []

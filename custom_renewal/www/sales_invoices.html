@@ -42,19 +42,20 @@ import frappe
                         <div class="page-header-actions-block">
                             <div class="row">
                                 <div class="dropdown">
-                                    <button class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown"
-                                        aria-expanded="false">
-                                        <span class="font-md">Actions</span>
-                                        <b class="caret"></b>
+                                    <button class="btn btn-secondary edit-button float-right"
+                                        onclick="printFile('{{d_name.custom_invoice_attachment}}')"
+                                        style="border-radius:10px; width:68px; height:25px; text-align:center; display:flex; justify-content:center; align-items:center; padding:0;font-size:11px;font-weight: bold;">Download
                                     </button>
-                                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
-
-                                        <a class="dropdown-item"
-                                            href='/printview?doctype=Sales Invoice&name={{d_name.name}}&format=Standard'
-                                            target="_blank" rel="noopener noreferrer">
-                                            Print
-                                        </a>
-                                    </ul>
+                                    <script>
+                                        function printFile(fileUrl) {
+                                            if (fileUrl) {
+                                                const newWindow = window.open(fileUrl, '_blank');
+                                            } else {
+                                                alert('File URL is missing!');
+                                            }
+                                        }
+                                    </script>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -75,7 +76,7 @@ import frappe
                                     <b>{{d_name.customer}}</b>
                                 </div>
                             </div>
-                            <div class="order-container mt-4">
+                            <div class="order-container mt-4 pl-3">
                                 <!-- items -->
                                 <div class="w-100">
                                     <div class="order-items order-item-header mb-1 row text-muted">

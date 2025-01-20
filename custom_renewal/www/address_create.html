@@ -139,7 +139,7 @@ import frappe
                             </div>
                         </div>
 
-
+                        <button type="clear" class="btn btn-secondary" id="discard-button">Clear</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                     <div id="responseMessage"></div>
@@ -250,6 +250,10 @@ import frappe
                                     `<div class="alert alert-danger">An error occurred while creating the address.</div>`;
                             }
                         }
+
+                        document.getElementById("discard-button").addEventListener("click", () => {
+                            document.getElementById("addressForm").reset();
+                        });
                     });
                 </script>
 

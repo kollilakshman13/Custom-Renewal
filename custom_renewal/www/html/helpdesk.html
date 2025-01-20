@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="http://192.168.23.50:8000/files/64_logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts</title>
+    <script type="module" crossorigin="" src="/index-a95a3bd9.js"></script>
+    <link rel="stylesheet" href="helpdesk.css">
+    <link rel="modulepreload" as="script" crossorigin="" href="/assets/helpdesk/desk/assets/ContactList-f240292e.js">
+    <link rel="modulepreload" as="script" crossorigin="" href="/assets/helpdesk/desk/assets/plus-5350301e.js">
+    <link rel="modulepreload" as="script" crossorigin=""
+        href="/assets/helpdesk/desk/assets/Avatar.vue_vue_type_script_setup_true_lang-904a60fd.js">
+    <link rel="modulepreload" as="script" crossorigin="" href="/assets/helpdesk/desk/assets/listManager-63e5fbf4.js">
+    <link rel="modulepreload" as="script" crossorigin="" href="/assets/helpdesk/desk/assets/LayoutHeader-721126a2.js">
+    <link rel="modulepreload" as="script" crossorigin=""
+        href="/assets/helpdesk/desk/assets/EmailBox.vue_vue_type_style_index_0_lang-fbe765d3.js">
+    <link rel="modulepreload" as="script" crossorigin="" href="/assets/helpdesk/desk/assets/book-open-653606eb.js">
+    <link rel="stylesheet" href="helpdesk.css">
+    <link rel="modulepreload" as="script" crossorigin=""
+        href="/assets/helpdesk/desk/assets/LV.vue_vue_type_script_setup_true_lang-3bafdd12.js">
+    <link rel="modulepreload" as="script" crossorigin=""
+        href="/assets/helpdesk/desk/assets/EmptyMessage.vue_vue_type_script_setup_true_lang-2739fc52.js">
+    <link rel="modulepreload" as="script" crossorigin="" href="/assets/helpdesk/desk/assets/TabButtons-aa465984.js">
+    <link rel="modulepreload" as="script" crossorigin="" href="/assets/helpdesk/desk/assets/label-b1f3adac.js">
+    <link rel="modulepreload" as="script" crossorigin="" href="/assets/helpdesk/desk/assets/error-5568bea1.js">
+    <link rel="modulepreload" as="script" crossorigin="" href="/assets/helpdesk/desk/assets/iconify-c88ef0fb.js">
+    <link rel="modulepreload" as="script" crossorigin="" href="/assets/helpdesk/desk/assets/FileUploader-8ee84604.js">
+    <link rel="modulepreload" as="script" crossorigin="" href="/assets/helpdesk/desk/assets/Pill-8a518fc0.js">
+    <link rel="modulepreload" as="script" crossorigin="" href="/assets/helpdesk/desk/assets/x-a1d98e60.js">
+    <link rel="modulepreload" as="script" crossorigin="" href="/assets/helpdesk/desk/assets/DesktopLayout-849b0997.js">
+    <link rel="modulepreload" as="script" crossorigin="" href="/index-a95a3bd9.js">
+    <link rel="modulepreload" as="script" crossorigin="" href="/assets/helpdesk/desk/assets/check-check-ebea6126.js">
+    <link rel="modulepreload" as="script" crossorigin="" href="/assets/helpdesk/desk/assets/Apps-72f191a0.js">
+    <link rel="modulepreload" as="script" crossorigin="" href="/assets/helpdesk/desk/assets/Dropdown-8f619cae.js">
+    <link rel="modulepreload" as="script" crossorigin=""
+        href="/assets/helpdesk/desk/assets/BrandLogo.vue_vue_type_script_setup_true_lang-6aa7cf78.js">
+    <link rel="modulepreload" as="script" crossorigin="" href="/assets/helpdesk/desk/assets/bell-090ecf03.js">
+    <link rel="modulepreload" as="script" crossorigin=""
+        href="/assets/helpdesk/desk/assets/UserAvatar.vue_vue_type_script_setup_true_lang-28b9b1a6.js">
+    <link rel="modulepreload" as="script" crossorigin="" href="SidebarLink">
+    <link rel="modulepreload" as="script" crossorigin="" href="/assets/helpdesk/desk/assets/yandex-d4d20afa.js">
+    <script src="sidebarLink.js"></script>
+    <script src="index-a95a3bd9.js"></script>
+
+</head>
+
+<body>
+    <div id="app" data-v-app="">
+        <div class="flex h-screen w-screen antialiased">
+            <div class="z-0 flex select-none flex-col border-r border-gray-200 bg-gray-50 p-2 text-base duration-300 ease-in-out"
+                style="min-width: 224px; max-width: 224px;">
+                <div data-headlessui-state="" class="relative inline-block text-left mb-2 ml-0.5">
+                    <div>
+                        <div class="flex">
+                            <div disabled="false" id="headlessui-menu-button-v-0-0" aria-haspopup="menu"
+                                aria-expanded="false" data-headlessui-state=""><button
+                                    class="flex h-12 items-center rounded-md py-2 duration-300 ease-in-out w-52 px-2 hover:bg-gray-200">
+                                    <div class="relative inline-block shrink-0 w-8 h-8 rounded-full"><img
+                                            src="/files/64-Network-Security.jpg"
+                                            class="rounded-full h-full w-full object-cover"><!----></div>
+                                    <div
+                                        class="flex flex-1 flex-col text-left duration-300 ease-in-out ml-2 w-auto opacity-100">
+                                        <div class="text-base font-medium leading-none text-gray-900"> Helpdesk </div>
+                                        <div class="mt-1 text-sm leading-none text-gray-700">Administrator</div>
+                                    </div>
+                                    <div class="duration-300 ease-in-out ml-2 w-auto opacity-100"><svg
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="feather feather-chevron-down feather feather-chevron-down shrink-0 h-4 w-4 text-gray-600 h-4 w-4 text-gray-600"
+                                            aria-hidden="true">
+                                            <polyline points="6 9 12 15 18 9"></polyline>
+                                        </svg></div>
+                                </button></div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="-all flex h-7 cursor-pointer items-center rounded pl-2 pr-1 text-gray-800 duration-300 ease-in-out w-full hover:bg-gray-100 mb-1">
+                    <span class="shrink-0 text-gray-700"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.3-4.3"></path>
+                        </svg></span>
+                    <div
+                        class="-all ml-2 flex shrink-0 grow items-center justify-between text-sm duration-300 ease-in-out opacity-100">
+                        Search <span class="flex items-center gap-0.5 font-medium text-gray-600"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" class="h-3 w-3">
+                                <path d="m18 15-6-6-6 6"></path>
+                            </svg><span>K</span></span></div>
+                </div><span class="mb-4"><!---->
+                    <div
+                        class="-all flex h-7 cursor-pointer items-center rounded pl-2 pr-1 text-gray-800 duration-300 ease-in-out w-full hover:bg-gray-100 relative">
+                        <span class="shrink-0 text-gray-700"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                                <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+                            </svg></span>
+                        <div
+                            class="-all ml-2 flex shrink-0 grow items-center justify-between text-sm duration-300 ease-in-out opacity-100">
+                            Notifications </div>
+                    </div>
+                </span>
+                <div class="mb-4 flex flex-col gap-1">
+                    <div
+                        class="-all flex h-7 cursor-pointer items-center rounded pl-2 pr-1 text-gray-800 duration-300 ease-in-out w-full hover:bg-gray-100">
+                        <span class="shrink-0 text-gray-700"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                                <path
+                                    d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
+                                </path>
+                                <path d="M13 5v2"></path>
+                                <path d="M13 17v2"></path>
+                                <path d="M13 11v2"></path>
+                            </svg></span>
+                        <div
+                            class="-all ml-2 flex shrink-0 grow items-center justify-between text-sm duration-300 ease-in-out opacity-100">
+                            Tickets </div>
+                    </div>
+                    <div
+                        class="-all flex h-7 cursor-pointer items-center rounded pl-2 pr-1 text-gray-800 duration-300 ease-in-out w-full hover:bg-gray-100">
+                        <span class="shrink-0 text-gray-700"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg></span>
+                        <div
+                            class="-all ml-2 flex shrink-0 grow items-center justify-between text-sm duration-300 ease-in-out opacity-100">
+                            Agents </div>
+                    </div>
+                    <div
+                        class="-all flex h-7 cursor-pointer items-center rounded pl-2 pr-1 text-gray-800 duration-300 ease-in-out w-full hover:bg-gray-100">
+                        <span class="shrink-0 text-gray-700"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg></span>
+                        <div
+                            class="-all ml-2 flex shrink-0 grow items-center justify-between text-sm duration-300 ease-in-out opacity-100">
+                            Knowledge base </div>
+                    </div>
+                    <div
+                        class="-all flex h-7 cursor-pointer items-center rounded pl-2 pr-1 text-gray-800 duration-300 ease-in-out w-full hover:bg-gray-100">
+                        <span class="shrink-0 text-gray-700"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg></span>
+                        <div
+                            class="-all ml-2 flex shrink-0 grow items-center justify-between text-sm duration-300 ease-in-out opacity-100">
+                            Teams </div>
+                    </div>
+                    <div
+                        class="-all flex h-7 cursor-pointer items-center rounded pl-2 pr-1 text-gray-800 duration-300 ease-in-out w-full hover:bg-gray-100">
+                        <span class="shrink-0 text-gray-700"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                                <path d="M6 16.326A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.973"></path>
+                                <path d="m13 12-3 5h4l-3 5"></path>
+                            </svg></span>
+                        <div
+                            class="-all ml-2 flex shrink-0 grow items-center justify-between text-sm duration-300 ease-in-out opacity-100">
+                            Canned responses </div>
+                    </div>
+                    <div
+                        class="-all flex h-7 cursor-pointer items-center rounded pl-2 pr-1 text-gray-800 duration-300 ease-in-out w-full hover:bg-gray-100">
+                        <span class="shrink-0 text-gray-700"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                                <path d="M18 20a6 6 0 0 0-12 0"></path>
+                                <circle cx="12" cy="10" r="4"></circle>
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span>
+                        <div
+                            class="-all ml-2 flex shrink-0 grow items-center justify-between text-sm duration-300 ease-in-out opacity-100">
+                            Customers </div>
+                    </div>
+                    <div
+                        class="-all flex h-7 cursor-pointer items-center rounded pl-2 pr-1 text-gray-800 duration-300 ease-in-out w-full shadow-sm bg-white">
+                        <span class="shrink-0 text-gray-700"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                                <path d="M16 18a4 4 0 0 0-8 0"></path>
+                                <circle cx="12" cy="11" r="3"></circle>
+                                <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                                <line x1="8" x2="8" y1="2" y2="4"></line>
+                                <line x1="16" x2="16" y1="2" y2="4"></line>
+                            </svg></span>
+                        <div
+                            class="-all ml-2 flex shrink-0 grow items-center justify-between text-sm duration-300 ease-in-out opacity-100">
+                            Contacts </div>
+                    </div>
+                </div>
+                <div class="grow"></div>
+                <div
+                    class="-all flex h-7 cursor-pointer items-center rounded pl-2 pr-1 text-gray-800 duration-300 ease-in-out w-full hover:bg-gray-100">
+                    <span class="shrink-0 text-gray-700"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                            <path d="m9 6-6 6 6 6"></path>
+                            <path d="M3 12h14"></path>
+                            <path d="M21 19V5"></path>
+                        </svg></span>
+                    <div
+                        class="-all ml-2 flex shrink-0 grow items-center justify-between text-sm duration-300 ease-in-out opacity-100">
+                        Collapse </div>
+                </div>
+            </div>
+            <div class="flex-1 flex flex-col h-full overflow-auto">
+                <div class="flex border-b pr-5">
+                    <div id="app-header" class="flex-1 w-full">
+                        <header class="flex h-10.5 items-center justify-between mx-4 md:mr-0">
+                            <div class="flex items-center gap-2 max-w-[50%]">
+                                <div class="text-lg font-medium text-gray-900">Contacts</div>
+                            </div>
+                            <div class="flex items-center gap-2"><button
+                                    class="inline-flex items-center justify-center gap-2 transition-colors focus:outline-none text-white bg-gray-900 hover:bg-gray-800 active:bg-gray-700 focus-visible:ring focus-visible:ring-gray-400 h-7 text-base px-2 rounded"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round" class="h-4 w-4">
+                                        <path d="M5 12h14"></path>
+                                        <path d="M12 5v14"></path>
+                                    </svg><span class="">New contact</span><!----></button></div>
+                        </header>
+                    </div>
+                </div>
+                <div class="flex flex-col z-0 flex flex-1 flex-col overflow-auto">
+                    <div class="mt-2 flex w-full grow flex-col overflow-hidden overflow-x-auto">
+                        <div class="flex h-full w-max min-w-full flex-col overflow-y-hidden text-gray-900">
+                            <div class="mx-5 rounded bg-gray-100 px-2.5 py-2 text-sm text-gray-600">
+                                <div class="flex w-full items-center gap-2"><!---->
+                                    <div>
+                                        <div class="w-80"><span class="">Name</span></div>
+                                    </div>
+                                    <div>
+                                        <div class="w-80"><span class="">Email</span></div>
+                                    </div>
+                                    <div>
+                                        <div class="w-80"><span class="">Phone</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grow divide-y overflow-y-auto">
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                K</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Kavitha Pindi</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">kavitha.p@64network.com</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">7330778802</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                L</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Lakshman Kolli</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">kollilakshman13@gmail.com</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-300">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">⸺</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                S</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Surender J-ATMECS Technologies Pvt Ltd
+                                                            - Banglore</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">surender.jadi@atmecs.com</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">8068232437</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                R</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Ritvik Sardana</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">ritvik@frappe.io</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-300">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">⸺</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                Z</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Zone Electricals-Zone Electricals
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-300">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">⸺</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">9030962857</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                M</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Madhu P-Zen Securities Limited</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">madhu@zenmoney.in</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">9391632938</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                B</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Bhavani Shankar-RIVERVOLT HYDRO
+                                                            PRIVATE LIMITED</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">bhavani.shankar@mantena.in</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">9676736292</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                S</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Siva-BABA GROUP OF COMPANIES</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">siva@babaindia.net</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">7799788088</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                B</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Bhushan-Bhargava Sajjala BIo</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">bhushan.k@sajjalabio.com</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">9100088061</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                K</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Kiran-PITTI LAMINATIONS LIMITED</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">kiran.b@pittilaminations.com
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">9948131836</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                M</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Mr Ravi kumar multi-hospital-Hyderabad
+                                                            Multispeciality Hospital</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-300">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">⸺</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">7680883666</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                M</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Mounika Ganapathi</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">mounika.g@64network.com</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-300">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">⸺</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                P</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Paramesh P-Vanga Associates LLP</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">connect@vangaassociates.com</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">97004 28210</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                S</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Srividya Janga</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">srividya.j@64network.com</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-300">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">⸺</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                M</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Muntha Vamsi Raj</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">vamsimuntha31@gmail.com</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-300">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">⸺</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                S</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Simhanath Mantena-VEB Healthcare Pvt
+                                                            Ltd</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    simhanadh@pc2scientificservices.com</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">8555912411</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                A</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Amar K-VEB Healthcare Pvt Ltd</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">hr@pc2scientificservices.com
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">9989833433</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                A</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Anil Vijayagiri-Mahathi IT Solutions
+                                                            Pvt. Ltd.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">Anil@mahathihealthcare.com</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate"> 9177616676</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                R</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Raj K-Srikargroup</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate"> Support@srikargroup.com</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">9160221222</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                                <div class="group mx-5 flex h-10 items-center gap-2 whitespace-nowrap px-2.5 text-base hover:bg-gray-100 cursor-pointer"
+                                    id="/contacts_Contact" checkbox="false"
+                                    columns="[object Object],[object Object],[object Object]" doctype="Contact"
+                                    filter="false" to="()=>s(o.name)"><!----><span as="template" to="()=>s(o.name)"
+                                        class="flex w-full items-center gap-2">
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">
+                                                    <div class="flex items-center gap-2">
+                                                        <div
+                                                            class="relative inline-block shrink-0 w-5 h-5 rounded-full">
+                                                            <div
+                                                                class="flex h-full w-full items-center justify-center bg-gray-100 uppercase text-gray-600 font-medium text-sm rounded-full">
+                                                                M</div><!---->
+                                                        </div>
+                                                        <div class="line-clamp-1">Meghana Akula</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-800">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">meghana.a@64network.com</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-gray-300">
+                                            <div class="w-80">
+                                                <div class="w-max max-w-full truncate">⸺</div>
+                                            </div>
+                                        </div>
+                                    </span></div>
+                            </div>
+                        </div><!---->
+                    </div>
+                    <div class="flex items-center justify-between border-t px-5 py-2" resource="[object Object]">
+                        <div id="headlessui-radiogroup-v-0-1048" role="radiogroup">
+                            <div class="flex space-x-1 rounded bg-gray-100 p-0.5 text-sm" role="none"><button
+                                    class="bg-white text-gray-900 shadow flex flex-1 justify-center gap-2 whitespace-nowrap rounded-[7px] px-3 py-[5px] leading-none transition-colors focus:outline-none"
+                                    id="headlessui-radiogroup-option-v-0-1049" role="radio" aria-checked="true"
+                                    tabindex="0" data-headlessui-state="checked"
+                                    aria-labelledby="headlessui-label-v-0-1050"><!----><span
+                                        id="headlessui-label-v-0-1050"
+                                        class="flex h-4 items-center">20</span></button><button
+                                    class="text-gray-700 flex flex-1 justify-center gap-2 whitespace-nowrap rounded-[7px] px-3 py-[5px] leading-none transition-colors focus:outline-none"
+                                    id="headlessui-radiogroup-option-v-0-1051" role="radio" aria-checked="false"
+                                    tabindex="-1" data-headlessui-state=""
+                                    aria-labelledby="headlessui-label-v-0-1052"><!----><span
+                                        id="headlessui-label-v-0-1052"
+                                        class="flex h-4 items-center">50</span></button><button
+                                    class="text-gray-700 flex flex-1 justify-center gap-2 whitespace-nowrap rounded-[7px] px-3 py-[5px] leading-none transition-colors focus:outline-none"
+                                    id="headlessui-radiogroup-option-v-0-1053" role="radio" aria-checked="false"
+                                    tabindex="-1" data-headlessui-state=""
+                                    aria-labelledby="headlessui-label-v-0-1054"><!----><span
+                                        id="headlessui-label-v-0-1054" class="flex h-4 items-center">500</span></button>
+                            </div>
+                        </div><span class="flex items-center"><!----><span class="space-x-1 text-base"><span
+                                    class="text-gray-900">20</span><span class="text-gray-700">of</span><span
+                                    class="text-gray-900">9763</span></span></span>
+                    </div>
+                    <div><!----></div><!---->
+                </div>
+            </div><!----><!---->
+        </div><!---->
+    </div>
+    <div id="modals"></div>
+    <div id="popovers"></div>
+
+    <script>
+        window.csrf_token = "db36efc193b3d8bfd4654799f4e93f232d3defaca309b40c5cc66107";
+        window.frappe_version = "15.37.0";
+        window.helpdesk_version = "0.10.0";
+        window.site_name = "test.64network.com";
+        window.favicon = "/files/64_logo.png";
+        document.querySelector("link").href = window.favicon;
+    </script>
+
+    <div id="frappeui-toast-root" style="position: fixed; inset: 16px; z-index: 9999; pointer-events: none;">
+        <div class="absolute top-0 left-0"></div>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2"></div>
+        <div class="absolute top-0 right-0"></div>
+        <div class="absolute bottom-0 left-0"></div>
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2"></div>
+        <div class="absolute bottom-0 right-0"></div>
+    </div>
+    <div id="frappeui-popper-root">
+        <div class="relative z-[100] body-container" style="min-width: 205px;">
+            <div style="display: none;"><!----></div>
+        </div>
+    </div>
+</body>
+
+</html>

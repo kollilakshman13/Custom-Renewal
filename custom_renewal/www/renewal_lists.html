@@ -33,32 +33,22 @@ import frappe
                         </nav>
                     </div>
                 </div>
-                <main class="container ml-2" style="background-color: white;">
-                    <div class="page-header-wrapper">
+                <main class="container ml-2" style="background-color: white;min-height:90vh;">
+                    <div class="page-header-wrapper pl-3 pr-2 pt-1">
                         <div class="page-header">
                             <h3 class="m-0">{{d_name.name}}</h3>
                         </div>
                         <div class="page-header-actions-block">
-                            <div class="row">
-                                <div class="dropdown">
-                                    <button class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown"
-                                        aria-expanded="false">
-                                        <span class="font-md">Actions</span>
-                                        <b class="caret"></b>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
-
-                                        <a class="dropdown-item"
-                                            href='/printview?doctype=Renewal List&name={{d_name.name}}&format=Standard'
-                                            target="_blank" rel="noopener noreferrer">
-                                            Print
-                                        </a>
-                                    </ul>
-                                </div>
-                            </div>
+                            <a href="/printview?doctype=Renewal List&name={{ d_name.name }}&format=Standard"
+                                target="_blank" rel="noopener noreferrer"
+                                class="btn btn-secondary float-right download-button" aria-label="Download Renewal List"
+                                style="text-decoration: none;border-radius:10px; width:68px; height:25px; text-align:center; display:flex; justify-content:center; align-items:center; padding:0;font-size:11px;font-weight: bold;">
+                                Download
+                            </a>
                         </div>
+
                     </div>
-                    <div class="page_content">
+                    <div class="page_content pl-3 pr-2">
                         <div>
                             <div class="row transaction-subheading  mt-1">
                                 <div class="col-6 text-muted small mt-1">
@@ -79,7 +69,7 @@ import frappe
                             <div class="order-container mt-4">
                                 <!-- items -->
                                 <div class="w-100">
-                                    <div class="order-items order-item-header mb-1 row text-muted">
+                                    <div class="order-items order-item-header mb-1 row">
                                         <span class="col-4">
                                             Item
                                         </span>
@@ -110,7 +100,7 @@ import frappe
                                                 <div class="text-muted small item-description">
                                                     {{item.item_code}}
                                                 </div>
-                                                <span class="text-muted mt-2 d-l-n order-qty">
+                                                <span class="mt-2 d-l-n order-qty">
                                                     Qty ({{item.quantity}})
                                                 </span>
                                             </div>
@@ -121,13 +111,13 @@ import frappe
                                     <span class="d-s-n col-1 pl-10">
                                         {{item.quantity}}
                                     </span>
-                                    <span class="order-rate pl-4 col-2">
+                                    <span class="pl-4 col-2">
                                         {{frappe.utils.format_date(d_name.start_date, "dd-MM-yyyy")}}
                                     </span>
-                                    <span class="order-rate pl-4 col-1">
+                                    <span class="pl-4 col-1">
                                         {{frappe.utils.format_date(d_name.end_date, "dd-MM-yyyy")}}
                                     </span>
-                                    <span class="order-rate pl-4 col-2">
+                                    <span class="pl-4 col-2">
                                         {{item.rate}}
                                     </span>
                                     <span class="col-2 text-right">
@@ -137,7 +127,7 @@ import frappe
                                 {% endfor %}
                             </div>
                         </div>
-                        <div>
+                        <div class="pl-3 pr-2">
                             <div class="">
                                 <div class="w-100 mt-5 order-taxes font-weight-bold">
                                     <div class="col-4 d-flex">

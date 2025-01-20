@@ -10,7 +10,7 @@ import frappe
             </div>
         </div>
         <div class="main-column col-sm-10 ml-1">
-            <div class="page-content-wrapper pl-2">
+            <div class="page-content-wrapper pl-4">
                 <div class="page-breadcrumbs">
                     <div class="breadcrumb-container container">
                         <nav aria-label="breadcrumb">
@@ -47,10 +47,10 @@ import frappe
                                 <div class="col-6 text-muted small mt-1"></div>
                             </div>
                             <div class="row indicator-container mt-2">
-                                <div class="col-10">
+                                <div class="col-6">
                                     <span class="indicator-pill red">{{d_name.status or ""}}</span>
                                 </div>
-                                <div class="col-2 text-right">
+                                <div class="col-6 text-right">
                                     <b>{{d_name.customer or ""}}</b>
                                 </div>
                             </div>
@@ -168,10 +168,10 @@ import frappe
                     <button class="btn btn-sm small" id="submit-comment">{{ _("Comment") }}</button>
                 </div>
 
-                <div class="comment-list" style="background-color: white;">
+                <div class="comment-list pl-2" style="background-color: white;">
                     {% for comment in comments %}
-                    <div class="my-5 comment-row media ml-2">
-                        <div class="comment-avatar">
+                    <div class="comment-row media">
+                        <div class="comment-avatar ml-5">
                             {{ avatar(user_id=(frappe.utils.strip_html(comment.comment_email or comment.sender or "")),
                             size='avatar-medium') }}
                         </div>

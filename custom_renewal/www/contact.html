@@ -7,6 +7,7 @@
   <title>Contact - Eterna Bootstrap Template</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
+  <meta name="csrf-token" content="{{ csrf_token }}">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -28,14 +29,6 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: Eterna
-  * Template URL: https://bootstrapmade.com/eterna-free-multipurpose-bootstrap-template/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body class="contact-page">
@@ -166,61 +159,144 @@
           </div><!-- End Google Maps -->
 
           <div class="col-lg-6">
-            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up"
-              data-aos-delay="400">
+            <form id="contactForm" action="/api/method/custom_renewal.www.contact.handle_contact_form" method="POST"
+              autocomplete="off">
               <div class="row gy-4">
-
                 <div class="col-md-6">
                   <label for="name" class="form-label mt-4"><b>Name *</b></label>
-                  <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+                  <input type="text" name="name" id="name" class="form-control" placeholder="Your Name" required
+                    autocomplete="off">
                 </div>
-
-                <div class="col-md-6 ">
+                <div class="col-md-6">
                   <label for="email" class="form-label mt-4"><b>Email *</b></label>
-                  <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+                  <input type="email" id="email" class="form-control" name="email" placeholder="Your Email" required
+                    autocomplete="off">
                 </div>
                 <div class="col-md-6">
                   <label for="phoneno" class="form-label mt-4"><b>Phone no *</b></label>
-                  <input type="text" name="phone_no" id="phoneno" placeholder="Phone number" style="width:100%;"
+                  <input type="text" name="phone_no" id="phoneno" placeholder="Phone number" style="width: 100%;"
                     class="form-control" required autocomplete="off">
                 </div>
                 <div class="col-md-6">
                   <label for="service" class="form-label mt-4"><b>Service *</b></label>
-                  <select name="service_name" id="service" style="width:100%;" class="form-control" required autocomplete="off" >
-                      <option value="">select services</option>
-                      <option></option>
+                  <select name="service_name" id="service" style="width: 100%;" class="form-control" required>
+                    <option value="" disabled selected>Select a service</option>
+                    <option value="ngfw">Next Generation Firewalls (NGFW)</option>
+                    <option value="endpoint_protection">Endpoint Protection Solutions</option>
+                    <option value="data_center_cloud">Data Center&Cloud Solutions</option>
+                    <option value="hosted_email">Hosted Email Messaging Solutions</option>
+                    <option value="iam">Identity and Access Management (IAM)</option>
                   </select>
-              </div>
-
-
+                </div>
                 <div class="col-md-12">
                   <label for="subject" class="form-label mt-4"><b>Subject</b></label>
-                  <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+                  <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required
+                    autocomplete="off">
                 </div>
-
                 <div class="col-md-12">
                   <label for="message" class="form-label mt-4"><b>Message</b></label>
-                  <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+                  <textarea class="form-control" id="message" name="message" rows="6" placeholder="Message" required
+                    autocomplete="off"></textarea>
                 </div>
-
+                <div class="col-md-12 mt-3">
+                  <div class="captcha d-flex align-items-center">
+                    <div class="spinner">
+                      <label>
+                        <input type="checkbox" id="notRobot" autocomplete="off">
+                        <span class="checkmark"><span>&nbsp;</span></span>
+                      </label>
+                    </div>
+                    <div class="text ms-2">I'm not a Robot</div>
+                    <div class="logo ms-2">
+                      <img src="/assets/img/recaptcha-logo-1.png" alt="ReCaptcha Logo"
+                        style="width: 50px; height: 50px; object-fit: contain;">
+                    </div>
+                  </div>
+                </div>
                 <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
-
-                  <button type="submit">Send Message</button>
+                  <div class="loading" style="display: none;">Loading...</div>
+                  <div class="error-message" style="display: none; color: red;"></div>
+                  <div class="sent-message" style="display: none; color: green;">Your message has been sent. Thank you!
+                  </div>
+                  <button type="submit" id="submitButton" class="btn btn-primary mt-3">Send Message</button>
                 </div>
-
               </div>
             </form>
-          </div><!-- End Contact Form -->
+          </div>
 
+          <script>
+            function validateForm() {
+              const checkbox = document.getElementById('notRobot');
+              if (!checkbox.checked) {
+                alert('Please confirm that you are not a robot.');
+                return false;
+              }
+              return true;
+            }
+
+            document.querySelectorAll("input, select, textarea,text").forEach(field => {
+              field.setAttribute("autocomplete", "off");
+            });
+
+
+            document.addEventListener('DOMContentLoaded', function () {
+              const form = document.getElementById('contactForm');
+              const loading = document.querySelector('.loading');
+              const errorMessage = document.querySelector('.error-message');
+              const sentMessage = document.querySelector('.sent-message');
+              const submitButton = document.getElementById('submitButton');
+
+              form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                if (!validateForm()) {
+                  return;
+                }
+
+                const formData = new FormData(form);
+                const csrfToken = document.querySelector('meta[name="csrf-token"]');
+                if (!csrfToken) {
+                  alert('CSRF token not found. Please try again.');
+                  return;
+                }
+
+                loading.style.display = 'block';
+                errorMessage.style.display = 'none';
+                sentMessage.style.display = 'none';
+                submitButton.disabled = true;
+
+                fetch(form.action, {
+                  method: 'POST',
+                  headers: {
+                    'X-Frappe-CSRF-Token': csrfToken.getAttribute('content'),
+                  },
+                  body: formData,
+                })
+                  .then(response => response.json())
+                  .then(data => {
+                    loading.style.display = 'none';
+                    submitButton.disabled = false;
+
+                    if (data.status === 'success') {
+                      sentMessage.style.display = 'block';
+                      form.reset();
+                    } else {
+                      errorMessage.textContent = data.message || 'Error submitting the form.';
+                      errorMessage.style.display = 'block';
+                    }
+                  })
+                  .catch(error => {
+                    loading.style.display = 'none';
+                    submitButton.disabled = false;
+                    errorMessage.textContent = `Error: ${error.message}`;
+                    errorMessage.style.display = 'block';
+                  });
+              });
+            });
+          </script>
         </div>
-
       </div>
-
-    </section><!-- /Contact Section -->
-
+    </section>
   </main>
 
   <footer id="footer" class="footer position-relative dark-background">

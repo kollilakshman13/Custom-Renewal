@@ -15,7 +15,9 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -29,99 +31,114 @@
 
   <style>
     .task {
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-        overflow: hidden;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      overflow: hidden;
     }
+
     .task .row {
-        display: flex;
-        align-items: center;
-        padding: 15px;
+      display: flex;
+      align-items: center;
+      padding: 15px;
     }
 
     .task h2 {
-        margin: 0;
-        font-size: 2.5rem;
-        color: #333;
+      margin: 0;
+      font-size: 2.5rem;
+      color: #333;
     }
+
     .card2 {
-        display: flex;
-        justify-content: space-between;
-        padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      padding: 15px;
     }
+
     .card1 {
-        width: 48%;
+      width: 48%;
     }
 
     .reg a {
-        text-decoration: none;
-        color:white;
+      text-decoration: none;
+      color: white;
     }
+
     .reg a:hover {
-        color:white;
-        text-decoration: none;
+      color: white;
+      text-decoration: none;
     }
+
     .card1 p {
-        margin: 0;
-        color: #666;
-        line-height: 1.6;
+      margin: 0;
+      color: #666;
+      line-height: 1.6;
     }
+
     @media (max-width: 600px) {
-        .task .row {
-            flex-direction: column;
-            text-align: center;
-        }
-        .task .row img {
-            margin-bottom: 10px;
-        }
-        .card2 {
-            flex-direction: column;
-        }
-        .card1 {
-            width: 100%;
-            margin-bottom: 10px;
-        }
+      .task .row {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .task .row img {
+        margin-bottom: 10px;
+      }
+
+      .card2 {
+        flex-direction: column;
+      }
+
+      .card1 {
+        width: 100%;
+        margin-bottom: 10px;
+      }
     }
 
 
     .countdown {
-        display: flex;
-        /*justify-content: center;
+      display: flex;
+      /*justify-content: center;
         /* align-items: center; 
         background-color: #ff0000; /* Red background */
-        padding: 5px;
-        border-radius: 5px;
-        color: white;
-        font-family: 'Arial', sans-serif;
-        font-weight: bold;
+      padding: 5px;
+      border-radius: 5px;
+      color: white;
+      font-family: 'Arial', sans-serif;
+      font-weight: bold;
     }
 
     .countdown div {
-        margin: 0px;
-        text-align: center;
+      margin: 0px;
+      text-align: center;
     }
 
     .countdown .time-box {
-        background-color: #000000; /* Black background for time boxes */
-        padding: 0px;
-        border-radius: 5px;
-        min-width: 50px; /* Ensure the boxes have a minimum width */
+      background-color: #000000;
+      /* Black background for time boxes */
+      padding: 0px;
+      border-radius: 5px;
+      min-width: 50px;
+      /* Ensure the boxes have a minimum width */
     }
 
     .countdown .label {
-        font-size: 12px; /* Smaller text for labels */
-        margin-top: 5px;
+      font-size: 12px;
+      /* Smaller text for labels */
+      margin-top: 5px;
     }
 
     .countdown .time {
-        font-size: 12px; /* Larger text for time */
+      font-size: 12px;
+      /* Larger text for time */
     }
 
     .countdown .separator {
-        font-size: 14px; /* Same size as time */
-        margin: 0px; /* Space out the separators */
+      font-size: 14px;
+      /* Same size as time */
+      margin: 0px;
+      /* Space out the separators */
     }
   </style>
 
@@ -141,7 +158,8 @@
     <div class="topbar d-flex align-items-center dark-background">
       <div class="container d-flex justify-content-center justify-content-md-between">
         <div class="contact-info d-flex align-items-center">
-          <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">contact@example.com</a></i>
+          <i class="bi bi-envelope d-flex align-items-center"><a
+              href="mailto:contact@example.com">contact@example.com</a></i>
           <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
@@ -172,10 +190,12 @@
             <li><a href="team.html">Team</a></li>
             <li><a href="pricing.html">Pricing</a></li>
             <li><a href="blog.html">Blog</a></li>
-            <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <li class="dropdown"><a href="#"><span>Dropdown</span> <i
+                  class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
                 <li><a href="#">Dropdown 1</a></li>
-                <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i
+                      class="bi bi-chevron-down toggle-dropdown"></i></a>
                   <ul>
                     <li><a href="#">Deep Dropdown 1</a></li>
                     <li><a href="#">Deep Dropdown 2</a></li>
@@ -202,50 +222,62 @@
   </header>
 
   <main class="main">
-    
-    
 
     <div class="container mt-3">
-        <!--<div style="margin-bottom: 20px;">
-            <img src="assets/img/events.jpg" style="width:100%; object-fit: fill; height:200px;">
-        </div>-->
-    
-        <!-- Fetch all events -->
-        {% set tasks = frappe.get_all("Event", 
-            filters={'status': 'open', 'event_type': 'public','starts_on': ['>=', frappe.utils.now()]}, 
-            fields=['name', 'subject', 'starts_on', 'ends_on', 'event_type', 'description','custom_event_mode'], 
-            order_by='starts_on asc') %}  
-    
-        <!-- Loop through events and display them -->
-        {% for task in tasks %}
-        <div class="row mb-5">
-            <div class="col-8">
-                <div class="row">
-                    <div class="col-2">
-                        <img src="assets/img/64-Network-PNG-Logo 3.png" style="height: 100px; width: 100px;">
-                    </div>
-                    <div class="col">
-                        <h4>{{ task.subject }}</h4>
-                        <p>Date & Time:{{task.starts_on}}</p>
-                        <!-- <p>Date:&nbsp;{{task.starts_on.strftime('%d-%m-%Y')}}</p>
+      {% set tasks = frappe.get_all("Event",filters={'status': 'open', 'event_type': 'public','starts_on': ['>=',
+      frappe.utils.now()]},fields=['*'],order_by='starts_on asc' ) %}
+      <div style="display: flex; justify-content: center; align-items: center;">
+        <button class="btn btn-primary">Upcoming events</button>
+      </div>
+      {% for task in tasks %}
+      <div class="row mb-5">
+        <div class="col-8">
+          <div class="row">
+            <div class="col-2">
+              <img src="assets/img/64-Network-PNG-Logo 3.png" style="height: 100px; width: 100px;">
+            </div>
+            <div class="col">
+              <h4>{{ task.subject }}</h4>
+              <p>Date & Time:{{task.starts_on}}</p>
+              <!-- <p>Date:&nbsp;{{task.starts_on.strftime('%d-%m-%Y')}}</p>
                         <p>Time: {{ task.starts_on.strftime('%I:%M %p') }}</p> -->
-                        <p>{{task.custom_event_mode}}</p>
-                    </div>
-                </div>
+              <p>{{task.custom_event_mode}}</p>
             </div>
-            <div class="col-4">
-                <div class="row">
-                    <a href="event_page?event_name={{ task.name }}" class="btn btn-primary mt-3 mb-5">View details</a>
-                </div>
-            </div>
+          </div>
         </div>
-        {% endfor %}
+        <div class="col-4">
+          <div class="row">
+            <a href="event_page?event_name={{ task.name }}" class="btn btn-primary mt-3 mb-5">View details</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
     </div>
-    
 
-    
-    
-    
+
+    <div class="container mt-3">
+      {% set tasks = frappe.get_all("Event",filters={'status': 'open', 'event_type': 'public','starts_on': ['<=',
+        frappe.utils.now()]},fields=['*'],order_by='starts_on asc' ) %} <div
+        style="display: flex; justify-content: center; align-items: center;">
+        <button class="btn btn-primary">Previous events</button>
+    </div>
+    <div class="row mt-2">
+      {% for task in tasks %}
+      <div class="col-lg-3 col-md-4 col-sm-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{task.subject}}</h5>
+            <p>{{task.custom_event_mode}}|{{ task.starts_on.strftime('%I:%M %p') }}</p>
+            <a href="event_page?event_name={{ task.name }}" class="card-link btn btn-primary">View Details</a>
+
+          </div>
+        </div>
+      </div>
+      {%endfor%}
+    </div>
+    </div>
+
+
 
   </main>
 
@@ -258,7 +290,8 @@
             <h4>Join Our Newsletter</h4>
             <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
             <form action="forms/newsletter.php" method="post" class="php-email-form">
-              <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
+              <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe">
+              </div>
               <div class="loading">Loading</div>
               <div class="error-message"></div>
               <div class="sent-message">Your subscription request has been sent. Thank you!</div>
@@ -330,7 +363,8 @@
   </footer>
 
   <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Preloader -->
   <div id="preloader"></div>
@@ -346,7 +380,7 @@
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 
-  
+
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>

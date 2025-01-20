@@ -86,25 +86,32 @@ website_route_rules = [
         }
     },
     {
-        "from_route": "/address", "to_route": "address"
+        "from_route": "/address_list", "to_route": "address_list"
     },
     {
-        "from_route": "/address/<path:name>",
+        "from_route": "/address_list/<path:name>",
         "to_route": "address",
         "defaults": {
             "doctype": "Address",
             "parents": [
                 {
                     "label": "Address",
-                    "route": "address"
+                    "route": "address_list"
                 }
             ]
         }
     },
+    # {
+    #     "from_route":"/fixed_sidebar","to_route":"fixed_sidebar"
+    # },
+    # {
+    #     "from_route":"/fixed_sidebar<path:name>","to_route":"fixed_sidebar"
+    # }
     
 ]
 website_context = {
     "web_sidebar": "custom_renewal/templates/includes/web_sidebar.html",
+    "renewal_list":"custom_renewal/templates/includes/renewal_list1.html",
     "override_doctype_templates": {
         "me": "custom_renewal/www/me.html",
         "address":"custom_renewal/www/address.html",
@@ -112,9 +119,15 @@ website_context = {
         "filters":"custom_renewal/templates/list/filters.html"
     },
 }
+# website_route_rules = [
+#     {"from_route": "/address", "to_route": "custom_renewal.www.address.html"}
+# ]
+
 website_route_rules = [
-    {"from_route": "/address", "to_route": "custom_renewal.www.address.html"}
+    {"from_route": "/address", "to_route": "custom_renewal/www/address"},
+    {"from_route": "/fixed_sidebar/<path:path>", "to_route": "fixed_sidebar"}
 ]
+
 
 
 # hooks.py

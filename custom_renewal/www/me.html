@@ -9,8 +9,13 @@
     <div class="row account-info d-flex flex-column">
         <div class="col d-flex justify-content-between align-items-center">
             <div style="display: flex;justify-content: center;align-items: center;">
-                <span class="my-account-avatar">
+                <!-- <span class="my-account-avatar">
                     {{avatar(current_user.name)}}
+                     <img src="/files/64-Network-PNG-Logo3.png" class="rounded-full h-full w-full"> 
+                </span> -->
+                <span>
+                    <img class="avatar-frame standard-image" src="/files/64-Network-PNG-Logo3.png"
+                        title="{{ full_name|e or user_info.name|e }}" style="width:50px;height:50px;object-fit: fill;">
                 </span>
                 <span class="my-account-name ml-4">
                     <div>

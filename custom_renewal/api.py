@@ -392,3 +392,54 @@ def create_issue():
 
 
 
+# In your app's api.py
+
+# import frappe
+
+# @frappe.whitelist()  # Make this callable from the frontend
+# def get_renewal_content():
+#     # Fetch data for the Jinja template
+#     doc = frappe.get_all('Renewal List', fields=['name', 'status', 'start_date', 'end_date'])
+#     # Render the template
+#     return frappe.render_template("custom_renewal/templates/includes/renewal_list1.html", {"doc": doc})
+
+import frappe
+
+@frappe.whitelist(allow_guest=True)  # allow_guest if needed for unauthenticated users
+def get_renewal_content():
+    # Fetch data for the Jinja template
+    doc = frappe.get_all('Renewal List', fields=['*'])
+    # Render the Jinja template
+    html_content = frappe.render_template(
+        "custom_renewal/templates/includes/renewal_list .html",
+        {"doc": doc}
+    )
+    # Directly set the response as plain HTML
+    frappe.response['type'] = 'text/html'
+    return html_content
+
+import frappe
+
+@frappe.whitelist()
+def get_sales_invoice_content():
+    # Fetch data for Sales Invoice
+    data = frappe.get_all('Sales Invoice', fields=['*'])
+    # Render the template
+    return frappe.render_template("custom_renewal/templates/includes/sales_invoice.html", {"data": data})
+
+
+@frappe.whitelist()
+def get_sales_order_content():
+    # Fetch data for Sales Order
+    data = frappe.get_all('Sales Order', fields=['*'])
+    # Render the template
+    return frappe.render_template("custom_renewal/templates/includes/sales_order.html", {"data": data})
+
+
+@frappe.whitelist()
+def get_renewal_list_content():
+    # Fetch data for Renewal List
+    data = frappe.get_all('Renewal List', fields=['*'])
+    # Render the template
+    return frappe.render_template("custom_renewal/templates/includes/renewal_list.html", {"data": data})
+

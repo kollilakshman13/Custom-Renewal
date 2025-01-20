@@ -1,0 +1,160 @@
+<!-- <h2>Renewal List</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in data %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.status }}</td>
+            <td>{{ frappe.utils.format_date(item.start_date, "dd-MM-yyyy") }}</td>
+            <td>{{ frappe.utils.format_date(item.end_date, "dd-MM-yyyy") }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table> -->
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link type="text/css" rel="stylesheet" href="/assets/custom_renewal/css/custom_renewal_website.css">
+<link type="text/css" rel="stylesheet" href="/assets/erpnext/dist/css/erpnext-web.bundle.F3YA764F.css">
+<main class="ml-2">
+    <div class="page-header-wrapper">
+        <div class="page-head">
+            <h3 class="my-account-header ml-1">Renewal List</h3>
+        </div>
+        <div class="page-header-actions-block">
+            <input type="text" id="search-bar" class="form-control" placeholder="Search..." onkeyup="filterRows()"
+                style="border-radius:10px;">
+        </div>
+    </div>
+    <div style="background-color: white;">
+
+        <div class="website-list" data-doctype="Renewal List" data-txt="None" style="min-height:90vh;">
+            <div class="website-list-filters">
+                <!-- <input type="text" id="search-bar" class="form-control" placeholder="Search..."
+                    onkeyup="filterRows()"> -->
+            </div>
+            <div id="row-container" class="result ml-5" style="background-color: white;box-sizing: border-box;">
+                {% for d in data %}
+                <div class="web-list-item transaction-list-item ml-5">
+                    <div class="row align-items-center">
+                        <div class="col-sm-2">
+                            <span class="list-item-name font-weight-bold">{{d.name}}</span>
+                            <div class="small text-muted transaction-time" title="">
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <span class="indicator-pill red list-item-status">{{d.status}}</span>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="small text-muted items-preview ellipsis ellipsis-width items-startdate">
+                                {{frappe.utils.format_date(d.start_date, "dd-MM-yyyy")}}
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="small text-muted items-preview ellipsis ellipsis-width items-enddate">
+                                {{frappe.utils.format_date(d.end_date, "dd-MM-yyyy")}}
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="small text-muted items-preview ellipsis ellipsis-width items-name">
+                                {{ d.item_name }}
+                            </div>
+                        </div>
+                        <div class="col-sm-2 text-right font-weight-bold item-total">
+                            {{d.total_amount}}
+                        </div>
+                    </div>
+                    <a class="transaction-item-link" href="renewal_lists?d_name={{ d.name }}">Link</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="list-paging-area level" style="padding:5px">
+            <div class="level-left">
+                <div class="btn-group">
+                    <button class="btn btn-sm b1 mr-2" onclick="showRows(20, this)">20
+                    </button>
+                    <button class="btn btn-sm bl mr-2" onclick="showRows(100, this)">100
+                    </button>
+                    <button class="btn btn-sm b1 mr-2" onclick="showRows(500, this)">500
+                    </button>
+                    <button class="btn btn-sm b1" onclick="showRows(1500, this)">1500
+                    </button>
+                </div>
+            </div>
+            <div class="level-right">
+                <button class="btn " onclick="loadMoreRows()">
+                    Load More
+                </button>
+            </div>
+        </div>
+
+        <script>
+            rowsPerPage = 20; // Default number of rows to show
+            let currentlyVisibleRows = 0; // Counter to track visible rows
+            searchQuery = ""; // Store the current search query
+
+            // Function to show rows based on pagination and search
+            function showRows(count, button = null) {
+                rowsPerPage = count; // Update rows per page
+                filterRows(); // Reapply search and pagination
+
+                // Highlight the active button
+                if (button) {
+                    const buttons = document.querySelectorAll(".btn-group .btn");
+                    buttons.forEach(btn => btn.classList.remove("active"));
+                    button.classList.add("active");
+                }
+            }
+
+            // Function to filter rows and handle pagination
+            function filterRows() {
+                const searchInput = document.getElementById("search-bar").value.toLowerCase();
+                const rows = document.querySelectorAll("#row-container .web-list-item");
+
+                searchQuery = searchInput; // Update the search query
+
+                let visibleCount = 0;
+
+                rows.forEach(row => {
+                    const name = row.querySelector(".list-item-name").textContent.toLowerCase();
+                    const status = row.querySelector(".list-item-status").textContent.toLowerCase();
+                    const startDate = row.querySelector(".items-startdate").textContent.toLowerCase();
+                    const endDate = row.querySelector(".items-enddate").textContent.toLowerCase();
+                    const itemName = row.querySelector(".items-name").textContent.toLowerCase();
+                    const totalAmount = row.querySelector(".item-total").textContent.toLowerCase();
+
+                    const matches =
+                        name.includes(searchQuery) ||
+                        status.includes(searchQuery) ||
+                        startDate.includes(searchQuery) ||
+                        endDate.includes(searchQuery) ||
+                        itemName.includes(searchQuery) ||
+                        totalAmount.includes(searchQuery);
+
+                    if (matches && visibleCount < rowsPerPage) {
+                        row.style.display = "block"; // Show matching row
+                        visibleCount++;
+                    } else {
+                        row.style.display = "none"; // Hide row
+                    }
+                });
+            }
+
+            // Initialize the page with default rows
+            document.addEventListener("DOMContentLoaded", () => {
+                const defaultButton = document.querySelector(".btn-group .btn");
+                showRows(rowsPerPage, defaultButton);
+            });
+        </script>
+
+    </div>
+</main>

@@ -40,6 +40,14 @@ import frappe
                             <p>{{frappe.utils.format_date(d_name.transaction_date, "dd-MM-yyyy")}}</p>
                         </div>
                         <div class="page-header-actions-block">
+                            <a href="/printview?doctype=Sales Order&name={{ d_name.name }}&format=Standard"
+                                target="_blank" rel="noopener noreferrer"
+                                class="btn btn-secondary float-right download-button" aria-label="Download Renewal List"
+                                style="text-decoration: none;border-radius:10px; width:68px; height:25px; text-align:center; display:flex; justify-content:center; align-items:center; padding:0;font-size:11px;font-weight: bold;">
+                                Download
+                            </a>
+                        </div>
+                        <!-- <div class="page-header-actions-block">
                             <div class="row">
                                 <div class="dropdown">
                                     <button class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown"
@@ -57,7 +65,7 @@ import frappe
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="page_content">
                         <div>
@@ -80,7 +88,7 @@ import frappe
                             <div class="order-container mt-4">
                                 <!-- items -->
                                 <div class="w-100">
-                                    <div class="order-items order-item-header mb-1 row text-muted">
+                                    <div class="order-items order-item-header mb-1 row ">
                                         <span class="col-5">
                                             Item
                                         </span>

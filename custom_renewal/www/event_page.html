@@ -108,7 +108,6 @@
   </header>
 
   <main class="main">
-
     {% set event_name = frappe.form_dict.get('event_name') %}
     {% if event_name %}
     {% set event = frappe.get_doc("Event", event_name) %}
@@ -138,25 +137,27 @@
           </div>
         </div>
 
-
         <div class="col-lg-4 col-md-5 col-sm-12">
           <h3>Event Summary</h3>
-          <p>Date:&nbsp;{{ event.starts_on.strftime('%d-%m-%Y') }}</p>
+          <p>Date: {{ event.starts_on.strftime('%d-%m-%Y') }}</p>
           <p>Time: {{ event.starts_on.strftime('%I:%M %p') }}</p>
-          <p>Event Type:&nbsp;{{ event.custom_event_mode }}</p>
+          <p>Event Type: {{ event.custom_event_mode }}</p>
         </div>
       </div>
 
-
+      {% if event.starts_on >= frappe.utils.now_datetime() %}
       <div class="mt-4">
         <a class="btn btn-primary" style="min-width: 200px;"
           href="/event-registration/new?event={{ event.name }}&event_name={{ event.subject }}">
           Registration
         </a>
       </div>
+      {% else %}
+      <div class="mt-4">
+        <p class="text-danger">Registration is closed as the event has already started.</p>
+      </div>
+      {% endif %}
     </div>
-
-
     {% else %}
     <div class="container mt-5">
       <h4>No event found with the name: {{ event_name }}</h4>
@@ -167,7 +168,6 @@
       <h4>No event name provided in the URL.</h4>
     </div>
     {% endif %}
-
   </main>
 
   <footer id="footer" class="footer position-relative dark-background">

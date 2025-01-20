@@ -48,7 +48,13 @@ def get_context(context):
         filters={'parent': d_name},
         fields=['*']
     )
+    for item in renewal_items:
+        if "rate" in item:
+            item["rate"] = frappe.utils.fmt_money(item["rate"], currency="INR")
+        if "amount" in item:
+            item["amount"] = frappe.utils.fmt_money(item["amount"], currency="INR")  
 
+    renewal_doc.total_amount = frappe.utils.fmt_money(renewal_doc.total_amount,currency="INR") 
     # Add data to the context for rendering in the template
     context.items = renewal_items
     context.d_name = renewal_doc  # Pass the entire document to the template

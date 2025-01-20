@@ -69,12 +69,13 @@
 	<div class="profile-container mb-1" onclick="toggleDropdown(event)">
 		<div class="profile-row">
 			<div class="profile-avatar rounded-full">
-				{% set image = frappe.db.get_value('User', frappe.session.user, 'user_image') %}
+				<!-- {% set image = frappe.db.get_value('User', frappe.session.user, 'user_image') %}
 				{% if image %}
 				<img src="{{ image }}" class="rounded-full h-full w-full">
 				{% else %}
 				<img src="/files/64-Network-PNG-Logo3.png" class="rounded-full h-full w-full">
-				{% endif %}
+				{% endif %} -->
+				<img src="/files/64-Network-PNG-Logo3.png" class="rounded-full h-full w-full">
 			</div>
 			<div class="profile-info">
 				<p class="profile-name">Helpdesk</p>

@@ -1,0 +1,48 @@
+<div id="row-container" class="result ml-5" style="background-color: white; box-sizing: border-box;">
+    <div class="web-list-item transaction-list-item ml-5">
+        <div class="row align-items-center">
+            <div class="col-sm-2">
+                <span class="list-item-name font-weight-bold">Sample Name</span>
+                <div class="small text-muted transaction-time" title=""></div>
+            </div>
+            <div class="col-sm-2">
+                <span class="indicator-pill red list-item-status">Status</span>
+            </div>
+            <div class="col-sm-2">
+                <div class="small text-muted items-preview ellipsis ellipsis-width items-startdate">
+                    Start Date
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="small text-muted items-preview ellipsis ellipsis-width items-enddate">
+                    End Date
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {% for d in data %}
+    <div class="web-list-item transaction-list-item ml-5">
+        <div class="row align-items-center">
+            <div class="col-sm-2">
+                <span class="list-item-name font-weight-bold">{{ d.name }}</span>
+            </div>
+            <div class="col-sm-2">
+                <span class="indicator-pill red list-item-status">{{ d.status }}</span>
+            </div>
+            <div class="col-sm-2">
+                <div class="small text-muted items-preview ellipsis ellipsis-width items-startdate">
+                    {{ frappe.utils.format_date(d.start_date, "dd-MM-yyyy") }}
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="small text-muted items-preview ellipsis ellipsis-width items-enddate">
+                    {{ frappe.utils.format_date(d.end_date, "dd-MM-yyyy") }}
+                </div>
+            </div>
+
+        </div>
+        <a class="transaction-item-link" href="renewal_lists?d_name={{ d.name }}">Link</a>
+    </div>
+    {% endfor %}
+</div>

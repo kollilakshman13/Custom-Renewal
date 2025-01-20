@@ -46,20 +46,17 @@ import frappe
                                             <span class="indicator-pill red list-item-status">{{d.status}}</span>
                                         </div>
                                         <div class="col-sm-2">
-                                            <div
-                                                class="small text-muted items-preview ellipsis ellipsis-width items-startdate">
+                                            <div class="ellipsis ellipsis-width items-startdate">
                                                 {{frappe.utils.format_date(d.start_date, "dd-MM-yyyy")}}
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
-                                            <div
-                                                class="small text-muted items-preview ellipsis ellipsis-width items-enddate">
+                                            <div class="ellipsis ellipsis-width items-enddate">
                                                 {{frappe.utils.format_date(d.end_date, "dd-MM-yyyy")}}
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
-                                            <div
-                                                class="small text-muted items-preview ellipsis ellipsis-width items-name">
+                                            <div class="ellipsis ellipsis-width items-name">
                                                 {{ d.item_name }}
                                             </div>
                                         </div>
@@ -109,31 +106,28 @@ import frappe
                                     button.classList.add("active");
                                 }
                             }
-
-                            // Function to filter rows and handle pagination
                             function filterRows() {
                                 const searchInput = document.getElementById("search-bar").value.toLowerCase();
                                 const rows = document.querySelectorAll("#row-container .web-list-item");
-
-                                searchQuery = searchInput; // Update the search query
-
                                 let visibleCount = 0;
-
                                 rows.forEach(row => {
                                     const name = row.querySelector(".list-item-name").textContent.toLowerCase();
                                     const status = row.querySelector(".list-item-status").textContent.toLowerCase();
                                     const startDate = row.querySelector(".items-startdate").textContent.toLowerCase();
                                     const endDate = row.querySelector(".items-enddate").textContent.toLowerCase();
                                     const itemName = row.querySelector(".items-name").textContent.toLowerCase();
-                                    const totalAmount = row.querySelector(".item-total").textContent.toLowerCase();
+                                    // Normalize the total amount by removing formatting characters
+                                    let totalAmount = row.querySelector(".item-total").textContent.toLowerCase();
+                                    totalAmount = totalAmount.replace(/,/g, "").replace(/\s+/g, "");
 
+                                    // Check for matches across all fields
                                     const matches =
-                                        name.includes(searchQuery) ||
-                                        status.includes(searchQuery) ||
-                                        startDate.includes(searchQuery) ||
-                                        endDate.includes(searchQuery) ||
-                                        itemName.includes(searchQuery) ||
-                                        totalAmount.includes(searchQuery);
+                                        name.includes(searchInput) ||
+                                        status.includes(searchInput) ||
+                                        startDate.includes(searchInput) ||
+                                        endDate.includes(searchInput) ||
+                                        itemName.includes(searchInput) ||
+                                        totalAmount.includes(searchInput);
 
                                     if (matches && visibleCount < rowsPerPage) {
                                         row.style.display = "block"; // Show matching row

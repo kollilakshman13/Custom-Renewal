@@ -24,7 +24,12 @@ def get_context(context):
         filters={'parent': d_name},
         fields=['*']
     )
-
+    for item in order_items:
+        if "rate" in item:
+            item["rate"] = frappe.utils.fmt_money(item["rate"], currency="INR")
+        if "amount" in item:
+            item["amount"] = frappe.utils.fmt_money(item["amount"], currency="INR")  
+    order_doc.rounded_total = frappe.utils.fmt_money(order_doc.rounded_total,currency="INR")         
     # Add data to the context for rendering in the template
     context.items = order_items
     context.d_name = order_doc  # Pass the entire document to the template

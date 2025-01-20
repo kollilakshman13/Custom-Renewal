@@ -24,7 +24,14 @@ def get_context(context):
         filters={'parent': d_name},
         fields=['*']
     )
+    # Format the rate field for each item
+    for item in invoice_items:
+        if "rate" in item:
+            item["rate"] = frappe.utils.fmt_money(item["rate"], currency="INR")
+        if "amount" in item:
+            item["amount"] = frappe.utils.fmt_money(item["amount"], currency="INR")  
 
+    invoice_doc.rounded_total = frappe.utils.fmt_money(invoice_doc.rounded_total,currency="INR")          
     # Add data to the context for rendering in the template
     context.items = invoice_items
     context.d_name = invoice_doc  # Pass the entire document to the template

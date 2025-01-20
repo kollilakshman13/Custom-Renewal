@@ -46,8 +46,7 @@ import frappe
                                             <span class="indicator-pill red list-item-status">{{d.status}}</span>
                                         </div>
                                         <div class="col-sm-3">
-                                            <div
-                                                class="small text-muted items-preview ellipsis ellipsis-width items-name">
+                                            <div class="ellipsis ellipsis-width items-name">
                                                 {{ d.item_name }}
                                             </div>
                                         </div>
@@ -107,18 +106,18 @@ import frappe
                                 const searchInput = document.getElementById("search-bar").value.toLowerCase();
                                 const rows = document.querySelectorAll("#row-container .web-list-item");
                                 totalRows = 0;
-
                                 rows.forEach(row => {
                                     const name = row.querySelector(".list-item-name").textContent.toLowerCase();
                                     const status = row.querySelector(".list-item-status").textContent.toLowerCase();
                                     const itemName = row.querySelector(".items-name").textContent.toLowerCase();
-                                    const totalAmount = row.querySelector(".item-total").textContent.toLowerCase();
+                                    //const totalAmount = row.querySelector(".item-total").textContent.toLowerCase();
+                                    let totalAmount = row.querySelector(".item-total").textContent.toLowerCase();
+                                    totalAmount = totalAmount.replace(/,/g, "").replace(/\s+/g, "");
 
                                     const matches = name.includes(searchInput) ||
                                         status.includes(searchInput) ||
                                         itemName.includes(searchInput) ||
                                         totalAmount.includes(searchInput);
-
                                     row.style.display = matches ? "block" : "none";
                                     if (matches) totalRows++;
                                 });
