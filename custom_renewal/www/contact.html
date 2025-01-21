@@ -172,11 +172,14 @@
                   <input type="email" id="email" class="form-control" name="email" placeholder="Your Email" required
                     autocomplete="off">
                 </div>
+
                 <div class="col-md-6">
                   <label for="phoneno" class="form-label mt-4"><b>Phone no *</b></label>
-                  <input type="text" name="phone_no" id="phoneno" placeholder="Phone number" style="width: 100%;"
-                    class="form-control" required autocomplete="off">
+                  <input type="tel" name="phone_no" id="phoneno" placeholder="Phone number" class="form-control"
+                    style="width: 100%;" required autocomplete="off" pattern="[0-9]{10}"
+                    title="Please enter a valid 10-digit phone number.">
                 </div>
+
                 <div class="col-md-6">
                   <label for="service" class="form-label mt-4"><b>Service *</b></label>
                   <select name="service_name" id="service" style="width: 100%;" class="form-control" required>
@@ -234,7 +237,7 @@
               return true;
             }
 
-            document.querySelectorAll("input, select, textarea,text").forEach(field => {
+            document.querySelectorAll("input, select, textarea,text,tel").forEach(field => {
               field.setAttribute("autocomplete", "off");
             });
 

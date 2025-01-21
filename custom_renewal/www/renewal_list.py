@@ -51,7 +51,7 @@ def get_context(context):
         if customer:
             context.doc = frappe.get_all(
                 "Renewal List",
-                filters={"customer": customer},
+                filters={"customer_name": customer},
                 fields=["*"],
                 order_by="creation desc",
                 limit_page_length=20

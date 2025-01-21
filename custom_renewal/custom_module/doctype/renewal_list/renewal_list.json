@@ -10,7 +10,7 @@
  "field_order": [
   "renewal_summary_section",
   "naming_series",
-  "customer",
+  "customer_name",
   "total_quantity",
   "invoice_no",
   "column_break_uxvza",
@@ -52,14 +52,6 @@
    "label": "Series",
    "options": "RN-.YYYY.-.####\nRN-.YY.-.####",
    "reqd": 1
-  },
-  {
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "in_filter": 1,
-   "in_global_search": 1,
-   "label": "Customer",
-   "options": "Customer"
   },
   {
    "fieldname": "sales_user",
@@ -196,11 +188,19 @@
    "fieldname": "renewal_attachment",
    "fieldtype": "Attach",
    "label": "Renewal Attachment"
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_global_search": 1,
+   "label": "Customer",
+   "options": "Customer"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-03 14:36:28.117690",
+ "modified": "2025-01-20 18:50:07.106272",
  "modified_by": "Administrator",
  "module": "Custom Module",
  "name": "Renewal List",

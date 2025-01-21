@@ -1,0 +1,576 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-01-20 16:37:50.094857",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item_code",
+  "customers_item_code",
+  "column_break_oksku",
+  "item_name",
+  "section_break_5",
+  "description",
+  "gst_hsn_code",
+  "item_group",
+  "brand",
+  "section_break_9",
+  "image",
+  "image_view",
+  "quantity_and_rate_section",
+  "qty",
+  "stock_uom",
+  "column_break_0ycar",
+  "uom",
+  "conversion_factor",
+  "stock_qty",
+  "section_break_opxaq",
+  "price_list_rate",
+  "base_price_list_rate",
+  "discount_and_margin_section",
+  "margin_type",
+  "margin_rate_or_amount",
+  "rate_with_margin",
+  "column_break_ikeig",
+  "discount_percentage",
+  "discount_amount",
+  "base_rate_with_margin",
+  "section_break_qwnuo",
+  "rate",
+  "net_rate",
+  "amount",
+  "net_amount",
+  "item_tax_template",
+  "column_break_uslxd",
+  "base_rate",
+  "base_net_rate",
+  "base_amount",
+  "base_net_amount",
+  "pricing_rules",
+  "stock_uom_rate",
+  "is_free_item",
+  "section_break_yjueo",
+  "valuation_rate",
+  "column_break_itv7t",
+  "gross_profit",
+  "item_weight_details_section",
+  "weight_per_unit",
+  "total_weight",
+  "column_break_wjyhg",
+  "weight_uom",
+  "reference",
+  "warehouse",
+  "against_blanket_order",
+  "blanket_order",
+  "blanket_order_rate",
+  "column_break_f82uo",
+  "prevdoc_doctype",
+  "prevdoc_docname",
+  "item_balance",
+  "projected_qty",
+  "actual_qty",
+  "column_break_e0bj7",
+  "stock_balance",
+  "item_tax_rate",
+  "shopping_cart_section",
+  "additional_notes",
+  "section_break_oyhtu",
+  "page_break",
+  "section_break_oqwqy",
+  "orc",
+  "column_break_mkime",
+  "orc_id",
+  "orc_amount",
+  "margin_amount",
+  "purchase_details_section",
+  "column_break_lnszg",
+  "tax_rate",
+  "opportunity_type",
+  "renewal_id",
+  "purchase_rate",
+  "column_break_xfpet",
+  "purchase_amount",
+  "supplier_quotation",
+  "supplier"
+ ],
+ "fields": [
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item Code",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customers_item_code",
+   "fieldtype": "Data",
+   "label": "Customer's Item Code"
+  },
+  {
+   "fieldname": "column_break_oksku",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break",
+   "label": "Description"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  },
+  {
+   "fieldname": "item_group",
+   "fieldtype": "Link",
+   "label": "Item Group",
+   "options": "Item Group"
+  },
+  {
+   "fieldname": "brand",
+   "fieldtype": "Link",
+   "label": "Brand",
+   "options": "Brand"
+  },
+  {
+   "fieldname": "section_break_9",
+   "fieldtype": "Section Break",
+   "label": "Image"
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach",
+   "label": "Image"
+  },
+  {
+   "fieldname": "image_view",
+   "fieldtype": "Image",
+   "label": "Image View",
+   "options": "image"
+  },
+  {
+   "fieldname": "quantity_and_rate_section",
+   "fieldtype": "Section Break",
+   "label": "Quantity and Rate"
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Quantity"
+  },
+  {
+   "fieldname": "stock_uom",
+   "fieldtype": "Link",
+   "label": "Stock UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "column_break_0ycar",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM",
+   "reqd": 1
+  },
+  {
+   "fieldname": "conversion_factor",
+   "fieldtype": "Float",
+   "label": "UOM Conversion Factor",
+   "reqd": 1
+  },
+  {
+   "fieldname": "stock_qty",
+   "fieldtype": "Float",
+   "label": "Qty as per Stock UOM"
+  },
+  {
+   "fieldname": "section_break_opxaq",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "price_list_rate",
+   "fieldtype": "Currency",
+   "label": "Price List Rate"
+  },
+  {
+   "fieldname": "base_price_list_rate",
+   "fieldtype": "Currency",
+   "label": "Price List Rate (Company Currency)",
+   "options": "Company:company:default_currency"
+  },
+  {
+   "fieldname": "discount_and_margin_section",
+   "fieldtype": "Section Break",
+   "label": "Discount and Margin"
+  },
+  {
+   "fieldname": "margin_type",
+   "fieldtype": "Select",
+   "label": "Margin Type",
+   "options": "\nPercentage\nAmount"
+  },
+  {
+   "fieldname": "margin_rate_or_amount",
+   "fieldtype": "Float",
+   "label": "Margin Rate or Amount"
+  },
+  {
+   "fieldname": "rate_with_margin",
+   "fieldtype": "Currency",
+   "label": "Rate With Margin",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "column_break_ikeig",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "discount_percentage",
+   "fieldtype": "Percent",
+   "label": "Discount (%) on Price List Rate with Margin"
+  },
+  {
+   "fieldname": "discount_amount",
+   "fieldtype": "Currency",
+   "label": "Discount Amount",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "base_rate_with_margin",
+   "fieldtype": "Currency",
+   "label": "Rate With Margin (Company Currency)",
+   "options": "Company:company:default_currency"
+  },
+  {
+   "fieldname": "section_break_qwnuo",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Rate"
+  },
+  {
+   "fieldname": "net_rate",
+   "fieldtype": "Currency",
+   "label": "Net Rate"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount"
+  },
+  {
+   "fieldname": "net_amount",
+   "fieldtype": "Currency",
+   "label": "Net Amount"
+  },
+  {
+   "fieldname": "item_tax_template",
+   "fieldtype": "Link",
+   "label": "Item Tax Template",
+   "options": "Item Tax Template"
+  },
+  {
+   "fieldname": "column_break_uslxd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "base_rate",
+   "fieldtype": "Currency",
+   "label": "Rate (Company Currency)",
+   "options": "Company:company:default_currency"
+  },
+  {
+   "fieldname": "base_net_rate",
+   "fieldtype": "Currency",
+   "label": "Net Rate (Company Currency)"
+  },
+  {
+   "fieldname": "base_amount",
+   "fieldtype": "Currency",
+   "label": "Amount (Company Currency)",
+   "options": "Company:company:default_currency"
+  },
+  {
+   "fieldname": "base_net_amount",
+   "fieldtype": "Currency",
+   "label": "Net Amount (Company Currency)",
+   "options": "Company:company:default_currency"
+  },
+  {
+   "fieldname": "pricing_rules",
+   "fieldtype": "Small Text",
+   "label": "Pricing Rules"
+  },
+  {
+   "fieldname": "stock_uom_rate",
+   "fieldtype": "Currency",
+   "label": "Rate of Stock UOM",
+   "options": "Currency"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_free_item",
+   "fieldtype": "Check",
+   "label": "Is Free Item"
+  },
+  {
+   "fieldname": "section_break_yjueo",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "valuation_rate",
+   "fieldtype": "Currency",
+   "label": "Valuation Rate",
+   "options": "Company:company:default_currency"
+  },
+  {
+   "fieldname": "column_break_itv7t",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "gross_profit",
+   "fieldtype": "Currency",
+   "label": "Gross Profit",
+   "options": "Company:company:default_currency"
+  },
+  {
+   "fieldname": "item_weight_details_section",
+   "fieldtype": "Section Break",
+   "label": "Item Weight Details"
+  },
+  {
+   "fieldname": "weight_per_unit",
+   "fieldtype": "Float",
+   "label": "Weight Per Unit"
+  },
+  {
+   "fieldname": "total_weight",
+   "fieldtype": "Float",
+   "label": "Total Weight"
+  },
+  {
+   "fieldname": "column_break_wjyhg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "weight_uom",
+   "fieldtype": "Link",
+   "label": "Weight UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "reference",
+   "fieldtype": "Section Break",
+   "label": "Warehouse and Reference"
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse",
+   "options": "Warehouse"
+  },
+  {
+   "default": "0",
+   "fieldname": "against_blanket_order",
+   "fieldtype": "Check",
+   "label": "Against Blanket Order"
+  },
+  {
+   "fieldname": "blanket_order",
+   "fieldtype": "Link",
+   "label": "Blanket Order",
+   "options": "Blanket Order"
+  },
+  {
+   "fieldname": "blanket_order_rate",
+   "fieldtype": "Currency",
+   "label": "Blanket Order Rate"
+  },
+  {
+   "fieldname": "column_break_f82uo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "item_balance",
+   "fieldtype": "Section Break",
+   "label": "Planning"
+  },
+  {
+   "fieldname": "projected_qty",
+   "fieldtype": "Float",
+   "label": "Projected Qty"
+  },
+  {
+   "fieldname": "actual_qty",
+   "fieldtype": "Float",
+   "label": "Actual Qty"
+  },
+  {
+   "fieldname": "column_break_e0bj7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "stock_balance",
+   "fieldtype": "Button",
+   "label": "Stock Balance"
+  },
+  {
+   "fieldname": "item_tax_rate",
+   "fieldtype": "Code",
+   "label": "Item Tax Rate"
+  },
+  {
+   "fieldname": "shopping_cart_section",
+   "fieldtype": "Section Break",
+   "label": "Shopping Cart"
+  },
+  {
+   "fieldname": "additional_notes",
+   "fieldtype": "Text",
+   "label": "Additional Notes"
+  },
+  {
+   "fieldname": "section_break_oyhtu",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "page_break",
+   "fieldtype": "Check",
+   "label": "Page Break"
+  },
+  {
+   "fieldname": "section_break_oqwqy",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "orc",
+   "fieldtype": "Check",
+   "label": "ORC"
+  },
+  {
+   "fieldname": "column_break_mkime",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "orc_id",
+   "fieldtype": "Data",
+   "label": "ORC ID"
+  },
+  {
+   "fieldname": "orc_amount",
+   "fieldtype": "Currency",
+   "label": "ORC Amount"
+  },
+  {
+   "fieldname": "margin_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Margin Amount"
+  },
+  {
+   "fieldname": "prevdoc_doctype",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Against Doctype",
+   "options": "DocType",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "prevdoc_docname",
+   "fieldtype": "Dynamic Link",
+   "label": "Against Docname",
+   "options": "prevdoc_doctype"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "gst_hsn_code",
+   "fieldtype": "Data",
+   "label": "HSN/SAC"
+  },
+  {
+   "fieldname": "purchase_details_section",
+   "fieldtype": "Section Break",
+   "label": "Purchase Details"
+  },
+  {
+   "fieldname": "column_break_lnszg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tax_rate",
+   "fieldtype": "Float",
+   "label": "Tax Rate"
+  },
+  {
+   "fieldname": "opportunity_type",
+   "fieldtype": "Select",
+   "label": "Opportunity Type",
+   "options": "New\nRenewal\nAdditional\nMonthly Usage"
+  },
+  {
+   "fieldname": "renewal_id",
+   "fieldtype": "Link",
+   "label": "Renewal ID",
+   "options": "Renewal List"
+  },
+  {
+   "fieldname": "purchase_rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Purchase Rate"
+  },
+  {
+   "fieldname": "column_break_xfpet",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "purchase_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Purchase Amount"
+  },
+  {
+   "fieldname": "supplier_quotation",
+   "fieldtype": "Link",
+   "label": "Supplier Quotation",
+   "options": "Supplier Quotation"
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "label": "Supplier",
+   "options": "Supplier"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-01-20 17:17:07.862677",
+ "modified_by": "Administrator",
+ "module": "Custom Renewal",
+ "name": "Customer Order Form Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
