@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {% from "frappe/templates/includes/avatar_macro.html" import avatar %}
 {% extends "templates/web.html" %}
 {% block title %}
@@ -60,7 +61,7 @@
             {% set customer=frappe.get_doc("Customer",{"name":contact.company_name})%}
             {% set salesPerson =frappe.get_doc("Sales Team",{"parent":customer.name}) %}
             <span>
-                <div class="my-account-item"><b>Salesperson:</b>&nbsp;{{salesPerson.sales_person or "" }}</div>
+                <div class="my-account-item"><b>Sales Person:</b>&nbsp;{{salesPerson.sales_person or "" }}</div>
                 <div class="my-account-item-desc"><b>Email Id:</b>&nbsp;{{customer.account_manager or ""}}</div>
             </span>
             {%endif %}

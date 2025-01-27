@@ -1,6 +1,7 @@
 {% extends "templates/web.html" %}
 import frappe
 {% block page_content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="container">
     <div class="row" id="page-list" data-path="renewal_list">
         <div class="sidebar-column col-sm-2">
@@ -10,7 +11,7 @@ import frappe
         </div>
         <div class="main-column col-sm-10">
             <div class="page-content-wrapper pl-2">
-                <div class="page-breadcrumbs">
+                <!-- <div class="page-breadcrumbs">
                     <div class="breadcrumb-container container">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
@@ -32,7 +33,56 @@ import frappe
                             </ol>
                         </nav>
                     </div>
+                </div> -->
+                <div class="page-breadcrumbs">
+                    <div class="breadcrumb-container container">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                                <div class="page-header-icon">
+                                    <i class="fa fa-bars" aria-hidden="true" style="font-size:20px;"
+                                        onclick="toggleSidebar(event)"></i>
+                                </div>
+                                <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"
+                                    class="breadcrumb-item">
+                                    <a itemprop="item" href="/sales_order" itemprop="url">
+                                        <span itemprop="name">Sales Order</span>
+                                        <meta itemprop="position" content="1" />
+                                    </a>
+                                </li>
+                                <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"
+                                    class="breadcrumb-item active" aria-current="page">
+                                    <span itemprop="item">
+                                        <span itemprop="name">{{d_name.name}}</span>
+                                        <meta itemprop="position" content="2" />
+                                    </span>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div id="sidebar" class="page-header-toggle hidden">
+                        {% include web_sidebar1 %}
+                    </div>
+                    <script>
+                        // Toggle sidebar visibility
+                        function toggleSidebar(event) {
+                            event.stopPropagation(); // Prevent event propagation
+                            const sidebar = document.getElementById('sidebar');
+                            sidebar.classList.toggle('hidden'); // Toggle the 'hidden' class
+                        }
+    
+                        // Close sidebar when clicking outside
+                        document.addEventListener('click', function (event) {
+                            const sidebar = document.getElementById('sidebar');
+                            const toggleButton = document.querySelector('.fa-bars');
+    
+                            if (!sidebar.contains(event.target) && !toggleButton.contains(event.target)) {
+                                sidebar.classList.add('hidden'); // Ensure sidebar is closed
+                            }
+                        });
+                    </script>
                 </div>
+
+                
                 <main class="container ml-2" style="background-color: white;">
                     <div class="page-header-wrapper">
                         <div class="page-header">

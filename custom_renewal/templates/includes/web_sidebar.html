@@ -17,16 +17,17 @@
 	<a href="{{ item.route }}" class="{{ 'active' if pathname == item.route else '' }}" {% if item.target
 		%}target="{{ item.target }}" {%endif%} style="display: flex; align-items: center; gap: 0.5rem;">
 		{% if item.icon %}
-		<span class="material-symbols-outlined material">
+		<span class="material-symbols-outlined material" style="font-size: 14px;">
 			{{ item.icon }}
 		</span>
 		{% endif %}
-		<span class="label">{{ _(item.title) or _(item.label) }}</span>
+		<span class="label1">{{ _(item.title) or _(item.label)
+			}}</span>
 	</a>
 
 	{% else %}
 	<form action="{{ item.route }}" class="mr-4">
-		<input name='q' class='form-control' type='text' style="outline: none"
+		<input name="q" class="form-control" type="text" style="outline: none"
 			placeholder="{{ _(item.title) or _(item.label) }}">
 
 	</form>
@@ -52,13 +53,13 @@
 	<li class="sidebar-item">
 		<a href="/me" style="display: flex; align-items: center; gap: 0.5rem;">
 			<span class="material-symbols-outlined material">person</span>
-			<span class="label">{{ _("My Account") }}</span>
+			<span class="label1">{{ _("My Account") }}</span>
 		</a>
 	</li>
 	<li class="sidebar-item">
 		<a href="javascript:void(0)" onclick="logout()" style="display: flex; align-items: center; gap: 0.5rem;">
 			<span class="material-symbols-outlined material">logout</span>
-			<span class="label">{{ _("Logout") }}</span>
+			<span class="label1 text-gray">{{ _("Logout") }}</span>
 		</a>
 	</li>
 </ul>
@@ -68,22 +69,23 @@
 <div class="web-sidebar">
 	<div class="profile-container mb-1" onclick="toggleDropdown(event)">
 		<div class="profile-row">
-			<div class="profile-avatar rounded-full">
+			<div class="profile-avatar rounded-full ml-2" style="width:40px;">
 				<!-- {% set image = frappe.db.get_value('User', frappe.session.user, 'user_image') %}
 				{% if image %}
 				<img src="{{ image }}" class="rounded-full h-full w-full">
 				{% else %}
 				<img src="/files/64-Network-PNG-Logo3.png" class="rounded-full h-full w-full">
 				{% endif %} -->
-				<img src="/files/64-Network-PNG-Logo3.png" class="rounded-full h-full w-full">
+				<img src="/files/64-Network-PNG-Logo3.png" class="rounded-full h-full w-full"
+					style="width:30px;height:30px;object-fit: fill;">
 			</div>
 			<div class="profile-info">
-				<p class="profile-name">Helpdesk</p>
-				<p class="profile-role">
+				<p class="profile-name" style="font-weight: 600;font-size: 14px;">Helpdesk</p>
+				<p class="profile-role" style="font-size: 12px;">
 					{{ frappe.db.get_value("User", frappe.session.user, "full_name") or frappe.session.user }}
 				</p>
 			</div>
-			<div class="profile-dropdown mr-2">
+			<div class="profile-dropdown mr-5">
 				<span class="material-symbols-outlined">keyboard_arrow_down</span>
 			</div>
 		</div>

@@ -11,36 +11,82 @@ import frappe
             </div>
         </div>
         <div class="main-column col-sm-10">
-            <div class="page-content-wrapper">
+            <div class="page-content-wrapper ml-2">
                 <div class="page-breadcrumbs">
 
                 </div>
                 <main class="container ml-2">
-                    <div class="page-header-wrapper">
+                    <!-- <div class="page-header-wrapper">
                         <div class="page-head">
-                            <h3 class="my-account-header ml-1">Sales Order</h3>
+                            <div style="display: flex;">
+                                <div class="page-header-icon">
+                                    <i class="fa fa-bars" aria-hidden="true" style="font-size:20px;"></i>
+                                </div>
+                                <h3 class="my-account-header ml-1">Sales Order</h3>
+                            </div>
+
                         </div>
                         <div class="page-header-actions-block">
                             <input type="text" id="search-bar" class="form-control" placeholder="Search..."
                                 onkeyup="filterRows()" style="border-radius:10px;">
                         </div>
+                    </div> -->
+
+                    <div class="page-header-wrapper">
+                        <div class="page-head">
+                            <div style="display: flex; align-items: center;">
+                                <div class="page-header-icon">
+                                    <i class="fa fa-bars" aria-hidden="true" style="font-size:20px;"
+                                        onclick="toggleSidebar()"></i>
+                                </div>
+                                <h3 class="my-account-header" style="margin: 0;color:#383838;">Sales Order</h3>
+                            </div>
+                        </div>
+                        <div class="page-header-actions-block" style="margin-top: 10px;">
+                            <input type="text" id="search-bar" class="form-control" placeholder="Search..."
+                                onkeyup="filterRows()" style="border-radius: 10px;">
+                        </div>
                     </div>
 
-                    <div class="page_content" style="background-color: white;">
+                    <div id="sidebar1" class="page-header-toggle">
+                        {% include web_sidebar1 %}
+                    </div>
 
-                        <div class="website-list" data-doctype="Renewal List" data-txt="None" style="min-height:90vh;">
+                    <script>
+                        function toggleSidebar() {
+                            const sidebar = document.getElementById('sidebar1');
+
+                            if (sidebar.style.display === 'none' || sidebar.style.display === '') {
+                                sidebar.style.display = 'block';
+                            } else {
+                                sidebar.style.display = 'none';
+                            }
+                        }
+                    </script>
+
+
+
+                    <div class="page_content mt-1" style="background-color: white;">
+
+                        <div class="website-list" data-doctype="Sales Order" data-txt="None" style="min-height:90vh;">
                             <div class="website-list-filters">
                             </div>
-                            <div id="row-container" class="result ml-5"
+                            <div id="row-container" class="result"
                                 style="background-color: white;box-sizing: border-box;">
                                 {% for d in doc %}
                                 <div class="web-list-item transaction-list-item ml-5">
                                     <div class="row align-items-center">
                                         <div class="col-sm-3">
-                                            <span class="list-item-name font-weight-bold">{{d.name}}</span>
+                                            <span class="list-item-name font-weight-bold" style="color:#383838">
+                                                <a href="sales_orders?d_name={{ d.name }}"
+                                                    style="text-decoration: none;">
+                                                    {{ d.name }}
+                                                </a>
+                                            </span>
                                             <div class="small text-muted transaction-time" title="{{transaction_date}}">
                                                 {{frappe.utils.format_date(d.transaction_date,"dd-MM-yyyy")}}
                                             </div>
+
                                         </div>
                                         <div class="col-sm-3">
                                             <span class="indicator-pill red list-item-status">{{d.status}}</span>
@@ -54,7 +100,7 @@ import frappe
                                             {{d.rounded_total}}
                                         </div>
                                     </div>
-                                    <a class="transaction-item-link" href="sales_orders?d_name={{ d.name }}">Link</a>
+                                    <!-- <a class="transaction-item-link" href="sales_orders?d_name={{ d.name }}">Link</a> -->
                                 </div>
                                 {% endfor %}
                             </div>
@@ -135,7 +181,6 @@ import frappe
                             });
                         </script>
                     </div>
-
 
                 </main>
 

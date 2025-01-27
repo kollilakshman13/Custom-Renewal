@@ -13,6 +13,7 @@ app_include_css = "/assets/custom_renewal/css/custom_renewal.css"
 app_include_css = "/assets/css/font-awesome.css"
 # app_include_js = "/assets/custom_renewal/js/custom_renewal.js"
 app_include_js = "/assets/custom_renewal/js/page.js"
+
 # app_include_css = ["/assets/custom_renewal/css/theme.css","/assets/custom_module/css/menu.css"]
 # app_include_js = ["/assets/custom_renewal/js/theme.js",
 #                     "/assets/custom_renewal/js/menu/router.js",
@@ -111,6 +112,7 @@ website_route_rules = [
 ]
 website_context = {
     "web_sidebar": "custom_renewal/templates/includes/web_sidebar.html",
+    "web_sidebar1": "custom_renewal/templates/includes/web_sidebar1.html",
     "renewal_list":"custom_renewal/templates/includes/renewal_list1.html",
     "override_doctype_templates": {
         "me": "custom_renewal/www/me.html",
@@ -119,15 +121,12 @@ website_context = {
         "filters":"custom_renewal/templates/list/filters.html"
     },
 }
-# website_route_rules = [
-#     {"from_route": "/address", "to_route": "custom_renewal.www.address.html"}
-# ]
+
 
 website_route_rules = [
     {"from_route": "/address", "to_route": "custom_renewal/www/address"},
     {"from_route": "/fixed_sidebar/<path:path>", "to_route": "fixed_sidebar"}
 ]
-
 
 
 # hooks.py
@@ -177,6 +176,10 @@ website_route_rules = [
 # role_home_page = {
 # 	"Role": "home_page"
 # }
+# role_home_page = {
+#     "Customer": "/me",  # Redirect users with the "Customer" role to the /me page
+# }
+
 
 # Generators
 # ----------

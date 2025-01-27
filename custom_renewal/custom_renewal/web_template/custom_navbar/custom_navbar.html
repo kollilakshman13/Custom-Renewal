@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&amp;display=swap"
+        rel="stylesheet">
+    <style>
+        .navbar-logo {
+            width: 100px;
+            position: relative;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navbar-img {
+            width: 80px;
+            height: 60px;
+            object-fit: fill;
+        }
+
+        .navbar-logo .text-block {
+            position: absolute;
+            top: 30%;
+            left: 40%;
+            transform: translate(-50%, -50%);
+            color: #AE1817 !important;
+            font-family: 'Old Standard TT', serif;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 320px) {
+            .navbar-logo {
+                width: 70px;
+                position: relative;
+                padding: 0;
+                margin: 0;
+            }
+
+            .navbar-img {
+                width: 70px;
+                height: 60px;
+                object-fit: fill;
+            }
+
+            .navbar-logo .text-block {
+                position: absolute;
+                top: 33%;
+                left: 47%;
+                transform: translate(-50%, -50%);
+                color: #AE1817 !important;
+                font-family: 'Old Standard TT', serif;
+                font-size: 26px;
+                font-weight: bold;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid container">
+            <!-- <a class="navbar-brand" href="#">Home</a> -->
+            <a href="index.html" class="navbar-brand p-0">
+                <img src="/assets/img/logo (3).png">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation" style="margin-left: auto;margin-right: 5px;">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                {% if frappe.session.user and frappe.session.user != "Guest" %}
+                {% set current_user = frappe.get_doc("User", frappe.session.user) %}
+                {% if current_user.user_type == "System User" %}
+                <!-- Navbar for System Users -->
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 mr-1">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="events.html">Event</a></li>
+                    <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="team.html">Team</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                </ul>
+                {% elif current_user.user_type == "Website User" %}
+                <!-- Navbar for Website Users -->
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 mr-1">
+                    <li class="nav-item"><a class="nav-link" href="/sales_order">Sales Order</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/sales_invoice">Sales Invoice</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/renewal_list">Renewal List</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/issue">Tickets</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/address_list">Address</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/me">Me</a></li>
+                    <li class="nav-item"><a class="nav-link" href="javascript:void(0)" onclick="logout()">Log Out</a>
+                    </li>
+                </ul>
+                {% endif %}
+                {% else %}
+                <!-- Navbar for Guests (Not Logged In) -->
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 mr-1">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="events.html">Event</a></li>
+                    <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="team.html">Team</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                </ul>
+                {% endif %}
+            </div>
+            <div class="navbar-logo">
+                <img src="/assets/img/17-years-experience.png" class="navbar-img">
+                <div class="text-block">
+                    17
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Select the navbar toggler and content
+            const navbarToggler = document.querySelector(".navbar-toggler");
+            const navbarSupportedContent = document.querySelector("#navbarSupportedContent");
+
+            // Ensure the navbarContent exists before adding event listeners
+            if (navbarToggler && navbarSupportedContent) {
+                navbarToggler.addEventListener("click", function () {
+                    navbarSupportedContent.classList.toggle("show"); // Toggle the 'show' class
+                });
+            } else {
+                console.error("Navbar toggler or content element not found.");
+            }
+
+
+            // Logout function
+            window.logout = function () {
+                frappe.call({
+                    method: "frappe.handler.logout",
+                    callback: function () {
+                        window.location.href = "/login";
+                    },
+                    error: function (err) {
+                        console.error("Logout failed:", err);
+                    }
+                });
+            };
+        });
+    </script>
+
+
+
+
+</body>
+
+</html>

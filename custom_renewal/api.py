@@ -443,3 +443,12 @@ def get_renewal_list_content():
     # Render the template
     return frappe.render_template("custom_renewal/templates/includes/renewal_list.html", {"data": data})
 
+import frappe
+
+@frappe.whitelist()
+def is_customer():
+    """Check if the logged-in user has the 'Customer' role."""
+    user_roles = frappe.get_roles(frappe.session.user)
+    return "Customer" in user_roles
+
+

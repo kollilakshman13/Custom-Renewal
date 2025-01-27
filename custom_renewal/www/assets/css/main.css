@@ -242,7 +242,7 @@ h6 {
 @media (min-width: 1200px) {
   .navmenu {
     padding: 0;
-    margin-right: 150px;
+    /* margin-right: 150px; */
   }
 
   .navmenu ul {
@@ -255,9 +255,26 @@ h6 {
     flex-wrap: wrap;
   }
 
+  .navbar-logo {
+    height: 80px;
+    width: 100px;
+    object-fit: fill;
+  }
+
+  .text-block {
+    position: absolute;
+    top: 33%;
+    right: 18%;
+    transform: translate(-50%, -50%);
+    color: #AE1817;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Old Standard TT', serif;
+  }
+
   .navmenu li {
     position: relative;
-    flex: 1 1 auto;
+    /* flex: 1 1 auto; */
   }
 
   .navmenu a,
@@ -363,6 +380,23 @@ h6 {
   .navmenu {
     padding: 0;
     z-index: 9997;
+  }
+
+  .navbar-logo {
+    height: 60px;
+    width: 80px;
+    object-fit: fill;
+  }
+
+  .text-block {
+    position: absolute;
+    top: 25%;
+    right: 28%;
+    transform: translate(-50%, -50%);
+    color: #AE1817;
+    font-size: 26px;
+    font-weight: bold;
+    font-family: 'Old Standard TT', serif;
   }
 
   .navmenu ul {
