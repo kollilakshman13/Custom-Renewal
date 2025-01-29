@@ -82,73 +82,6 @@
     </div>
 </div>
 
-<script>
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const rows = document.querySelectorAll(".web-list-item");
-        const searchBar = document.getElementById("search-bar");
-        let currentRows = 20; // Default number of rows to show
-
-        // Function to show the first 'n' rows
-        function showRows(count, button = null) {
-            rows.forEach((row, index) => {
-                row.style.display = index < count ? "block" : "none";
-            });
-            currentRows = count;
-
-            // Highlight the active button
-            const buttons = document.querySelectorAll(".btn-group .btn");
-            buttons.forEach(btn => btn.classList.remove("active"));
-            if (button) {
-                button.classList.add("active");
-            }
-        }
-
-        // Initial setup: show default number of rows
-        const defaultButton = document.querySelector(".btn-group .btn"); // Select the default 20 button
-        showRows(currentRows, defaultButton);
-
-        // Function to filter rows based on search input
-        function filterRows() {
-            const searchTerm = searchBar.value.toLowerCase();
-            let visibleCount = 0;
-
-            rows.forEach(row => {
-                const textContent = row.textContent.toLowerCase();
-                if (textContent.includes(searchTerm)) {
-                    if (visibleCount < currentRows) {
-                        row.style.display = "block";
-                        visibleCount++;
-                    } else {
-                        row.style.display = "none";
-                    }
-                } else {
-                    row.style.display = "none";
-                }
-            });
-        }
-
-        // Event listener for the search bar
-        searchBar.addEventListener("input", filterRows);
-
-        // Function to load more rows incrementally
-        function loadMoreRows() {
-            currentRows += 20;
-            showRows(currentRows);
-        }
-
-        // Attach the loadMoreRows function to the button
-        window.loadMoreRows = loadMoreRows;
-
-        // Attach the showRows function to buttons
-        window.showRows = showRows;
-
-        // Attach the filterRows function to search bar
-        window.filterRows = filterRows;
-    });
-
-
-</script>
 
 <div class="modal" id="editAddressModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -229,7 +162,9 @@
         </div>
     </div>
 </div>
+{%endblock%}
 
+{% block script %}
 <script>
     document.querySelectorAll(".edit-button").forEach(button => {
         button.addEventListener("click", function () {
@@ -397,4 +332,59 @@
     // Call the initialization function on page load
     document.addEventListener("DOMContentLoaded", initializeEditButtons);
 </script>
+
+
+<script>
+    let rowsPerPage = 20; // Default number of rows to show
+    let currentlyVisibleRows = rowsPerPage; // Set initial value to show rows on load
+    let searchQuery = ""; // Store the current search query
+
+    function showRows(count, button = null) {
+        rowsPerPage = count; // Update rows per page
+        currentlyVisibleRows = count; // Update visible row count
+        filterRows();
+
+        // Highlight the active button
+        if (button) {
+            const buttons = document.querySelectorAll(".btn-group .btn");
+            buttons.forEach(btn => btn.classList.remove("active"));
+            button.classList.add("active");
+        }
+    }
+
+    function filterRows() {
+        const searchInputElem = document.getElementById("search-bar");
+        const searchInput = searchInputElem ? searchInputElem.value.toLowerCase() : "";
+        const rows = document.querySelectorAll("#row-container .web-list-item");
+        let visibleCount = 0; // Reset visible row count
+
+        rows.forEach((row, index) => {
+            const textContent = row.textContent.toLowerCase();
+            const matches = textContent.includes(searchInput);
+
+            if (matches && visibleCount < currentlyVisibleRows) {
+                row.style.display = "block"; // Show matching row
+                visibleCount++;
+            } else {
+                row.style.display = "none"; // Hide row
+            }
+        });
+    }
+
+    function loadMoreRows() {
+        currentlyVisibleRows += rowsPerPage; // Increase visible rows count
+        filterRows(); // Reapply filtering with increased row count
+    }
+
+    // Initialize the page with default rows
+    document.addEventListener("DOMContentLoaded", () => {
+        const defaultButton = document.querySelector(".btn-group .btn");
+        if (defaultButton) {
+            showRows(rowsPerPage, defaultButton);
+        } else {
+            showRows(rowsPerPage);
+        }
+    });
+</script>
+
 {%endblock%}

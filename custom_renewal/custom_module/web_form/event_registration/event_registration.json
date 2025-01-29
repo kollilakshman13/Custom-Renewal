@@ -24,7 +24,7 @@
  "list_columns": [],
  "login_required": 0,
  "max_attachment_size": 0,
- "modified": "2024-11-02 16:55:54.758367",
+ "modified": "2025-01-27 13:24:03.784085",
  "modified_by": "Administrator",
  "module": "Custom Module",
  "name": "event-registration",
@@ -174,7 +174,7 @@
    "label": "Captcha",
    "max_length": 0,
    "max_value": 0,
-   "options": "<link href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css\" rel=\"stylesheet\">\n\n<form id=\"apply-form\" method=\"post\">\n    <div class=\"form-group1\">\n        <div class=\"row\">\n            <!-- Captcha Display -->\n            <div class=\"col-3 captcha\">\n                <span id=\"captcha-text\">ABCD12</span>\n                <button id=\"refresh-captcha\" type=\"button\">\n                    <i class=\"fas fa-sync-alt\"></i>\n                </button>\n            </div>\n\n            <!-- Captcha Input with Placeholder -->\n            <div class=\"col-7 captcha\">\n                <input id=\"captcha-input\" required type=\"text\">\n            </div>\n\n            <!-- Submit Button -->\n            <div class=\"col-2 form-actions\">\n                <button class=\"button1\" id=\"submit-form\" type=\"button\">Save</button>\n            </div>\n        </div>\n    </div>\n</form>\n",
+   "options": "<link href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css\" rel=\"stylesheet\">\n\n<form id=\"apply-form\" method=\"post\">\n    <div class=\"form-group1\">\n        <div class=\"row\">\n            <!-- Captcha Display -->\n            <div class=\"col-md-3 col-12 mb-2 captcha\">\n                <span id=\"captcha-text\">ABCD12</span>\n                <button id=\"refresh-captcha\" type=\"button\">\n                    <i class=\"fas fa-sync-alt\"></i>\n                </button>\n            </div>\n\n            <!-- Captcha Input with Placeholder -->\n            <div class=\"col-md-7 col-12 mb-2 captcha\">\n                <input id=\"captcha-input\" required type=\"text\">\n            </div>\n\n            <!-- Submit Button -->\n            <div class=\"col-md-2 col-12 mb-2 form-actions\">\n                <button class=\"button1\" id=\"submit-form\" type=\"button\">Save</button>\n            </div>\n        </div>\n    </div>\n</form>\n",
    "read_only": 0,
    "reqd": 0,
    "show_in_filter": 0

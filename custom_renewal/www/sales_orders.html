@@ -62,27 +62,10 @@ import frappe
                     <div id="sidebar" class="page-header-toggle hidden">
                         {% include web_sidebar1 %}
                     </div>
-                    <script>
-                        // Toggle sidebar visibility
-                        function toggleSidebar(event) {
-                            event.stopPropagation(); // Prevent event propagation
-                            const sidebar = document.getElementById('sidebar');
-                            sidebar.classList.toggle('hidden'); // Toggle the 'hidden' class
-                        }
-    
-                        // Close sidebar when clicking outside
-                        document.addEventListener('click', function (event) {
-                            const sidebar = document.getElementById('sidebar');
-                            const toggleButton = document.querySelector('.fa-bars');
-    
-                            if (!sidebar.contains(event.target) && !toggleButton.contains(event.target)) {
-                                sidebar.classList.add('hidden'); // Ensure sidebar is closed
-                            }
-                        });
-                    </script>
+
                 </div>
 
-                
+
                 <main class="container ml-2" style="background-color: white;">
                     <div class="page-header-wrapper">
                         <div class="page-header">
@@ -206,5 +189,26 @@ import frappe
 
     </div>
 </div>
+
+{% endblock %}
+{% block script %}
+<script>
+    // Toggle sidebar visibility
+    function toggleSidebar(event) {
+        event.stopPropagation(); // Prevent event propagation
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('hidden'); // Toggle the 'hidden' class
+    }
+
+    // Close sidebar when clicking outside
+    document.addEventListener('click', function (event) {
+        const sidebar = document.getElementById('sidebar');
+        const toggleButton = document.querySelector('.fa-bars');
+
+        if (!sidebar.contains(event.target) && !toggleButton.contains(event.target)) {
+            sidebar.classList.add('hidden'); // Ensure sidebar is closed
+        }
+    });
+</script>
 
 {% endblock %}

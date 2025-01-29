@@ -47,7 +47,22 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style>
+    @media(min-width: 769px) {
+      .navbar-logo1 {
+        display: none;
+      }
+    }
+
+    @media(max-width: 768px) {
+      .navbar-img {
+        display: none;
+      }
+    }
+  </style>
+
 </head>
+
 
 <body class="index-page">
 
@@ -75,6 +90,15 @@
         <a href="index.html" class="logo d-flex">
           <h1 class="sitename">Eterna<br></h1>
         </a>
+
+        <div class="navbar-logo1" style="justify-content:end;justify-items:end;padding: 0px;">
+          <div style="width:100px;position:relative;height:80px;">
+            <img src="assets/img/17-years-experience.png" alt="Experience" class="navbar-logo">
+            <div class="text-block">
+              17
+            </div>
+          </div>
+        </div>
 
         <nav id="navmenu" class="navmenu">
           <ul>
@@ -110,7 +134,7 @@
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
-        <div style="justify-content:end;justify-items:end;padding: 0px;">
+        <div class="navbar-img" style="justify-content:end;justify-items:end;padding: 0px;">
           <div style="width:100px;position:relative;height:80px;">
             <img src="assets/img/17-years-experience.png" alt="Experience" class="navbar-logo">
             <div class="text-block">

@@ -142,10 +142,7 @@ import frappe
                                                 <span class="help"></span>
                                             </div>
                                             <div class="control-input-wrapper">
-                                                <div class="control-value like-disabled-input for-description">
-                                                    <!-- <div class="ql-editor read-mode">
-                                                        <p>{{d_name.description or ""}}</p>
-                                                    </div> -->
+                                                <div class="control-value like-disabled-input for-description"> 
                                                     <div>
                                                         {{d_name.description or ""}}
                                                     </div>
@@ -252,27 +249,8 @@ import frappe
                 callback: function (response) {
                     if (response.message) {
                         frappe.msgprint(__("Comment added successfully!"));
-
                         // Clear the comment textarea
                         $("[name='comment']").val("");
-
-                        // Add the new comment dynamically
-                        // let new_comment = response.message;
-                        // let comment_html = `
-                        //     <div class="my-5 comment-row media">
-                        //         <div class="comment-avatar">
-                        //             ${frappe.avatar(new_comment.comment_email, 'avatar-medium')}
-                        //         </div>
-                        //         <div class="comment-content">
-                        //             <div class="mb-2 head">
-                        //                 <span class="mr-2 title font-weight-bold">${frappe.utils.escape_html(new_comment.comment_by)}</span>
-                        //                 <span class="time small text-muted">${frappe.utils.pretty_date(new_comment.creation)}</span>
-                        //             </div>
-                        //             <div id="${new_comment.name}" class="content">${frappe.utils.markdown(new_comment.content)}</div>
-                        //         </div>
-                        //     </div>
-                        // `;
-                        // $(".comment-list").prepend(comment_html); // Add the new comment at the top of the list
                     } else {
                         frappe.msgprint(__("Failed to add comment. Please try again."));
                     }

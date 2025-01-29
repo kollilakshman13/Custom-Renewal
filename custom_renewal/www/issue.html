@@ -71,15 +71,14 @@ import frappe
                                     <div class="row align-items-center">
                                         <div class="col-sm-3">
                                             <span class="list-item-name">{{d.subject}}</span>
-                                            <div class="small text-muted transaction-time" title="">
-                                            </div>
+                                            <a class="transaction-item-link" href="ticket?d_name={{ d.name }}">Link</a>
                                         </div>
                                         <div class="col-sm-3">
                                             <span class="indicator-pill red list-item-status">{{d.status}}</span>
                                         </div>
 
                                         <div class="col-sm-3">
-                                            <div class="items-preview ellipsis ellipsis-width items-name">
+                                            <div class="ellipsis items-name">
                                                 {{ d.raised_by }}
                                             </div>
                                         </div>
@@ -89,7 +88,6 @@ import frappe
                                             </div>
                                         </div>
                                     </div>
-                                    <a class="transaction-item-link" href="ticket?d_name={{ d.name }}">Link</a>
                                 </div>
                                 {% endfor %}
                             </div>
@@ -114,132 +112,136 @@ import frappe
                             </div>
                         </div>
 
-                        <script>
-                            rowsPerPage = 20;
-                            originalRowsPerPage = rowsPerPage;
-                            currentlyVisibleRows = 0;
-                            isFiltered = false;
 
-                            function showRows(count, button = null) {
-                                const rows = document.querySelectorAll("#row-container .web-list-item");
-                                rowsPerPage = count;
-
-                                if (!isFiltered) {
-                                    rows.forEach((row, index) => {
-                                        row.style.display = index < count ? "block" : "none";
-                                    });
-                                    currentlyVisibleRows = count;
-                                } else {
-                                    applyFilter(count);
-                                }
-                                const buttons = document.querySelectorAll(".btn-group .btn");
-                                buttons.forEach(btn => btn.classList.remove("active"));
-                                if (button) button.classList.add("active");
-
-                                const loadMoreButton = document.getElementById("load-more-btn");
-                                if (currentlyVisibleRows >= rows.length || isFiltered) {
-                                    loadMoreButton.style.display = "none";
-                                } else {
-                                    loadMoreButton.style.display = "block";
-                                }
-
-                                if (!isFiltered) {
-                                    originalRowsPerPage = count;
-                                }
-                            }
-
-                            function loadMoreRows() {
-                                const rows = document.querySelectorAll("#row-container .web-list-item");
-                                const newVisibleRows = currentlyVisibleRows + rowsPerPage;
-
-                                if (!isFiltered) {
-                                    rows.forEach((row, index) => {
-                                        if (index < newVisibleRows) {
-                                            row.style.display = "block";
-                                        }
-                                    });
-                                } else {
-                                    applyFilter(newVisibleRows);
-                                }
-
-                                currentlyVisibleRows = newVisibleRows;
-                                const loadMoreButton = document.getElementById("load-more-btn");
-                                if (currentlyVisibleRows >= rows.length) {
-                                    loadMoreButton.style.display = "none";
-                                }
-                            }
-
-                            function applyFilter(count) {
-                                const searchInput = document.getElementById("search-bar").value.toLowerCase();
-                                const selectedStatus = document.getElementById("status-filter").value.toLowerCase();
-                                const rows = document.querySelectorAll("#row-container .web-list-item");
-
-                                let visibleCount = 0;
-
-                                rows.forEach(row => {
-                                    const subject = row.querySelector(".list-item-name").textContent.toLowerCase();
-                                    const status = row.querySelector(".list-item-status").textContent.toLowerCase();
-                                    const raisedBy = row.querySelector(".items-name").textContent.toLowerCase();
-                                    const priority = row.querySelector(".items-priority").textContent.toLowerCase();
-
-                                    const matchesSearch = subject.includes(searchInput) ||
-                                        status.includes(searchInput) ||
-                                        raisedBy.includes(searchInput) ||
-                                        priority.includes(searchInput);
-
-                                    const matchesStatus = selectedStatus === "" || status === selectedStatus;
-
-                                    if (matchesSearch && matchesStatus && visibleCount < count) {
-                                        row.style.display = "block";
-                                        visibleCount++;
-                                    } else {
-                                        row.style.display = "none";
-                                    }
-                                });
-
-                                currentlyVisibleRows = visibleCount;
-                                const loadMoreButton = document.getElementById("load-more-btn");
-                                if (visibleCount >= rows.length) {
-                                    loadMoreButton.style.display = "none";
-                                } else {
-                                    loadMoreButton.style.display = "block";
-                                }
-                            }
-
-                            function filterRows() {
-                                isFiltered = true;
-                                applyFilter(rowsPerPage);
-                            }
-
-                            function clearFilters() {
-                                isFiltered = false;
-                                const rows = document.querySelectorAll("#row-container .web-list-item");
-                                document.getElementById("search-bar").value = "";
-                                document.getElementById("status-filter").value = "";
-
-                                rows.forEach((row, index) => {
-                                    row.style.display = index < originalRowsPerPage ? "block" : "none";
-                                });
-
-                                currentlyVisibleRows = originalRowsPerPage;
-                                const loadMoreButton = document.getElementById("load-more-btn");
-                                if (currentlyVisibleRows >= rows.length) {
-                                    loadMoreButton.style.display = "none";
-                                } else {
-                                    loadMoreButton.style.display = "block";
-                                }
-                            }
-
-                            document.addEventListener("DOMContentLoaded", () => {
-                                const defaultButton = document.querySelector(".btn-group .btn");
-                                showRows(rowsPerPage, defaultButton);
-                            });
-
-                        </script>
                     </div>
                 </main>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    rowsPerPage = 20;
+    originalRowsPerPage = rowsPerPage;
+    currentlyVisibleRows = 0;
+    isFiltered = false;
+
+    function showRows(count, button = null) {
+        const rows = document.querySelectorAll("#row-container .web-list-item");
+        rowsPerPage = count;
+
+        if (!isFiltered) {
+            rows.forEach((row, index) => {
+                row.style.display = index < count ? "block" : "none";
+            });
+            currentlyVisibleRows = count;
+        } else {
+            applyFilter(count);
+        }
+        const buttons = document.querySelectorAll(".btn-group .btn");
+        buttons.forEach(btn => btn.classList.remove("active"));
+        if (button) button.classList.add("active");
+
+        const loadMoreButton = document.getElementById("load-more-btn");
+        if (currentlyVisibleRows >= rows.length || isFiltered) {
+            loadMoreButton.style.display = "none";
+        } else {
+            loadMoreButton.style.display = "block";
+        }
+
+        if (!isFiltered) {
+            originalRowsPerPage = count;
+        }
+    }
+
+    function loadMoreRows() {
+        const rows = document.querySelectorAll("#row-container .web-list-item");
+        const newVisibleRows = currentlyVisibleRows + rowsPerPage;
+
+        if (!isFiltered) {
+            rows.forEach((row, index) => {
+                if (index < newVisibleRows) {
+                    row.style.display = "block";
+                }
+            });
+        } else {
+            applyFilter(newVisibleRows);
+        }
+
+        currentlyVisibleRows = newVisibleRows;
+        const loadMoreButton = document.getElementById("load-more-btn");
+        if (currentlyVisibleRows >= rows.length) {
+            loadMoreButton.style.display = "none";
+        }
+    }
+
+    function applyFilter(count) {
+        const searchInput = document.getElementById("search-bar").value.toLowerCase();
+        const selectedStatus = document.getElementById("status-filter").value.toLowerCase();
+        const rows = document.querySelectorAll("#row-container .web-list-item");
+
+        let visibleCount = 0;
+
+        rows.forEach(row => {
+            const subject = row.querySelector(".list-item-name").textContent.toLowerCase();
+            const status = row.querySelector(".list-item-status").textContent.toLowerCase();
+            const raisedBy = row.querySelector(".items-name").textContent.toLowerCase();
+            const priority = row.querySelector(".items-priority").textContent.toLowerCase();
+
+            const matchesSearch = subject.includes(searchInput) ||
+                status.includes(searchInput) ||
+                raisedBy.includes(searchInput) ||
+                priority.includes(searchInput);
+
+            const matchesStatus = selectedStatus === "" || status === selectedStatus;
+
+            if (matchesSearch && matchesStatus && visibleCount < count) {
+                row.style.display = "block";
+                visibleCount++;
+            } else {
+                row.style.display = "none";
+            }
+        });
+
+        currentlyVisibleRows = visibleCount;
+        const loadMoreButton = document.getElementById("load-more-btn");
+        if (visibleCount >= rows.length) {
+            loadMoreButton.style.display = "none";
+        } else {
+            loadMoreButton.style.display = "block";
+        }
+    }
+
+    function filterRows() {
+        isFiltered = true;
+        applyFilter(rowsPerPage);
+    }
+
+    function clearFilters() {
+        isFiltered = false;
+        const rows = document.querySelectorAll("#row-container .web-list-item");
+        document.getElementById("search-bar").value = "";
+        document.getElementById("status-filter").value = "";
+
+        rows.forEach((row, index) => {
+            row.style.display = index < originalRowsPerPage ? "block" : "none";
+        });
+
+        currentlyVisibleRows = originalRowsPerPage;
+        const loadMoreButton = document.getElementById("load-more-btn");
+        if (currentlyVisibleRows >= rows.length) {
+            loadMoreButton.style.display = "none";
+        } else {
+            loadMoreButton.style.display = "block";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const defaultButton = document.querySelector(".btn-group .btn");
+        showRows(rowsPerPage, defaultButton);
+    });
+
+</script>
 {% endblock %}

@@ -7,7 +7,7 @@ from frappe.utils import get_formatted
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div class="container">
-    
+
     <div class="row" id="page-list" data-path="renewal_list">
         <div class="sidebar-column col-sm-2">
             <div class="web-sidebar">
@@ -50,25 +50,12 @@ from frappe.utils import get_formatted
                                         </div>
                                         <div class="col-sm-3">
                                             <span class="indicator-pill red list-item-status">{{d.status}}</span>
-                                            <a class="transaction-item-link"
-                                                href="sales_invoices?d_name={{ d.name }}">Link</a>
                                         </div>
-                                        <!-- <div class="col-sm-2">
-                                            <div
-                                                class="small text-muted items-preview ellipsis ellipsis-width items-name">
-                                                {{ d.item_name }}
-                                                <a class="transaction-item-link"
-                                                    href="sales_invoices?d_name={{ d.name }}">Link</a>
-                                            </div>
-                                        </div> -->
+
                                         <div class="col-sm-2 text-right font-weight-bold item-total">
                                             {{d.rounded_total}}
-                                            <a class="transaction-item-link"
-                                                href="sales_invoices?d_name={{ d.name }}">Link</a>
                                         </div>
                                         <div class="col-sm-3">
-                                            <!-- <button class="btn btn-primary"
-                                                onclick="printFile('{{d.custom_invoice_attachment}}')">Download</button> -->
                                             <div>
                                                 <button class="btn btn-secondary edit-button float-right"
                                                     onclick="printFile('{{d.custom_invoice_attachment}}')"
@@ -78,12 +65,9 @@ from frappe.utils import get_formatted
                                             <script>
                                                 function printFile(fileUrl) {
                                                     if (fileUrl) {
-                                                        // Open the file in a new tab
+
                                                         const newWindow = window.open(fileUrl, '_blank');
-                                                        // Automatically print the file once it loads
-                                                        // newWindow.onload = function () {
-                                                        //     newWindow.print();
-                                                        // };
+
                                                     } else {
                                                         alert('File URL is missing!');
                                                     }
@@ -106,130 +90,12 @@ from frappe.utils import get_formatted
                                 </div>
                             </div>
                             <div class="level-right">
-                                <button class="btn" id="load-more-btn" onclick="loadMoreRows()">
+                                <button class="btn" onclick="loadMoreRows()">
                                     Load More
                                 </button>
                             </div>
                         </div>
-                        <script>
-                            let rowsPerPage = 20; // Default number of rows to show
-                            let originalRowsPerPage = rowsPerPage; // Store the initial pagination value
-                            let currentlyVisibleRows = 0; // Counter to track how many rows are visible
-                            let isFiltered = false; // Flag to check if search/filter is applied
 
-                            function showRows(count, button = null) {
-                                const rows = document.querySelectorAll("#row-container .web-list-item");
-                                let visibleRowCount = 0;
-
-                                rows.forEach((row, index) => {
-                                    if (row.style.display !== "none" && visibleRowCount < count) {
-                                        row.style.display = "block";
-                                        visibleRowCount++;
-                                    } else {
-                                        row.style.display = "none";
-                                    }
-                                });
-
-                                currentlyVisibleRows = visibleRowCount;
-
-                                if (button) {
-                                    const buttons = document.querySelectorAll(".btn-group .btn");
-                                    buttons.forEach(btn => btn.classList.remove("active"));
-                                    button.classList.add("active");
-                                }
-
-                                const loadMoreButton = document.getElementById("load-more-btn");
-                                if (currentlyVisibleRows >= rows.length || isFiltered) {
-                                    loadMoreButton.style.display = "none";
-                                } else {
-                                    loadMoreButton.style.display = "block";
-                                }
-
-                                if (!isFiltered) {
-                                    originalRowsPerPage = count;
-                                }
-                            }
-
-
-                            function loadMoreRows() {
-                                const rows = document.querySelectorAll("#row-container .web-list-item");
-                                const newVisibleRows = currentlyVisibleRows + rowsPerPage;
-
-                                rows.forEach((row, index) => {
-                                    if (index < newVisibleRows) {
-                                        row.style.display = "block";
-                                    }
-                                });
-
-                                currentlyVisibleRows = newVisibleRows;
-
-                                if (currentlyVisibleRows >= rows.length) {
-                                    document.getElementById("load-more-btn").style.display = "none";
-                                }
-                            }
-
-                            function filterRows() {
-                                const searchInput = document.getElementById("search-bar").value.toLowerCase();
-                                const rows = document.querySelectorAll("#row-container .web-list-item");
-                                let visibleRowCount = 0; // Track how many rows are visible after filtering
-
-                                rows.forEach(row => {
-                                    const name = row.querySelector(".list-item-name").textContent.toLowerCase();
-                                    const status = row.querySelector(".list-item-status").textContent.toLowerCase();
-                                    const itemName = row.querySelector(".items-name") ? row.querySelector(".items-name").textContent.toLowerCase() : "";
-                                    //const totalAmount = row.querySelector(".item-total").textContent.toLowerCase();
-                                    let totalAmount = row.querySelector(".item-total").textContent.toLowerCase();
-                                    totalAmount = totalAmount.replace(/,/g, "").replace(/\s+/g, "");
-
-                                    if (
-                                        name.includes(searchInput) ||
-                                        status.includes(searchInput) ||
-                                        itemName.includes(searchInput) ||
-                                        totalAmount.includes(searchInput)
-                                    ) {
-                                        row.style.display = "block";
-                                        visibleRowCount++;
-                                    } else {
-                                        row.style.display = "none";
-                                    }
-                                });
-
-                                // Update the "Load More" button based on filtered rows
-                                const loadMoreButton = document.getElementById("load-more-btn");
-                                if (visibleRowCount <= rowsPerPage || searchInput !== "") {
-                                    loadMoreButton.style.display = "none";
-                                } else {
-                                    loadMoreButton.style.display = "block";
-                                }
-
-                                isFiltered = searchInput !== "";
-                            }
-
-
-                            function clearFilters() {
-                                const rows = document.querySelectorAll("#row-container .web-list-item");
-                                document.getElementById("search-bar").value = "";
-
-                                rows.forEach((row, index) => {
-                                    row.style.display = index < originalRowsPerPage ? "block" : "none";
-                                });
-
-                                currentlyVisibleRows = originalRowsPerPage;
-                                isFiltered = false;
-
-                                const loadMoreButton = document.getElementById("load-more-btn");
-                                if (currentlyVisibleRows >= rows.length) {
-                                    loadMoreButton.style.display = "none";
-                                } else {
-                                    loadMoreButton.style.display = "block";
-                                }
-                            }
-
-                            document.addEventListener("DOMContentLoaded", () => {
-                                const defaultButton = document.querySelector(".btn-group .btn");
-                                showRows(rowsPerPage, defaultButton);
-                            });
-                        </script>
                     </div>
 
                 </main>
@@ -239,5 +105,64 @@ from frappe.utils import get_formatted
 
     </div>
 </div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+    let rowsPerPage = 20; // Default number of rows to show
+    let currentlyVisibleRows = rowsPerPage; // Track visible row count
+    let searchQuery = ""; // Store the current search query
+
+    function showRows(count, button = null) {
+        rowsPerPage = count; // Update rows per page
+        currentlyVisibleRows = count; // Update visible row count
+        filterRows();
+
+        // Highlight the active button
+        if (button) {
+            const buttons = document.querySelectorAll(".btn-group .btn");
+            buttons.forEach(btn => btn.classList.remove("active"));
+            button.classList.add("active");
+        }
+    }
+
+    function filterRows() {
+        const searchInput = document.getElementById("search-bar").value.toLowerCase();
+        const rows = document.querySelectorAll("#row-container .web-list-item");
+        let visibleRowCount = 0; // Track how many rows are visible after filtering
+
+        rows.forEach(row => {
+            const name = row.querySelector(".list-item-name")?.textContent.toLowerCase() || "";
+            const status = row.querySelector(".list-item-status")?.textContent.toLowerCase() || "";
+            const itemName = row.querySelector(".items-name")?.textContent.toLowerCase() || "";
+            let totalAmount = row.querySelector(".item-total")?.textContent.toLowerCase() || "";
+            totalAmount = totalAmount.replace(/,/g, "").replace(/\s+/g, "");
+
+            const matches = name.includes(searchInput) ||
+                status.includes(searchInput) ||
+                itemName.includes(searchInput) ||
+                totalAmount.includes(searchInput);
+
+            if (matches && visibleRowCount < currentlyVisibleRows) {
+                row.style.display = "block"; // Show matching row
+                visibleRowCount++;
+            } else {
+                row.style.display = "none"; // Hide row
+            }
+        });
+    }
+
+    function loadMoreRows() {
+        currentlyVisibleRows += rowsPerPage; // Increase visible rows count
+        filterRows(); // Reapply filtering with increased row count
+    }
+
+    // Initialize the page with default rows
+    document.addEventListener("DOMContentLoaded", () => {
+        const defaultButton = document.querySelector(".btn-group .btn");
+        showRows(rowsPerPage, defaultButton);
+    });
+</script>
 
 {% endblock %}

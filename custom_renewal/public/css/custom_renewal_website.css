@@ -145,6 +145,46 @@ body[data-path="me"] .container {
     border-radius: var(--border-radius-md);
     padding: 2rem;
 } */
+@media screen and (max-width: 769px) {
+
+    body[data-path="sales_order"] .page_content,
+    body[data-path="sales_orders"] .page_content,
+    body[data-path="sales_invoice"] .page_content,
+    body[data-path="sales_invoices"] .page_content,
+    body[data-path="renewal_list"] .page_content,
+    body[data-path="renewal_lists"] .page_content,
+    body[data-path="issue"] .page_content,
+    body[data-path="ticket"] .page_content,
+    body[data-path="tickets"] .page_content,
+    body[data-path="address_create"] .page_content,
+    body[data-path="address_list"] .page_content,
+    body[data-path="me"] .page_content {
+        padding: 0rem !important;
+        width: 90vw !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+
+    }
+
+    body[data-path="sales_order"] .page-header-wrapper,
+    body[data-path="sales_orders"] .page-header-wrapper,
+    body[data-path="sales_invoice"] .page-header-wrapper,
+    body[data-path="sales_invoices"] .page-header-wrapper,
+    body[data-path="renewal_list"] .page-header-wrapper,
+    body[data-path="renewal_lists"] .page-header-wrapper,
+    body[data-path="address_list"] .page-header-wrapper,
+    body[data-path="address_create"] .page-header-wrapper,
+    body[data-path="issue"] .page-header-wrapper,
+    body[data-path="ticket"] .page-header-wrapper,
+    body[data-path="tickets"] .page-header-wrapper,
+    body[data-path="me"] .page-header-wrapper {
+        padding: 0rem !important;
+        width: 90vw !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+
+    }
+}
 
 .page-header-icon {
     font-size: 20px !important;

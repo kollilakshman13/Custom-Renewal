@@ -452,3 +452,61 @@ def is_customer():
     return "Customer" in user_roles
 
 
+
+@frappe.whitelist()
+def get_profile_data():
+    user = frappe.session.user  # Fetch the current logged-in user
+    if user == "Guest":
+        frappe.throw(_("You need to be logged in to edit your profile."))
+
+    user_doc = frappe.get_doc("User", user)  # Fetch the User document
+    return {
+        "first_name": user_doc.first_name,
+        "middle_name": user_doc.middle_name or "",
+        "last_name": user_doc.last_name,
+        "phone": user_doc.phone or "",
+        "mobile_no": user_doc.mobile_no or "",
+        "user_image": user_doc.user_image or ""  # Add image field
+    }
+
+
+@frappe.whitelist()
+def save_profile_data(first_name, middle_name, last_name, phone, mobile_no):
+    user = frappe.session.user  # Fetch the current logged-in user
+    if user == "Guest":
+        frappe.throw(_("You need to be logged in to save your profile."))
+
+    user_doc = frappe.get_doc("User", user)
+    user_doc.first_name = first_name
+    user_doc.middle_name = middle_name
+    user_doc.last_name = last_name
+    user_doc.phone = phone
+    user_doc.mobile_no = mobile_no
+    if user_image:
+        user_doc.user_image = user_image  # Save the image file path
+    user_doc.save()
+    frappe.db.commit()
+    return {"message":("Profile updated successfully.")}
+
+
+import frappe
+
+@frappe.whitelist()
+def get_sales_invoices(start=0, page_length=20, search=""):
+    start = int(start)
+    page_length = int(page_length)
+    
+    filters = {}
+    if search:
+        filters["name"] = ["like", f"%{search}%"]
+
+    invoices = frappe.get_all(
+        "Sales Invoice",
+        fields=["name", "posting_date", "status", "rounded_total", "custom_invoice_attachment"],
+        filters=filters,
+        start=start,
+        page_length=page_length,
+        order_by="posting_date desc"
+    )
+
+    return invoices

@@ -1,17 +1,3 @@
-# import frappe
-
-# def get_context(context):
-#     # Title for the page
-#     context.title = "Renewal List"
-    
-#     # Example dynamic data to pass to the template
-#     context.map = "This is a dynamic map of renewals."
-#     context.doc = frappe.get_all(
-#         "Renewal List", fields=["name","status","total_amount"], limit_page_length=20
-#     )
-
-#     return context
-
 import frappe
 
 def get_context(context):

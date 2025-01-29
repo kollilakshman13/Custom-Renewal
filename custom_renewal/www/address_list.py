@@ -9,8 +9,7 @@ def get_context(context):
         context.doc = frappe.get_all(
             "Address",
             fields=["*"],
-            order_by="creation desc",
-            limit_page_length=20
+            order_by="creation desc"
         )
         context.message = "Showing all Address lists as Administrator."
         return context
@@ -49,7 +48,7 @@ def get_context(context):
                 dl.link_doctype = 'Customer' AND dl.link_name = %s AND addr.disabled = 0
             ORDER BY 
                 addr.creation DESC
-            LIMIT 20
+            
         """
         context.doc = frappe.db.sql(query, (customer,), as_dict=True)
         context.customer_name = customer

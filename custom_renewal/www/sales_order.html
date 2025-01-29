@@ -77,12 +77,11 @@ import frappe
                                 <div class="web-list-item transaction-list-item ml-5">
                                     <div class="row align-items-center">
                                         <div class="col-sm-3">
-                                            <span class="list-item-name font-weight-bold" style="color:#383838">
-                                                <a href="sales_orders?d_name={{ d.name }}"
-                                                    style="text-decoration: none;">
-                                                    {{ d.name }}
-                                                </a>
+                                            <span class="list-item-name font-weight-bold"
+                                                style="color:#383838">{{d.name}}
                                             </span>
+                                            <a class="transaction-item-link"
+                                                href="sales_orders?d_name={{ d.name }}">Link</a>
                                             <div class="small text-muted transaction-time" title="{{transaction_date}}">
                                                 {{frappe.utils.format_date(d.transaction_date,"dd-MM-yyyy")}}
                                             </div>
@@ -100,7 +99,6 @@ import frappe
                                             {{d.rounded_total}}
                                         </div>
                                     </div>
-                                    <!-- <a class="transaction-item-link" href="sales_orders?d_name={{ d.name }}">Link</a> -->
                                 </div>
                                 {% endfor %}
                             </div>
@@ -109,77 +107,20 @@ import frappe
                         <div class="list-paging-area level" style="padding:5px">
                             <div class="level-left">
                                 <div class="btn-group">
-                                    <button class="btn btn-sm b1 mr-2" onclick="setRowsPerPage(20, this)">20</button>
-                                    <button class="btn btn-sm bl mr-2" onclick="setRowsPerPage(100, this)">100</button>
-                                    <button class="btn btn-sm b1 mr-2" onclick="setRowsPerPage(500, this)">500</button>
-                                    <button class="btn btn-sm b1" onclick="setRowsPerPage(1500, this)">1500</button>
+                                    <button class="btn btn-sm b1 mr-2" onclick="showRows(20, this)">20
+                                    </button>
+                                    <button class="btn btn-sm bl mr-2" onclick="showRows(100, this)">100
+                                    </button>
+                                    <button class="btn btn-sm b1 mr-2" onclick="showRows(500, this)">500
+                                    </button>
+                                    <button class="btn btn-sm b1" onclick="showRows(1500, this)">1500
+                                    </button>
                                 </div>
                             </div>
                             <div class="level-right">
-                                <button id="load-more-btn" class="btn" onclick="loadMoreRows()">Load More</button>
+                                <button class="btn" onclick="loadMoreRows()">Load More</button>
                             </div>
                         </div>
-
-                        <script>
-                            rowsPerPage = 20;
-                            let currentlyVisibleRows = 0;
-                            totalRows = 0;
-
-                            function updateRowsVisibility(limit) {
-                                const rows = document.querySelectorAll("#row-container .web-list-item");
-                                rows.forEach((row, index) => {
-                                    row.style.display = index < limit ? "block" : "none";
-                                });
-                                currentlyVisibleRows = Math.min(limit, rows.length);
-                                document.getElementById("load-more-btn").style.display = currentlyVisibleRows < rows.length ? "block" : "none";
-                            }
-
-                            function setRowsPerPage(count, button = null) {
-                                rowsPerPage = count;
-                                updateRowsVisibility(rowsPerPage);
-
-                                // Highlight the active button
-                                const buttons = document.querySelectorAll(".btn-group .btn");
-                                buttons.forEach(btn => btn.classList.remove("active"));
-                                if (button) button.classList.add("active");
-                            }
-
-                            function loadMoreRows() {
-                                updateRowsVisibility(currentlyVisibleRows + rowsPerPage);
-                            }
-
-                            function filterRows() {
-                                const searchInput = document.getElementById("search-bar").value.toLowerCase();
-                                const rows = document.querySelectorAll("#row-container .web-list-item");
-                                totalRows = 0;
-                                rows.forEach(row => {
-                                    const name = row.querySelector(".list-item-name").textContent.toLowerCase();
-                                    const status = row.querySelector(".list-item-status").textContent.toLowerCase();
-                                    const itemName = row.querySelector(".items-name").textContent.toLowerCase();
-                                    //const totalAmount = row.querySelector(".item-total").textContent.toLowerCase();
-                                    let totalAmount = row.querySelector(".item-total").textContent.toLowerCase();
-                                    totalAmount = totalAmount.replace(/,/g, "").replace(/\s+/g, "");
-
-                                    const matches = name.includes(searchInput) ||
-                                        status.includes(searchInput) ||
-                                        itemName.includes(searchInput) ||
-                                        totalAmount.includes(searchInput);
-                                    row.style.display = matches ? "block" : "none";
-                                    if (matches) totalRows++;
-                                });
-
-                                currentlyVisibleRows = Math.min(rowsPerPage, totalRows);
-                                document.getElementById("load-more-btn").style.display = currentlyVisibleRows < totalRows ? "block" : "none";
-                            }
-
-                            document.addEventListener("DOMContentLoaded", () => {
-                                totalRows = document.querySelectorAll("#row-container .web-list-item").length;
-
-                                // Set the default active button on page load
-                                const defaultButton = document.querySelector(".btn-group .btn ");
-                                setRowsPerPage(rowsPerPage, defaultButton);
-                            });
-                        </script>
                     </div>
 
                 </main>
@@ -189,5 +130,116 @@ import frappe
 
     </div>
 </div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+    rowsPerPage = 20; // Default number of rows to show
+    let currentlyVisibleRows = 0; // Counter to track visible rows
+    searchQuery = ""; // Store the current search query
+
+    function showRows(count, button = null) {
+        rowsPerPage = count; // Update rows per page
+        currentlyVisibleRows = count; // Update visible row count
+        filterRows();
+
+        // Highlight the active button
+        if (button) {
+            const buttons = document.querySelectorAll(".btn-group .btn");
+            buttons.forEach(btn => btn.classList.remove("active"));
+            button.classList.add("active");
+        }
+    }
+
+    function filterRows() {
+        const searchInput = document.getElementById("search-bar").value.toLowerCase();
+        const rows = document.querySelectorAll("#row-container .web-list-item");
+        let visibleCount = 0;
+        rows.forEach(row => {
+            const name = row.querySelector(".list-item-name").textContent.toLowerCase();
+            const status = row.querySelector(".list-item-status").textContent.toLowerCase();
+            const itemName = row.querySelector(".items-name").textContent.toLowerCase();
+
+            let totalAmount = row.querySelector(".item-total").textContent.toLowerCase();
+            totalAmount = totalAmount.replace(/,/g, "").replace(/\s+/g, "");
+
+            const matches = name.includes(searchInput) ||
+                status.includes(searchInput) ||
+                itemName.includes(searchInput) ||
+                totalAmount.includes(searchInput);
+
+            if (matches && visibleCount < currentlyVisibleRows) {
+                row.style.display = "block"; // Show matching row
+                visibleCount++;
+            } else {
+                row.style.display = "none"; // Hide row
+            }
+        });
+    }
+
+    function loadMoreRows() {
+        currentlyVisibleRows += rowsPerPage; // Increase visible rows by current rowsPerPage count
+        filterRows(); // Reapply filtering with increased row count
+    }
+
+    // Initialize the page with default rows
+    document.addEventListener("DOMContentLoaded", () => {
+        const defaultButton = document.querySelector(".btn-group .btn");
+        showRows(rowsPerPage, defaultButton);
+    });
+</script>
+
+<!-- <script>
+    rowsPerPage = 2; // Default number of rows to show
+    let currentlyVisibleRows = 0; // Counter to track visible rows
+    searchQuery = ""; // Store the current search query
+
+    // Function to show rows based on pagination and search
+    function showRows(count, button = null) {
+        rowsPerPage = count; // Update rows per page
+        filterRows(); // Reapply search and pagination
+
+        // Highlight the active button
+        if (button) {
+            const buttons = document.querySelectorAll(".btn-group .btn");
+            buttons.forEach(btn => btn.classList.remove("active"));
+            button.classList.add("active");
+        }
+    }
+    function filterRows() {
+        const searchInput = document.getElementById("search-bar").value.toLowerCase();
+        const rows = document.querySelectorAll("#row-container .web-list-item");
+        let visibleCount = 0;
+        rows.forEach(row => {
+            const name = row.querySelector(".list-item-name").textContent.toLowerCase();
+            const status = row.querySelector(".list-item-status").textContent.toLowerCase();
+            const itemName = row.querySelector(".items-name").textContent.toLowerCase();
+
+            let totalAmount = row.querySelector(".item-total").textContent.toLowerCase();
+            totalAmount = totalAmount.replace(/,/g, "").replace(/\s+/g, "");
+
+            const matches = name.includes(searchInput) ||
+                status.includes(searchInput) ||
+                itemName.includes(searchInput) ||
+                totalAmount.includes(searchInput);
+
+            if (matches && visibleCount < rowsPerPage) {
+                row.style.display = "block"; // Show matching row
+                visibleCount++;
+            } else {
+                row.style.display = "none"; // Hide row
+            }
+        });
+
+    }
+
+    // Initialize the page with default rows
+    document.addEventListener("DOMContentLoaded", () => {
+        const defaultButton = document.querySelector(".btn-group .btn");
+        showRows(rowsPerPage, defaultButton);
+    });
+
+</script> -->
 
 {% endblock %}

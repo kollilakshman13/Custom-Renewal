@@ -14,8 +14,7 @@ def get_context(context):
 
 	context.current_user = frappe.get_doc("User", frappe.session.user)
 	context.show_sidebar = True
-
-
-
+	context.no_breadcrumbs = True
+	context.parents = [{"name": "me", "title": _("My Account")}]
 
 

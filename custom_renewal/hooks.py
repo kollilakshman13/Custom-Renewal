@@ -125,7 +125,7 @@ website_context = {
 
 website_route_rules = [
     {"from_route": "/address", "to_route": "custom_renewal/www/address"},
-    {"from_route": "/fixed_sidebar/<path:path>", "to_route": "fixed_sidebar"}
+    {"from_route": "/fixed_sidebar/<path:path>", "to_route": "fixed_sidebar"},
 ]
 
 

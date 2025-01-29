@@ -146,201 +146,122 @@ import frappe
 
                 </div>
 
-                <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        const form = document.getElementById("addressForm");
-
-                        form.addEventListener("submit", async function (e) {
-                            e.preventDefault();
-                            const formData = new FormData(form);
-                            const addressData = {};
-
-                            formData.forEach((value, key) => {
-                                addressData[key] = value;
-                            });
-
-                            addressData.is_primary_address = document.getElementById("is_primary_address").checked ? 1 : 0;
-                            addressData.is_shipping_address = document.getElementById("is_shipping_address").checked ? 1 : 0;
-                            addressData.disabled = document.getElementById("disabled").checked ? 1 : 0;
-
-                            try {
-                                const user = frappe.session.user; // Get current user
-                                if (user === "Administrator") {
-                                    // Prompt admin to input customer name manually
-                                    const customerName = prompt("No customer is linked to this admin user. Please enter a customer name to link:");
-
-                                    if (!customerName) {
-                                        document.getElementById("responseMessage").innerHTML =
-                                            `<div class="alert alert-danger">Customer name is required to create the address.</div>`;
-                                        return;
-                                    }
-
-                                    addressData.link_document_type = "Customer";
-                                    addressData.link_name = customerName;
-
-                                    await createAddress(addressData);
-                                } else {
-                                    // Fetch customer linked to the current user
-                                    const customerResponse = await frappe.call({
-                                        method: "frappe.client.get_list",
-                                        args: {
-                                            doctype: "Contact",
-                                            filters: { user: user },
-                                            fields: ["name", "company_name"],
-                                        },
-                                    });
-
-                                    if (customerResponse.message.length > 0) {
-                                        const customer = customerResponse.message[0];
-                                        addressData.link_document_type = "Customer";
-                                        addressData.link_name = customer.company_name;
-
-                                        await createAddress(addressData);
-                                    } else {
-                                        document.getElementById("responseMessage").innerHTML =
-                                            `<div class="alert alert-danger">No customer linked to this user. Unable to create address.</div>`;
-                                    }
-                                }
-                            } catch (error) {
-                                document.getElementById("responseMessage").innerHTML =
-                                    `<div class="alert alert-danger">An error occurred while processing your request.</div>`;
-                            }
-                        });
-
-                        async function createAddress(addressData) {
-                            try {
-                                const response = await frappe.call({
-                                    method: "frappe.client.insert",
-                                    args: {
-                                        doc: {
-                                            doctype: "Address",
-                                            address_type: addressData.address_type,
-                                            address_line1: addressData.address_line1,
-                                            address_line2: addressData.address_line2,
-                                            city: addressData.city,
-                                            state: addressData.state,
-                                            county: addressData.county,
-                                            pincode: addressData.postal_code,
-                                            email_id: addressData.email_id,
-                                            phone: addressData.phone,
-                                            fax: addressData.fax,
-                                            is_primary_address: addressData.is_primary_address,
-                                            is_shipping_address: addressData.is_shipping_address,
-                                            disabled: addressData.disabled,
-                                            links: [
-                                                {
-                                                    link_doctype: "Customer",
-                                                    link_name: addressData.link_name,
-                                                },
-                                            ],
-                                        },
-                                    },
-                                });
-
-                                if (response.message) {
-                                    document.getElementById("responseMessage").innerHTML =
-                                        `<div class="alert alert-success">Address created successfully!</div>`;
-                                    form.reset();
-                                } else {
-                                    document.getElementById("responseMessage").innerHTML =
-                                        `<div class="alert alert-danger">Failed to create address.</div>`;
-                                }
-                            } catch (error) {
-                                document.getElementById("responseMessage").innerHTML =
-                                    `<div class="alert alert-danger">An error occurred while creating the address.</div>`;
-                            }
-                        }
-
-                        document.getElementById("discard-button").addEventListener("click", () => {
-                            document.getElementById("addressForm").reset();
-                        });
-                    });
-                </script>
-
-
-                <!-- <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        const form = document.getElementById("addressForm");
-                        form.addEventListener("submit", async function (e) {
-                            e.preventDefault();
-                            const formData = new FormData(form);
-                            const addressData = {};
-                            formData.forEach((value, key) => {
-                                addressData[key] = value;
-                            });
-                            addressData.is_primary_address = document.getElementById("is_primary_address").checked ? 1 : 0;
-                            addressData.is_shipping_address = document.getElementById("is_shipping_address").checked ? 1 : 0;
-                            addressData.disabled = document.getElementById("disabled").checked ? 1 : 0;
-                            try {
-                                const user = frappe.session.user; // Get current user
-                                const customerResponse = await frappe.call({
-                                    method: "frappe.client.get_list",
-                                    args: {
-                                        doctype: "Contact",
-                                        filters: { user: user },
-                                        fields: ["name", "company_name"]
-                                    },
-                                });
-                                if (customerResponse.message.length > 0) {
-                                    const customer = customerResponse.message[0];
-                                    addressData.link_document_type = "Customer";
-                                    addressData.link_name = customer.company_name;
-                                    frappe.call({
-                                        method: "frappe.client.insert",
-                                        args: {
-                                            doc: {
-                                                doctype: "Address",
-                                                address_type: addressData.address_type,
-                                                address_line1: addressData.address_line1,
-                                                address_line2: addressData.address_line2,
-                                                city: addressData.city,
-                                                state: addressData.state,
-                                                county: addressData.county,
-                                                pincode: addressData.postal_code,
-                                                email_id: addressData.email_id,
-                                                phone: addressData.phone,
-                                                fax: addressData.fax,
-                                                is_primary_address: addressData.is_primary_address,
-                                                is_shipping_address: addressData.is_shipping_address,
-                                                disabled: addressData.disabled,
-                                                links: [
-                                                    {
-                                                        link_doctype: "Customer",
-                                                        link_name: customer.company_name,
-                                                    },
-                                                ],
-                                            },
-                                        },
-                                        callback: function (response) {
-                                            if (response.message) {
-                                                document.getElementById("responseMessage").innerHTML =
-                                                    `<div class="alert alert-success">Address created successfully!</div>`;
-                                                form.reset();
-                                            } else {
-                                                document.getElementById("responseMessage").innerHTML =
-                                                    `<div class="alert alert-danger">Failed to create address.</div>`;
-                                            }
-                                        },
-                                        error: function () {
-                                            document.getElementById("responseMessage").innerHTML =
-                                                `<div class="alert alert-danger">An error occurred.</div>`;
-                                        },
-                                    });
-                                } else {
-                                    document.getElementById("responseMessage").innerHTML =
-                                        `<div class="alert alert-danger">No customer linked to this user.</div>`;
-                                }
-                            } catch (error) {
-                                document.getElementById("responseMessage").innerHTML =
-                                    `<div class="alert alert-danger">An error occurred while fetching customer details.</div>`;
-                            }
-                        });
-                    });
-                </script> -->
-
 
             </main>
         </div>
     </div>
 </div>
+{%endblock%}
+
+{% block script %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("addressForm");
+
+        form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const addressData = {};
+
+            formData.forEach((value, key) => {
+                addressData[key] = value;
+            });
+
+            addressData.is_primary_address = document.getElementById("is_primary_address").checked ? 1 : 0;
+            addressData.is_shipping_address = document.getElementById("is_shipping_address").checked ? 1 : 0;
+            addressData.disabled = document.getElementById("disabled").checked ? 1 : 0;
+
+            try {
+                const user = frappe.session.user; // Get current user
+                if (user === "Administrator") {
+                    // Prompt admin to input customer name manually
+                    const customerName = prompt("No customer is linked to this admin user. Please enter a customer name to link:");
+
+                    if (!customerName) {
+                        document.getElementById("responseMessage").innerHTML =
+                            `<div class="alert alert-danger">Customer name is required to create the address.</div>`;
+                        return;
+                    }
+
+                    addressData.link_document_type = "Customer";
+                    addressData.link_name = customerName;
+
+                    await createAddress(addressData);
+                } else {
+                    // Fetch customer linked to the current user
+                    const customerResponse = await frappe.call({
+                        method: "frappe.client.get_list",
+                        args: {
+                            doctype: "Contact",
+                            filters: { user: user },
+                            fields: ["name", "company_name"],
+                        },
+                    });
+
+                    if (customerResponse.message.length > 0) {
+                        const customer = customerResponse.message[0];
+                        addressData.link_document_type = "Customer";
+                        addressData.link_name = customer.company_name;
+
+                        await createAddress(addressData);
+                    } else {
+                        document.getElementById("responseMessage").innerHTML =
+                            `<div class="alert alert-danger">No customer linked to this user. Unable to create address.</div>`;
+                    }
+                }
+            } catch (error) {
+                document.getElementById("responseMessage").innerHTML =
+                    `<div class="alert alert-danger">An error occurred while processing your request.</div>`;
+            }
+        });
+
+        async function createAddress(addressData) {
+            try {
+                const response = await frappe.call({
+                    method: "frappe.client.insert",
+                    args: {
+                        doc: {
+                            doctype: "Address",
+                            address_type: addressData.address_type,
+                            address_line1: addressData.address_line1,
+                            address_line2: addressData.address_line2,
+                            city: addressData.city,
+                            state: addressData.state,
+                            county: addressData.county,
+                            pincode: addressData.postal_code,
+                            email_id: addressData.email_id,
+                            phone: addressData.phone,
+                            fax: addressData.fax,
+                            is_primary_address: addressData.is_primary_address,
+                            is_shipping_address: addressData.is_shipping_address,
+                            disabled: addressData.disabled,
+                            links: [
+                                {
+                                    link_doctype: "Customer",
+                                    link_name: addressData.link_name,
+                                },
+                            ],
+                        },
+                    },
+                });
+
+                if (response.message) {
+                    document.getElementById("responseMessage").innerHTML =
+                        `<div class="alert alert-success">Address created successfully!</div>`;
+                    form.reset();
+                } else {
+                    document.getElementById("responseMessage").innerHTML =
+                        `<div class="alert alert-danger">Failed to create address.</div>`;
+                }
+            } catch (error) {
+                document.getElementById("responseMessage").innerHTML =
+                    `<div class="alert alert-danger">An error occurred while creating the address.</div>`;
+            }
+        }
+
+        document.getElementById("discard-button").addEventListener("click", () => {
+            document.getElementById("addressForm").reset();
+        });
+    });
+</script>
 {%endblock%}

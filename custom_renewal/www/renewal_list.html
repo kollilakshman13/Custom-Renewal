@@ -31,8 +31,7 @@ import frappe
 
                         <div class="website-list" data-doctype="Renewal List" data-txt="None" style="min-height:90vh;">
                             <div class="website-list-filters">
-                                <!-- <input type="text" id="search-bar" class="form-control" placeholder="Search..."
-                                    onkeyup="filterRows()"> -->
+
                             </div>
                             <div id="row-container" class="result"
                                 style="background-color: white;box-sizing: border-box;">
@@ -41,6 +40,8 @@ import frappe
                                     <div class="row align-items-center">
                                         <div class="col-sm-2">
                                             <span class="list-item-name font-weight-bold">{{d.name}}</span>
+                                            <a class="transaction-item-link"
+                                                href="renewal_lists?d_name={{ d.name }}">Link</a>
                                             <div class="small text-muted transaction-time" title="">
                                             </div>
                                         </div>
@@ -66,7 +67,7 @@ import frappe
                                             {{d.total_amount}}
                                         </div>
                                     </div>
-                                    <a class="transaction-item-link" href="renewal_lists?d_name={{ d.name }}">Link</a>
+
                                 </div>
                                 {% endfor %}
                             </div>
@@ -91,62 +92,6 @@ import frappe
                             </div>
                         </div>
 
-                        <script>
-                            rowsPerPage = 20; // Default number of rows to show
-                            let currentlyVisibleRows = 0; // Counter to track visible rows
-                            searchQuery = ""; // Store the current search query
-
-                            // Function to show rows based on pagination and search
-                            function showRows(count, button = null) {
-                                rowsPerPage = count; // Update rows per page
-                                filterRows(); // Reapply search and pagination
-
-                                // Highlight the active button
-                                if (button) {
-                                    const buttons = document.querySelectorAll(".btn-group .btn");
-                                    buttons.forEach(btn => btn.classList.remove("active"));
-                                    button.classList.add("active");
-                                }
-                            }
-                            function filterRows() {
-                                const searchInput = document.getElementById("search-bar").value.toLowerCase();
-                                const rows = document.querySelectorAll("#row-container .web-list-item");
-                                let visibleCount = 0;
-                                rows.forEach(row => {
-                                    const name = row.querySelector(".list-item-name").textContent.toLowerCase();
-                                    const status = row.querySelector(".list-item-status").textContent.toLowerCase();
-                                    const startDate = row.querySelector(".items-startdate").textContent.toLowerCase();
-                                    const endDate = row.querySelector(".items-enddate").textContent.toLowerCase();
-                                    const itemName = row.querySelector(".items-name").textContent.toLowerCase();
-                                    // Normalize the total amount by removing formatting characters
-                                    let totalAmount = row.querySelector(".item-total").textContent.toLowerCase();
-                                    totalAmount = totalAmount.replace(/,/g, "").replace(/\s+/g, "");
-
-                                    // Check for matches across all fields
-                                    const matches =
-                                        name.includes(searchInput) ||
-                                        status.includes(searchInput) ||
-                                        startDate.includes(searchInput) ||
-                                        endDate.includes(searchInput) ||
-                                        itemName.includes(searchInput) ||
-                                        totalAmount.includes(searchInput);
-
-                                    if (matches && visibleCount < rowsPerPage) {
-                                        row.style.display = "block"; // Show matching row
-                                        visibleCount++;
-                                    } else {
-                                        row.style.display = "none"; // Hide row
-                                    }
-                                });
-                            }
-
-                            // Initialize the page with default rows
-                            document.addEventListener("DOMContentLoaded", () => {
-                                const defaultButton = document.querySelector(".btn-group .btn");
-                                showRows(rowsPerPage, defaultButton);
-                            });
-                        </script>
-
                     </div>
                 </main>
 
@@ -156,4 +101,66 @@ import frappe
     </div>
 </div>
 
+{% endblock %}
+{% block script %}
+<script>
+    let rowsPerPage = 20; // Default number of rows to show
+    let currentlyVisibleRows = rowsPerPage; // Track visible rows count
+    let searchQuery = ""; // Store the current search query
+
+    function showRows(count, button = null) {
+        rowsPerPage = count; // Update rows per page
+        currentlyVisibleRows = count; // Update visible row count
+        filterRows(); // Reapply search and pagination
+
+        // Highlight the active button
+        if (button) {
+            const buttons = document.querySelectorAll(".btn-group .btn");
+            buttons.forEach(btn => btn.classList.remove("active"));
+            button.classList.add("active");
+        }
+    }
+
+    function filterRows() {
+        const searchInput = document.getElementById("search-bar").value.toLowerCase();
+        const rows = document.querySelectorAll("#row-container .web-list-item");
+        let visibleCount = 0;
+
+        rows.forEach(row => {
+            const name = row.querySelector(".list-item-name").textContent.toLowerCase();
+            const status = row.querySelector(".list-item-status").textContent.toLowerCase();
+            const startDate = row.querySelector(".items-startdate").textContent.toLowerCase();
+            const endDate = row.querySelector(".items-enddate").textContent.toLowerCase();
+            const itemName = row.querySelector(".items-name").textContent.toLowerCase();
+            let totalAmount = row.querySelector(".item-total").textContent.toLowerCase();
+            totalAmount = totalAmount.replace(/,/g, "").replace(/\s+/g, "");
+
+            const matches =
+                name.includes(searchInput) ||
+                status.includes(searchInput) ||
+                startDate.includes(searchInput) ||
+                endDate.includes(searchInput) ||
+                itemName.includes(searchInput) ||
+                totalAmount.includes(searchInput);
+
+            if (matches && visibleCount < currentlyVisibleRows) {
+                row.style.display = "block"; // Show matching row
+                visibleCount++;
+            } else {
+                row.style.display = "none"; // Hide row
+            }
+        });
+    }
+
+    function loadMoreRows() {
+        currentlyVisibleRows += rowsPerPage; // Increase the number of visible rows
+        filterRows(); // Reapply filtering with increased row count
+    }
+
+    // Initialize the page with default rows
+    document.addEventListener("DOMContentLoaded", () => {
+        const defaultButton = document.querySelector(".btn-group .btn");
+        showRows(rowsPerPage, defaultButton);
+    });
+</script>
 {% endblock %}
