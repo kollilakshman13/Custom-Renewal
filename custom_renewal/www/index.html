@@ -39,6 +39,7 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
 
   <!-- =======================================================
   * Template Name: Eterna
@@ -58,6 +59,29 @@
       .navbar-img {
         display: none;
       }
+    }
+  </style>
+  <style>
+    .circle-container {
+      width: 120px;
+      /* Circle size */
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #f1f1f1;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      margin: 10px;
+    }
+
+    .circle-container img {
+      width: 90%;
+      height: 90%;
+      object-fit: contain;
+      /* Ensures the image fills the circle */
     }
   </style>
 
@@ -394,7 +418,7 @@
               "loop": true,
               "speed": 600,
               "autoplay": {
-                "delay": 5000
+                "delay": 100
               },
               "slidesPerView": "auto",
               "pagination": {
@@ -423,16 +447,40 @@
             }
           </script>
           <div class="swiper-wrapper align-items-center">
-            <div class="swiper-slide"><img src="assets/img/clients/client-1.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-2.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-3.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-4.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-5.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-6.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-7.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-8.png" class="img-fluid" alt=""></div>
+
+            <!-- <div class="swiper-slide">
+              <div class="circle-container">
+                <img src="/assets/img/17-years-experience.png" alt="Profile Image">
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="circle-container">
+                <img src="/assets/img/about.jpg" alt="Profile Image">
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="circle-container">
+                <img src="/assets/img/64-Network-PNG-Logo 3.png" alt="Profile Image">
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="circle-container">
+                <img src="/assets/img/logo (3).png" alt="Profile Image">
+              </div>
+            </div> -->
+
+            {% set brand= frappe.get_all("Brand",fields=['*'],order_by="name asc") %}
+            {% for i in brand %}
+            <div class="swiper-slide">
+              <div class="circle-container">
+                {% if i.image %}
+                <img src="{{i.image}}" alt="Profile Image">
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
           </div>
-          <div class="swiper-pagination"></div>
+          <!-- <div class="swiper-pagination"></div> -->
         </div>
 
       </div>
@@ -542,6 +590,8 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script> -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
 </body>
 

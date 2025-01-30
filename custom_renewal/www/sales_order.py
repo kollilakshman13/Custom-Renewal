@@ -8,8 +8,8 @@ def get_context(context):
         context.doc = frappe.get_all(
             "Sales Order",
             fields=["*"],
-            order_by="creation desc",
-            limit_page_length=20
+            order_by="creation desc"
+            #limit_page_length=20
         )
         for order in context.doc:
             order.item_name = frappe.get_value(
@@ -44,8 +44,8 @@ def get_context(context):
             "Sales Order",
             filters={"customer_name": customer},
             fields=["*"],
-            order_by="creation desc",
-            limit_page_length=20
+            order_by="creation desc"
+           # limit_page_length=20
         )
         for order in context.doc:
             order.item_name = frappe.get_value(

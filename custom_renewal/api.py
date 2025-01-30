@@ -487,26 +487,3 @@ def save_profile_data(first_name, middle_name, last_name, phone, mobile_no):
     user_doc.save()
     frappe.db.commit()
     return {"message":("Profile updated successfully.")}
-
-
-import frappe
-
-@frappe.whitelist()
-def get_sales_invoices(start=0, page_length=20, search=""):
-    start = int(start)
-    page_length = int(page_length)
-    
-    filters = {}
-    if search:
-        filters["name"] = ["like", f"%{search}%"]
-
-    invoices = frappe.get_all(
-        "Sales Invoice",
-        fields=["name", "posting_date", "status", "rounded_total", "custom_invoice_attachment"],
-        filters=filters,
-        start=start,
-        page_length=page_length,
-        order_by="posting_date desc"
-    )
-
-    return invoices

@@ -2,8 +2,9 @@
 {% extends "templates/web.html" %}
 import frappe
 {% block page_content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="container">
-    <div class="row" id="page-list" data-path="renewal_list">
+    <div class="row" id="page-list" data-path="sales_invoices">
         <div class="sidebar-column col-sm-2">
             <div class="web-sidebar">
                 {% include web_sidebar %}
@@ -15,6 +16,13 @@ import frappe
                     <div class="breadcrumb-container container">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                                <div class="page-header-icon">
+                                    <i class="fa fa-bars" aria-hidden="true" style="font-size:20px;"
+                                        onclick="toggleSidebar(event)"></i>
+                                </div>
+                                <div id="sidebar1" class="page-header-toggle">
+                                    {% include web_sidebar1 %}
+                                </div>
                                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"
                                     class="breadcrumb-item">
                                     <a itemprop="item" href="/sales_invoice" itemprop="url">
@@ -32,6 +40,7 @@ import frappe
                                 </li>
                             </ol>
                         </nav>
+                        
                     </div>
                 </div>
                 <main class="container ml-2" style="background-color: white;">
@@ -127,7 +136,7 @@ import frappe
                             </div>
                         </div>
                         <div>
-                            <div class="">
+                            <div class="mr-1">
                                 <div class="w-100 mt-5 order-taxes font-weight-bold">
                                     <div class="col-4 d-flex">
                                         <div class="item-grand-total col-8">
@@ -148,5 +157,81 @@ import frappe
 
     </div>
 </div>
+
+{% endblock %}
+{% block script %}
+
+<script>
+    function toggleSidebar(event = null) {
+        if (event) {
+            event.stopPropagation(); // Prevent event bubbling
+        }
+
+        const sidebarMain = document.querySelector('.sidebar-column'); // web_sidebar
+        const sidebar1 = document.getElementById('sidebar1'); // web_sidebar1
+        const screenWidth = window.innerWidth;
+
+        if (screenWidth > 1024) {
+            // Laptop & Desktop logic
+            if (sidebarMain) {
+                sidebarMain.classList.toggle('collapsed');
+                localStorage.setItem('sidebar-collapsed', sidebarMain.classList.contains('collapsed') ? 'true' : 'false');
+            }
+        } else {
+            // Mobile & Tablet logic
+            if (sidebar1) {
+                sidebar1.style.display = (sidebar1.style.display === 'none' || !sidebar1.style.display) ? 'block' : 'none';
+            }
+        }
+    }
+
+    function toggleDropdown(event) {
+        event.stopPropagation(); // Prevent click from bubbling up
+        const dropdownCard = document.getElementById("dropdownCard"); // Desktop/Laptop dropdown
+        const dropdownCard1 = document.getElementById("dropdownCard1"); // Mobile/Tablet dropdown
+        const screenWidth = window.innerWidth;
+
+        if (screenWidth > 1024) {
+            // Desktop/Laptop
+            if (dropdownCard) {
+                dropdownCard.style.display = (dropdownCard.style.display === "none" || !dropdownCard.style.display) ? "block" : "none";
+            }
+        } else {
+            // Mobile/Tablet
+            if (dropdownCard1) {
+                dropdownCard1.style.display = (dropdownCard1.style.display === "none" || !dropdownCard1.style.display) ? "block" : "none";
+            }
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const sidebarMain = document.querySelector('.sidebar-column');
+        if (window.innerWidth > 1024 && sidebarMain && localStorage.getItem('sidebar-collapsed') === 'true') {
+            sidebarMain.classList.add('collapsed');
+        }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", function (event) {
+        const dropdownCard = document.getElementById("dropdownCard");
+        const dropdownCard1 = document.getElementById("dropdownCard1");
+        const profileContainer = document.querySelector('.profile-container');
+
+        if (window.innerWidth > 1024) {
+            // Desktop/Laptop
+            if (dropdownCard && dropdownCard.style.display === "block" &&
+                !dropdownCard.contains(event.target) && !profileContainer.contains(event.target)) {
+                dropdownCard.style.display = "none";
+            }
+        } else {
+            // Mobile/Tablet
+            if (dropdownCard1 && dropdownCard1.style.display === "block" &&
+                !dropdownCard1.contains(event.target) && !profileContainer.contains(event.target)) {
+                dropdownCard1.style.display = "none";
+            }
+        }
+    });
+</script>
+
 
 {% endblock %}

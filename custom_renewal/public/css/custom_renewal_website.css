@@ -89,6 +89,7 @@ body[data-path="me"] .container {
     margin-right: 0 !important;
     margin-left: 0 !important;
     font-size: 12px !important;
+    background-color:white !important;
 }
 
 
@@ -509,6 +510,9 @@ li .sidebar-item {
 }
 
 .sidebar-column.collapsed .sidebar-item .label {
+    display: none;
+}
+.sidebar-column.collapsed .sidebar-item .label1 {
     display: none;
 }
 

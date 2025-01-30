@@ -117,7 +117,7 @@
 	</div>
 </div>
 
-
+{% block script %}
 <script>
 	frappe.ready(function () {
 		$('.sidebar-item a').each(function (index) {
@@ -191,5 +191,7 @@
 		}
 	});
 
-
 </script>
+
+
+{% endblock %}

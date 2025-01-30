@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Helpdesk</title>
+    <script src="/assets/frappe/js/frappe-web.min.js"></script>
+    <script src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #343a40;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            padding: 15px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+
+        .sidebar a:hover {
+            background: #495057;
+        }
+
+        .content {
+            margin-left: 270px;
+            padding: 20px;
+            width: 100%;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        .active {
+            background: #007bff !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>Helpdesk</h3>
+        <a href="#" class="nav-link active" data-page="sales_order">Sales Order</a>
+        <a href="#" class="nav-link" data-page="sales_invoice">Sales Invoice</a>
+        <a href="#" class="nav-link" data-page="renewal_list">Renewal List</a>
+        <a href="#" class="nav-link" data-page="address_list">Address List</a>
+        <a href="#" class="nav-link" data-page="issue">Issue</a>
+        <a href="#" class="nav-link" data-page="me">Me</a>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content">
+        <div id="page-content">
+            <h2>Welcome to Helpdesk</h2>
+            <p>Select an option from the sidebar to load content.</p>
+        </div>
+    </div>
+
+    <!-- JavaScript to Load Content Dynamically -->
+    <script>
+        $(document).ready(function () {
+            $(".nav-link").click(function (e) {
+                e.preventDefault();
+
+                // Remove active class and set new active
+                $(".nav-link").removeClass("active");
+                $(this).addClass("active");
+
+                // Get page name from data attribute
+                let page = $(this).data("page");
+
+                // Fetch page content dynamically
+                $("#page-content").load(`/${page}.html`);
+            });
+        });
+    </script>
+
+</body>
+
+</html>

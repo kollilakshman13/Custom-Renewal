@@ -104,13 +104,24 @@
 
 
 <script>
+    function logout1() {
+        frappe.call({
+            method: "frappe.handler.logout",
+            callback: function () {
+                window.location.href = "/login";
+            },
+            error: function (err) {
+                console.error("Logout failed:", err);
+            }
+        });
+    }
     // Toggle the sidebar
     function toggleSidebar(event) {
         event.stopPropagation(); // Prevent the click event from propagating
         const sidebar1 = document.getElementById('sidebar1');
 
-        if (sidebar1.style.display === 'none' || !sidebar.style.display) {
-            sidebar1.style.display = 'block'; // Show sidebar
+        if (sidebar1.style.display === 'none' || !sidebar1.style.display) {
+            sidebar1.style.display = 'block'; // Show sidebar   
         } else {
             sidebar1.style.display = 'none'; // Hide sidebar
         }
@@ -118,6 +129,7 @@
 
     // Toggle the dropdown inside the sidebar
     function toggleDropdown(event) {
+        // console.log("Dropdown clicked!");
         event.stopPropagation(); // Prevent the click event from propagating
         const dropdownCard1 = document.getElementById("dropdownCard1");
 
@@ -148,5 +160,7 @@
             !profileContainer.contains(event.target)) {
             dropdownCard1.style.display = 'none';
         }
+
+
     });
 </script>
