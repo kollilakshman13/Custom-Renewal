@@ -36,7 +36,7 @@ from frappe.utils import get_formatted
                                 <h3 class="my-account-header" style="margin: 0;color:#383838;">Sales Invoice</h3>
                             </div>
                         </div>
-                        <div class="page-header-actions-block">
+                        <div class="page-header-actions-block mt-1">
                             <input type="text" id="search-bar" class="form-control" placeholder="Search..."
                                 onkeyup="filterRows()" style="border-radius:10px;">
                         </div>
@@ -92,7 +92,7 @@ from frappe.utils import get_formatted
                                 {% endfor %}
                             </div>
                         </div>
-                        <div class="list-paging-area level" style="padding:5px">
+                        <div class="list-paging-area level mb-2" style="padding:5px">
                             <div class="level-left">
                                 <div class="btn-group">
                                     <button class="btn btn-sm b1 mr-2" onclick="showRows(20, this)">20</button>
@@ -102,7 +102,7 @@ from frappe.utils import get_formatted
                                 </div>
                             </div>
                             <div class="level-right">
-                                <button class="btn" onclick="loadMoreRows()">
+                                <button class="btn btn-sm" onclick="loadMoreRows()">
                                     Load More
                                 </button>
                             </div>

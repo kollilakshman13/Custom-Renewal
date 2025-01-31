@@ -89,7 +89,7 @@ body[data-path="me"] .container {
     margin-right: 0 !important;
     margin-left: 0 !important;
     font-size: 12px !important;
-    background-color:white !important;
+    background-color: white !important;
 }
 
 
@@ -184,6 +184,23 @@ body[data-path="me"] .container {
         margin-left: 0px !important;
         margin-right: 0px !important;
 
+    }
+
+    body[data-path="sales_orders"] .page-breadcrumbs,
+    body[data-path="sales_invoices"] .page-breadcrumbs,
+    body[data-path="renewal_lists"] .page-breadcrumbs,
+    body[data-path="ticket"] .page-breadcrumbs,
+    body[data-path="tickets"] .page-breadcrumbs,
+    body[data-path="address_create"] .page-breadcrumbs {
+        width: 90vw !important;
+    }
+
+    body[data-path="sales_orders"] .breadcrumb-item,
+    body[data-path="sales_invoices"] .breadcrumb-item,
+    body[data-path="renewal_lists"] .breadcrumb-item,
+    body[data-path="ticket"] .breadcrumb-item {
+        display: flex !important;
+        align-items: center !important;
     }
 }
 
@@ -512,6 +529,7 @@ li .sidebar-item {
 .sidebar-column.collapsed .sidebar-item .label {
     display: none;
 }
+
 .sidebar-column.collapsed .sidebar-item .label1 {
     display: none;
 }
