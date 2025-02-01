@@ -70,18 +70,12 @@
 	<div class="profile-container mb-1" onclick="toggleDropdown(event)">
 		<div class="profile-row">
 			<div class="profile-avatar rounded-full ml-2" style="width:40px;">
-				<!-- {% set image = frappe.db.get_value('User', frappe.session.user, 'user_image') %}
-				{% if image %}
-				<img src="{{ image }}" class="rounded-full h-full w-full">
-				{% else %}
-				<img src="/files/64-Network-PNG-Logo3.png" class="rounded-full h-full w-full">
-				{% endif %} -->
 				<img src="/files/64-Network-PNG-Logo3.png" class="rounded-full h-full w-full"
 					style="width:30px;height:30px;object-fit: fill;">
 			</div>
 			<div class="profile-info">
 				<p class="profile-name" style="font-weight: 600;font-size: 14px;">Helpdesk</p>
-				<p class="profile-role" style="font-size: 12px;">
+				<p class="profile-role ellipsis ellipsis-width" style="font-size: 12px;">
 					{{ frappe.db.get_value("User", frappe.session.user, "full_name") or frappe.session.user }}
 				</p>
 			</div>

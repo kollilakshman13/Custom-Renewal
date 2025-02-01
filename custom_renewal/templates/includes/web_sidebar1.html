@@ -74,7 +74,7 @@
             </div>
             <div class="profile-info">
                 <p class="profile-name" style="font-size: 12px;font-weight: 600;">Helpdesk</p>
-                <p class="profile-role" style="font-size: 12px;padding:0px;margin:0px;">
+                <p class="profile-role ellipsis ellipsis-width" style="font-size: 12px;padding:0px;margin:0px;">
                     {{ frappe.db.get_value("User", frappe.session.user, "full_name") or frappe.session.user }}
                 </p>
             </div>

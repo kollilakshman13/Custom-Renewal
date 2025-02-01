@@ -13,7 +13,21 @@ import frappe
         <div class="main-column col-sm-10">
             <div class="page-content-wrapper">
                 <div class="page-breadcrumbs">
-
+                    <div class="breadcrumb-container" style="margin-top:-1px;">
+                        <nav aria-label="breadcrumb" style="display: flex; align-items: center;">
+                            <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                                <div class="page-header-icon">
+                                    <i class="fa fa-bars" aria-hidden="true" onclick="toggleSidebar(event)"></i>
+                                </div>
+                                <div id="sidebar1" class="page-header-toggle">
+                                    {% include web_sidebar1 %}
+                                </div>
+                            </ol>
+                            <ol class="breadcrumb">
+                                <h3 class="my-account-header" style="margin: 0;color:#383838;">Address</h3>
+                            </ol>
+                        </nav>
+                    </div>
                 </div>
             </div>
             <main class="container ml-2">
@@ -21,7 +35,7 @@ import frappe
                     <!-- <div class="page-head">
                         <h3 class="my-account-header ml-1">Address</h3>
                     </div> -->
-                    <div class="page-head">
+                    <!-- <div class="page-head">
                         <div style="display: flex; align-items: center;">
                             <div class="page-header-icon">
                                 <i class="fa fa-bars" aria-hidden="true" style="font-size:20px;"
@@ -32,7 +46,7 @@ import frappe
                             </div>
                             <h3 class="my-account-header" style="margin: 0;color:#383838;">Address</h3>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="page_content mt-1 mb-3" style="background-color: white;margin:2px;padding:2px;">
 
@@ -151,8 +165,8 @@ import frappe
                             </div>
                         </div>
 
-                        <button type="clear" class="btn btn-secondary" id="discard-button">Clear</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="clear" class="btn btn-secondary btn-sm" id="discard-button">Clear</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Submit</button>
                     </form>
                     <div id="responseMessage"></div>
 
@@ -286,7 +300,7 @@ import frappe
         const sidebar1 = document.getElementById('sidebar1'); // web_sidebar1
         const screenWidth = window.innerWidth;
 
-        if (screenWidth > 1024) {
+        if (screenWidth > 1023) {
             // Laptop & Desktop logic
             if (sidebarMain) {
                 sidebarMain.classList.toggle('collapsed');
@@ -306,7 +320,7 @@ import frappe
         const dropdownCard1 = document.getElementById("dropdownCard1"); // Mobile/Tablet dropdown
         const screenWidth = window.innerWidth;
 
-        if (screenWidth > 1024) {
+        if (screenWidth > 1023) {
             // Desktop/Laptop
             if (dropdownCard) {
                 dropdownCard.style.display = (dropdownCard.style.display === "none" || !dropdownCard.style.display) ? "block" : "none";
@@ -321,7 +335,7 @@ import frappe
 
     document.addEventListener("DOMContentLoaded", () => {
         const sidebarMain = document.querySelector('.sidebar-column');
-        if (window.innerWidth > 1024 && sidebarMain && localStorage.getItem('sidebar-collapsed') === 'true') {
+        if (window.innerWidth > 1023 && sidebarMain && localStorage.getItem('sidebar-collapsed') === 'true') {
             sidebarMain.classList.add('collapsed');
         }
     });
@@ -332,7 +346,7 @@ import frappe
         const dropdownCard1 = document.getElementById("dropdownCard1");
         const profileContainer = document.querySelector('.profile-container');
 
-        if (window.innerWidth > 1024) {
+        if (window.innerWidth > 1023) {
             // Desktop/Laptop
             if (dropdownCard && dropdownCard.style.display === "block" &&
                 !dropdownCard.contains(event.target) && !profileContainer.contains(event.target)) {

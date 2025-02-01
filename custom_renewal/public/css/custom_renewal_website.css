@@ -1,6 +1,7 @@
 * {
     /* font-weight: 600 !important; */
     color: #383838 !important;
+
 }
 
 html {
@@ -92,18 +93,6 @@ body[data-path="me"] .container {
     background-color: white !important;
 }
 
-
-/* .container {
-    width: 100% !important;
-    height: 100% !important;
-    padding-right: 5px !important;
-    padding-left: 5px !important;
-    margin-right: 0px !important;
-    margin-left: 0px !important;
-    font-size: 12px !important;
-    
-} */
-
 .row {
     height: 100% !important;
     width: 100% !important;
@@ -130,22 +119,6 @@ body[data-path="me"] .container {
     }
 }
 
-
-
-/* .btn-group .btn.active {
-    background-color: gray !important;
-    color: white !important;
-} */
-
-
-
-/* [data-doctype="Web Form"] .page-content-wrapper .container .page_content .web-list-container {
-    min-height: 90vh !important;
-    width: 100% !important;
-    border: 1px solid var(--dark-border-color);
-    border-radius: var(--border-radius-md);
-    padding: 2rem;
-} */
 @media screen and (max-width: 769px) {
 
     body[data-path="sales_order"] .page_content,
@@ -187,8 +160,11 @@ body[data-path="me"] .container {
     }
 
     body[data-path="sales_orders"] .page-breadcrumbs,
+    body[data-path="sales_order"] .page-breadcrumbs,
     body[data-path="sales_invoices"] .page-breadcrumbs,
+    body[data-path="sales_invoice"] .page-breadcrumbs,
     body[data-path="renewal_lists"] .page-breadcrumbs,
+    body[data-path="renewal_list"] .page-breadcrumbs,
     body[data-path="ticket"] .page-breadcrumbs,
     body[data-path="tickets"] .page-breadcrumbs,
     body[data-path="address_create"] .page-breadcrumbs {
@@ -196,13 +172,36 @@ body[data-path="me"] .container {
     }
 
     body[data-path="sales_orders"] .breadcrumb-item,
+    body[data-path="sales_order"] .breadcrumb-item,
     body[data-path="sales_invoices"] .breadcrumb-item,
+    body[data-path="sales_invoice"] .breadcrumb-item,
     body[data-path="renewal_lists"] .breadcrumb-item,
+    body[data-path="renewal_list"] .breadcrumb-item,
     body[data-path="ticket"] .breadcrumb-item {
         display: flex !important;
         align-items: center !important;
     }
 }
+
+@media screen and (max-width:768px) {
+
+    body[data-path="sales_order"] .page-breadcrumbs,
+    body[data-path="sales_orders"] .page-breadcrumbs,
+    body[data-path="sales_invoice"] .page-breadcrumbs,
+    body[data-path="sales_invoices"] .page-breadcrumbs,
+    body[data-path="ticket"] .page-breadcrumbs,
+    body[data-path="tickets"] .page-breadcrumbs,
+    body[data-path="issue"] .page-breadcrumbs,
+    body[data-path="renewal_list"] .page-breadcrumbs,
+    body[data-path="renewal_lists"] .page-breadcrumbs,
+    body[data-path="address_create"] .page-breadcrumbs,
+    body[data-path="address_list"] .page-breadcrumbs,
+    body[data-path="me"] .page-breadcrumbs {
+        width: 90vw !important;
+    }
+}
+
+
 
 .page-header-icon {
     font-size: 20px !important;
@@ -247,7 +246,6 @@ li .sidebar-item {
 }
 
 .sidebar-item:hover {
-    /* background-color: white !important; */
     background-color: white !important;
     border-radius: 10px !important;
 }
@@ -276,17 +274,13 @@ li .sidebar-item {
     margin: 1rem !important;
 }
 
-/* [data-doctype="Web Form"] .page-content-wrapper .container .page_content {
-    max-width: 90vw !important;
-    margin: 0rem !important;
-} */
-
 /* Profile Dropdown */
 .profile-container {
     display: flex;
     margin-bottom: 2px;
     width: 100%;
     border-radius: 10px;
+    padding: 0 !important;
 }
 
 .profile-container:hover {
@@ -297,7 +291,7 @@ li .sidebar-item {
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 10px;
+    /* gap: 10px; */
     cursor: pointer;
     border-radius: 10px;
 }
@@ -544,8 +538,6 @@ li .sidebar-item {
 
 
 
-
-
 /*ticke comment css*/
 
 .add-comment-button {
@@ -677,7 +669,7 @@ li .sidebar-item {
 }
 
 
-@media(max-width: 426px) {
+/* @media(max-width: 426px) {
     body[data-path="sales_order"] .page-head {
         width: 180px !important;
     }
@@ -696,7 +688,7 @@ li .sidebar-item {
     .modal-content {
         width: 100% !important;
     }
-}
+} */
 
 @media (max-width:567px) {
     .website-list {
@@ -741,4 +733,314 @@ li .sidebar-item {
     font-size: 12px;
     font-weight: 400;
     color: #383838;
+}
+
+.search {
+    padding: 0px !important;
+    margin-top: 2px !important;
+}
+
+.my-account-name {
+    font-size: 18px !important;
+}
+
+@media screen and (max-width: 769px) {
+    h3 {
+        font-size: 14px !important;
+        font-weight: bold !important;
+    }
+
+    .page-header-icon {
+        font-size: 14px !important;
+    }
+
+    .page-head {
+        margin-top: 5px !important;
+    }
+
+    .list-item-name {
+        font-size: 12px !important;
+    }
+
+    .items-name {
+        font-size: 12px !important;
+    }
+
+    .item-total {
+        font-size: 12px !important;
+    }
+
+    .search {
+        font-size: 12px !important;
+        padding: 0px !important;
+        margin-top: 2px !important;
+    }
+
+    .breadcrumb-item {
+        font-size: 12px !important;
+    }
+
+    .customer {
+        font-size: 12px !important;
+    }
+
+    .order-items {
+        font-size: 12px !important;
+    }
+
+    .item_name_and_description {
+        font-size: 12px !important;
+    }
+
+    .item-qty {
+        font-size: 12px !important;
+    }
+
+    .order-qty {
+        font-size: 12px !important;
+    }
+
+    .order-rate {
+        font-size: 12px !important;
+    }
+
+    .item-amount {
+        font-size: 12px !important;
+    }
+
+    .item-grand-total {
+        font-size: 12px !important;
+    }
+
+    .btn-group .btn-sm {
+        font-size: 12px !important;
+    }
+
+    .level-right .btn-sm {
+        font-size: 12px !important;
+    }
+
+    .page-header-actions-block .btn-sm {
+        font-size: 10px !important;
+    }
+
+    .btn {
+        font-size: 12px !important;
+    }
+
+    .status {
+        font-size: 12px !important;
+    }
+
+    [data-path="tickets"] input[type="text"] {
+        font-size: 12px !important;
+    }
+
+    [data-path="tickets"] input[type="file"] {
+        font-size: 12px !important;
+    }
+
+    [data-path="tickets"] textarea {
+        font-size: 12px !important;
+    }
+
+    [data-path="tickets"] select {
+        font-size: 12px !important;
+    }
+
+    [data-path="ticket"] .control-label,
+    [data-path="ticket"] .control-value,
+    [data-path="ticket"] .content,
+    [data-path="ticket"] .commentname {
+        font-size: 12px !important;
+    }
+
+    [data-path="address_list"] .form-group,
+    [data-path="address_list"] .form-control,
+    [data-path="address_list"] .modal-title,
+    [data-path="address_create"] .form-group,
+    [data-path="address_create"] .form-control,
+    [data-path="me"] .modal-title,
+    [data-path="me"] .form-group,
+    [data-path="me"] .form-control,
+    [data-path="me"] .my-account-item,
+    [data-path="me"] .my-account-item-desc {
+        font-size: 12px !important;
+    }
+
+    [data-path="me"] .my-account-name,
+    [data-path="me"] .my-account-item-link {
+        font-size: 14px !important;
+    }
+}
+
+@media screen and (max-width: 426px) and (min-width: 300px) {
+    h3 {
+        font-size: 12px !important;
+    }
+
+
+
+    .page-head {
+        margin-top: 5px !important;
+    }
+
+    .page-header-icon {
+        font-size: 14px !important;
+    }
+
+    .list-item-name {
+        font-size: 10px !important;
+    }
+
+    .items-name {
+        font-size: 10px !important;
+    }
+
+    .item-total {
+        font-size: 10px !important;
+    }
+
+    .search {
+        font-size: 10px !important;
+        padding: 0px !important;
+    }
+
+    .breadcrumb-item {
+        font-size: 10px !important;
+    }
+
+    .customer {
+        font-size: 10px !important;
+    }
+
+    .order-items {
+        font-size: 10px !important;
+    }
+
+    .item_name_and_description {
+        font-size: 10px !important;
+    }
+
+    .item-qty {
+        font-size: 10px !important;
+    }
+
+    .order-qty {
+        font-size: 10px !important;
+    }
+
+    .order-rate {
+        font-size: 10px !important;
+    }
+
+    .item-amount {
+        font-size: 10px !important;
+    }
+
+    .item-grand-total {
+        font-size: 10px !important;
+    }
+
+    .page-header-actions-block .btn-sm {
+        font-size: 10px !important;
+    }
+
+    .btn-group .btn-sm {
+        font-size: 10px !important;
+    }
+
+    .btn-sm {
+        font-size: 10px !important;
+    }
+
+    .level-right .btn-sm {
+        font-size: 10px !important;
+    }
+
+    .status {
+        font-size: 10px !important;
+    }
+
+    .form-control {
+        width: 70% !important;
+        padding: 2px !important;
+    }
+
+    [data-path="tickets"] input[type="text"] {
+        font-size: 10px !important;
+    }
+
+    [data-path="tickets"] input[type="file"] {
+        font-size: 10px !important;
+    }
+
+    [data-path="tickets"] textarea {
+        font-size: 10px !important;
+    }
+
+    [data-path="tickets"] select {
+        font-size: 10px !important;
+    }
+
+    [data-path="ticket"] .control-label,
+    [data-path="ticket"] .control-value,
+    [data-path="ticket"] .content,
+    [data-path="ticket"] .commentname {
+        font-size: 10px !important;
+    }
+
+    .address-title {
+        font-size: 10px !important;
+    }
+
+    body[data-path="address_list"] {
+        font-size: 10px !important;
+    }
+
+    [data-path="address_list"] .form-group,
+    [data-path="address_list"] .form-control,
+    [data-path="address_list"] .modal-title,
+    [data-path="address_create"] .form-group,
+    [data-path="address_create"] .form-control,
+    [data-path="me"] .modal-title,
+    [data-path="me"] .form-group,
+    [data-path="me"] .form-control,
+    [data-path="me"] .my-account-item,
+    [data-path="me"] .my-account-item-desc {
+        font-size: 10px !important;
+    }
+
+    [data-path="me"] .my-account-name,
+    [data-path="me"] .my-account-item-link {
+        font-size: 12px !important;
+    }
+
+    .tooltip-btn {
+        position: relative;
+        display: inline-block;
+    }
+
+    .tooltip-btn .tooltip-text {
+        visibility: hidden;
+        background-color: white;
+        color: #383838;
+        text-align: center;
+        padding: 5px 8px;
+        border-radius: 5px;
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        font-size: 12px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .tooltip-btn:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+    }
+
 }
