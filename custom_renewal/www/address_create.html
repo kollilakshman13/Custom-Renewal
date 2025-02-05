@@ -11,7 +11,7 @@ import frappe
             </div>
         </div>
         <div class="main-column col-sm-10">
-            <div class="page-content-wrapper">
+            <div class="page-content-wrapper pl-4">
                 <div class="page-breadcrumbs">
                     <div class="breadcrumb-container" style="margin-top:-1px;">
                         <nav aria-label="breadcrumb" style="display: flex; align-items: center;">
@@ -32,25 +32,10 @@ import frappe
             </div>
             <main class="container ml-2">
                 <div class="page-header-wrapper">
-                    <!-- <div class="page-head">
-                        <h3 class="my-account-header ml-1">Address</h3>
-                    </div> -->
-                    <!-- <div class="page-head">
-                        <div style="display: flex; align-items: center;">
-                            <div class="page-header-icon">
-                                <i class="fa fa-bars" aria-hidden="true" style="font-size:20px;"
-                                    onclick="toggleSidebar()"></i>
-                            </div>
-                            <div id="sidebar1" class="page-header-toggle">
-                                {% include web_sidebar1 %}
-                            </div>
-                            <h3 class="my-account-header" style="margin: 0;color:#383838;">Address</h3>
-                        </div>
-                    </div> -->
                 </div>
                 <div class="page_content mt-1 mb-3" style="background-color: white;margin:2px;padding:2px;">
 
-                    <form id="addressForm">
+                    <form id="addressForm" class="pl-4">
                         <div class="row">
 
                             <div class="col-sm-6">
@@ -165,8 +150,8 @@ import frappe
                             </div>
                         </div>
 
-                        <button type="clear" class="btn btn-secondary btn-sm" id="discard-button">Clear</button>
-                        <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                        <button type="clear" class="btn btn-secondary btn-sm mr-4" id="discard-button">Clear</button>
+                        <button type="submit" class="btn button-new btn-sm">Submit</button>
                     </form>
                     <div id="responseMessage"></div>
 

@@ -10,19 +10,24 @@ import frappe
             </div>
         </div>
         <div class="main-column col-sm-10">
-            <div class="page-content-wrapper pl-2">
-                <!-- <div class="page-breadcrumbs">
-                    <div class="breadcrumb-container container">
+            <div class="page-content-wrapper">
+                <div class="page-breadcrumbs">
+                    <div class="breadcrumb-container container" style="margin-top:-1px;">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                                <div class="page-header-icon">
+                                    <i class="fa fa-bars" aria-hidden="true" onclick="toggleSidebar(event)"></i>
+                                </div>
+                                <div id="sidebar1" class="page-header-toggle">
+                                    {% include web_sidebar1 %}
+                                </div>
                                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"
                                     class="breadcrumb-item">
-                                    <a itemprop="item" href="/sales_order" itemprop="url">
+                                    <a itemprop="item" href="/sales_order">
                                         <span itemprop="name">Sales Order</span>
                                         <meta itemprop="position" content="1" />
                                     </a>
                                 </li>
-
                                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"
                                     class="breadcrumb-item active" aria-current="page">
                                     <span itemprop="item">
@@ -30,46 +35,18 @@ import frappe
                                         <meta itemprop="position" content="2" />
                                     </span>
                                 </li>
+
+
                             </ol>
                         </nav>
                     </div>
-                </div>-->
-            </div>
-            <div class="page-breadcrumbs">
-                <div class="breadcrumb-container container" style="margin-top:-1px;">
-                    <nav aria-label="breadcrumb" style="display: flex; align-items: center;">
-                        <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
-                            <div class="page-header-icon">
-                                <i class="fa fa-bars" aria-hidden="true" onclick="toggleSidebar(event)"></i>
-                            </div>
-                            <div id="sidebar1" class="page-header-toggle">
-                                {% include web_sidebar1 %}
-                            </div>
-                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"
-                                class="breadcrumb-item">
-                                <a itemprop="item" href="/sales_order">
-                                    <span itemprop="name">Sales Order</span>
-                                    <meta itemprop="position" content="1" />
-                                </a>
-                            </li>
-                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"
-                                class="breadcrumb-item active" aria-current="page">
-                                <span itemprop="item">
-                                    <span itemprop="name">{{d_name.name}}</span>
-                                    <meta itemprop="position" content="2" />
-                                </span>
-                            </li>
 
-
-                        </ol>
-                    </nav>
                 </div>
-
             </div>
 
 
-            <main class="container ml-2" style="background-color: white;min-height:90vh;">
-                <div class="page-header-wrapper">
+            <main class="container" style="background-color: white;min-height:90vh;">
+                <div class="page-header-wrapper pl-3">
                     <div class="page-header">
                         <h3 class="m-0">{{d_name.name}}</h3>
                         <p>{{frappe.utils.format_date(d_name.transaction_date, "dd-MM-yyyy")}}</p>
@@ -77,15 +54,15 @@ import frappe
                     <div class="page-header-actions-block d-s-n">
                         <a href="/printview?doctype=Sales Order&name={{ d_name.name }}&format=Standard" target="_blank"
                             rel="noopener noreferrer" class="btn btn-secondary float-right btn-sm"
-                            aria-label="Download sales order" style="border-radius:10px;">
+                            aria-label="Download sales order" style="border-radius:10px;font-size: 12px;">
                             Download
                         </a>
                     </div>
                     <div class="page-header-actions-block d-l-n">
                         <a href="/printview?doctype=Sales Order&name={{ d_name.name }}&format=Standard" target="_blank"
-                            rel="noopener noreferrer" class="btn btn-secondary float-right btn-sm tooltip-btn"
-                            aria-label="Download sales order" style="border-radius:10px;">
-                            <span class="material-symbols-outlined" style="font-size: 12px;">
+                            rel="noopener noreferrer" class="float-right tooltip-btn" aria-label="Download sales order"
+                            style="border-radius:10px;">
+                            <span class="material-symbols-outlined" style="font-size: 14px;">
                                 Download
                             </span>
                             <span class="tooltip-text">Download</span>
@@ -99,7 +76,7 @@ import frappe
                             <div class="col-6 text-muted small mt-1">
                             </div>
                         </div>
-                        <div class="row indicator-container mt-2">
+                        <div class="row indicator-container mt-2 pl-3">
                             <div class="col-10">
                                 <span class="indicator-pill red status">
                                     {{d_name.status}}
@@ -109,7 +86,7 @@ import frappe
                                 <b class="customer">{{d_name.customer}}</b>
                             </div>
                         </div>
-                        <div class="order-container mt-4">
+                        <div class="order-container mt-4 pl-3">
                             <!-- items -->
                             <div class="w-100">
                                 <div class="order-items order-item-header mb-1 row ">

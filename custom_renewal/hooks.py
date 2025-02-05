@@ -102,6 +102,9 @@ website_route_rules = [
             ]
         }
     },
+    {
+        "from_route": "/tickets", "to_route": "tickets"
+    },
     # {
     #     "from_route":"/fixed_sidebar","to_route":"fixed_sidebar"
     # },

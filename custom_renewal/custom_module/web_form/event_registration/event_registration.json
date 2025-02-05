@@ -24,7 +24,7 @@
  "list_columns": [],
  "login_required": 0,
  "max_attachment_size": 0,
- "modified": "2025-01-27 13:24:03.784085",
+ "modified": "2025-02-03 12:10:23.973661",
  "modified_by": "Administrator",
  "module": "Custom Module",
  "name": "event-registration",
@@ -34,7 +34,7 @@
  "route": "event-registration",
  "show_attachments": 0,
  "show_list": 0,
- "show_sidebar": 0,
+ "show_sidebar": 1,
  "success_title": "",
  "success_url": "/events",
  "title": "Event Registration",
@@ -179,5 +179,6 @@
    "reqd": 0,
    "show_in_filter": 0
   }
- ]
+ ],
+ "website_sidebar": "Customer sidebar"
 }

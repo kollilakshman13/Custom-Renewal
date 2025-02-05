@@ -11,7 +11,7 @@ import frappe
             </div>
         </div>
         <div class="main-column col-sm-10">
-            <div class="page-content-wrapper pl-3">
+            <div class="page-content-wrapper">
                 <div class="page-breadcrumbs">
                     <div class="breadcrumb-container container" style="margin-top:-1px;">
                         <nav aria-label="breadcrumb">
@@ -43,7 +43,7 @@ import frappe
 
                     </div>
                 </div>
-                <main class="container ml-2" style="background-color: white;min-height:90vh;">
+                <main class="container" style="background-color: white;min-height:90vh;">
                     <div class="page-header-wrapper">
                         <div class="page-header">
                             <h3 class="m-0">{{d_name.name}}</h3>
@@ -54,19 +54,19 @@ import frappe
                                 <div class="dropdown d-s-n">
                                     <button class="btn btn-secondary edit-button float-right btn-sm"
                                         onclick="printFile('{{d_name.custom_invoice_attachment}}')"
-                                        style="border-radius:10px;">
+                                        style="border-radius:10px;font-size: 12px;">
                                         Download
                                     </button>
                                 </div>
                                 <div class="dropdown d-l-n">
-                                    <button class="btn btn-secondary edit-button float-right btn-sm tooltip-btn"
+                                    <a class="edit-button float-right tooltip-btn"
                                         onclick="printFile('{{d_name.custom_invoice_attachment}}')"
                                         style="border-radius:10px;">
                                         <span class="material-symbols-outlined" style="font-size: 12px;">
                                             Download
                                         </span>
                                         <span class="tooltip-text">Download</span>
-                                    </button>
+                                    </a>
                                 </div>
 
                                 <script>
@@ -93,7 +93,7 @@ import frappe
                                         {{d_name.status}}
                                     </span>
                                 </div>
-                                <div class="text-right col-2">
+                                <div class="text-right col-2 customer">
                                     <b>{{d_name.customer}}</b>
                                 </div>
                             </div>

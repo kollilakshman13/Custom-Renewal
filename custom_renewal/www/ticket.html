@@ -17,8 +17,7 @@ import frappe
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
                                 <div class="page-header-icon">
-                                    <i class="fa fa-bars" aria-hidden="true" style="font-size:20px;"
-                                        onclick="toggleSidebar(event)"></i>
+                                    <i class="fa fa-bars" aria-hidden="true" onclick="toggleSidebar(event)"></i>
                                 </div>
                                 <div id="sidebar1" class="page-header-toggle">
                                     {% include web_sidebar1 %}
@@ -26,7 +25,7 @@ import frappe
                                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"
                                     class="breadcrumb-item">
                                     <a itemprop="item" href="/issue" itemprop="url">
-                                        <span itemprop="name">Issue</span>
+                                        <span itemprop="name">Ticket</span>
                                         <meta itemprop="position" content="1" />
                                     </a>
                                 </li>
@@ -49,12 +48,12 @@ import frappe
                             <h3 class="m-1">{{d_name.name or ""}}</h3>
                         </div>
                     </div>
-                    <div class="page_content m-1">
+                    <div class="page_content">
                         <div>
-                            <div class="row transaction-subheading mt-1">
-                                <div class="col-6 text-muted small mt-1"></div>
+                            <div class="row transaction-subheading">
+                                <div class="col-6 text-muted small"></div>
                             </div>
-                            <div class="row indicator-container mt-2">
+                            <div class="row indicator-container">
                                 <div class="col-6">
                                     <span class="indicator-pill red status">{{d_name.status or ""}}</span>
                                 </div>
@@ -63,7 +62,7 @@ import frappe
                                 </div>
                             </div>
 
-                            <div class="order-container mt-4 ml-1">
+                            <div class="order-container ml-1 mt-2">
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">

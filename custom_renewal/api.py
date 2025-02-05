@@ -471,7 +471,7 @@ def get_profile_data():
 
 
 @frappe.whitelist()
-def save_profile_data(first_name, middle_name, last_name, phone, mobile_no):
+def save_profile_data(first_name, middle_name, last_name, phone, mobile_no,user_image):
     user = frappe.session.user  # Fetch the current logged-in user
     if user == "Guest":
         frappe.throw(_("You need to be logged in to save your profile."))
@@ -484,6 +484,6 @@ def save_profile_data(first_name, middle_name, last_name, phone, mobile_no):
     user_doc.mobile_no = mobile_no
     if user_image:
         user_doc.user_image = user_image  # Save the image file path
-    user_doc.save()
+    user_doc.save(ignore_permissions=True)
     frappe.db.commit()
     return {"message":("Profile updated successfully.")}
