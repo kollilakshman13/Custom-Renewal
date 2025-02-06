@@ -687,6 +687,15 @@ li .sidebar-item {
     background-color: gray !important;
     color: white !important;
     border: none !important;
+    font-size: 12px !important;
+}
+
+.btn-group .btn {
+    font-size: 12px !important;
+}
+
+.level-right .btn {
+    font-size: 12px !important;
 }
 
 .btn:focus {
@@ -831,7 +840,7 @@ li .sidebar-item {
 
 .dropdown-icon1 {
     position: absolute;
-    top: 60%;
+    top: 50%;
     right: 10px;
     transform: translateY(-50%);
     pointer-events: none;
@@ -891,6 +900,68 @@ select option:focus {
 select option:hover {
     background-color: yellow;
 }
+
+/* status filter css*/
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 150px;
+    height: 30px;
+    font-family: Arial, sans-serif;
+}
+
+.dropdown-button {
+    width: 100%;
+    height: 100%;
+    padding: 6px;
+    background-color: white;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    text-align: left;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+}
+
+.dropdown-button .icon {
+    transition: transform 0.3s ease;
+}
+
+.dropdown.active .dropdown-button .icon {
+    transform: rotate(180deg);
+}
+
+.dropdown-options {
+    display: none;
+    position: absolute;
+    width: 100%;
+    border: 1px solid #ccc;
+    background-color: white;
+    z-index: 10;
+    font-size: 12px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-options div {
+    padding: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.dropdown-options div:hover {
+    background-color: #f3f3f3;
+    color: white;
+    /* Custom hover color */
+}
+
+.dropdown.active .dropdown-options {
+    display: block;
+}
+
+
 
 @media screen and (max-width: 769px) and (min-width:426px) {
     h3 {
@@ -1298,12 +1369,22 @@ select option:hover {
     }
 
     .dropdown-icon1 {
-
         top: 50% !important;
-
     }
 
     .button-new {
+        font-size: 10px !important;
+    }
+
+    .dropdown-button {
+        font-size: 10px !important;
+    }
+
+    .dropdown-options {
+        font-size: 10px !important;
+    }
+
+    .dropdown-options div {
         font-size: 10px !important;
     }
 }

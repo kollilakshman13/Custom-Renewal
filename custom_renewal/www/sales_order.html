@@ -44,7 +44,7 @@ import frappe
                         <div class="website-list" data-doctype="Sales Order" data-txt="None"
                             style="min-height:90vh;padding-left:1px;">
                             <div class="website-list-filters mb-3">
-                                <div class="dropdown-container">
+                                <!-- <div class="dropdown-container">
                                     <select id="status-filter" class="form-control mb-1" placeholder="status.."
                                         onchange="filterRows()" style="width:100%;border-radius:10px;">
                                         <option value="" disabled selected hidden>Status ..</option>
@@ -61,9 +61,30 @@ import frappe
                                     <span class="dropdown-icon1 material-symbols-outlined">
                                         keyboard_arrow_down
                                     </span>
+                                </div> -->
+
+
+                                <div class="dropdown">
+                                    <div class="dropdown-button">
+                                        <span>Status</span>
+                                        <span class="dropdown-icon1 material-symbols-outlined">
+                                            keyboard_arrow_down
+                                        </span> <!-- Down arrow icon -->
+                                    </div>
+                                    <div id="status-filter" class="dropdown-options">
+                                        <div> </div>
+                                        <div>Draft</div>
+                                        <div>On Hold</div>
+                                        <div>To Deliver and Bill</div>
+                                        <div>To Bill</div>
+                                        <div>To Deliver</div>
+                                        <div>Completed</div>
+                                        <div>Cancelled</div>
+                                        <div>Closed</div>
+                                    </div>
                                 </div>
-                                
                             </div>
+
                             <div id="row-container" class="result"
                                 style="background-color: white;box-sizing: border-box;">
                                 <div class="web-list-items"
@@ -175,44 +196,88 @@ import frappe
 {% endblock %}
 
 {% block script %}
-<!-- <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        fetchStatusOptions();
+
+<script>
+    document.querySelector('.dropdown-button').addEventListener('click', function () {
+        this.parentNode.classList.toggle('active');
     });
 
-    function fetchStatusOptions() {
-        frappe.call({
-            method: "frappe.client.get_list",
-            args: {
-                doctype: "Sales Order",
-                filters: [],
-                fields: ["status"],
-                distinct: true,  // Ensures unique values
-                order_by: "status ASC"
-            },
-            callback: function (response) {
-                if (response.message) {
-                    let select = document.getElementById("status-filter");
-                    let uniqueStatuses = new Set();
+    document.querySelectorAll('.dropdown-options div').forEach(option => {
+        option.addEventListener('click', function () {
+            //document.querySelector('.dropdown-button').innerText = this.innerText;
+            document.querySelector('.dropdown-button span:first-child').innerText = this.innerText;
+            this.parentNode.parentNode.classList.remove('active');
+            this.closest(".dropdown").classList.remove("active");
+            filterRows();
+        });
+    });
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     fetchStatusOptions(); // Fetch options on page load
+    // });
 
-                    response.message.forEach(item => {
-                        if (item.status) {
-                            uniqueStatuses.add(item.status);
-                        }
-                    });
+    // function fetchStatusOptions() {
+    //     frappe.call({
+    //         method: "frappe.client.get_list",
+    //         args: {
+    //             doctype: "Sales Order",
+    //             fields: ["status"],
+    //             distinct: true, // Get unique statuses
+    //             order_by: "status asc" // Sort the statuses
+    //         },
+    //         callback: function (response) {
+    //             if (response.message) {
+    //                 let statusDropdown = document.getElementById("status-filter");
+    //                 statusDropdown.innerHTML = ""; // Clear existing options
 
-                    // Append unique status options
-                    uniqueStatuses.forEach(status => {
-                        let option = document.createElement("option");
-                        option.value = status;
-                        option.textContent = status;
-                        select.appendChild(option);
-                    });
-                }
+    //                 // Add a default empty option
+    //                 let defaultOption = document.createElement("div");
+    //                 defaultOption.textContent = ""; // Default to show all statuses
+    //                 statusDropdown.appendChild(defaultOption);
+
+    //                 let uniqueStatuses = new Set(); // Store unique statuses
+
+    //                 response.message.forEach((entry) => {
+    //                     if (!uniqueStatuses.has(entry.status)) {
+    //                         uniqueStatuses.add(entry.status);
+
+    //                         let option = document.createElement("div");
+    //                         option.textContent = entry.status;
+    //                         statusDropdown.appendChild(option);
+    //                     }
+    //                 });
+
+    //                 // Reattach event listeners to the newly added options
+    //                 attachDropdownListeners();
+    //             }
+    //         }
+    //     });
+    // }
+
+    // function attachDropdownListeners() {
+    //     document.querySelectorAll(".dropdown-options div").forEach((option) => {
+    //         option.addEventListener("click", function () {
+    //             document.querySelector(".dropdown-button span:first-child").innerText = this.innerText;
+    //             this.parentNode.parentNode.classList.remove("active");
+
+    //             filterRows(); // ✅ Trigger filtering after selection
+    //         });
+    //     });
+    // }
+
+    document.addEventListener("click", function (event) {
+        document.querySelectorAll(".dropdown").forEach(dropdown => {
+            let button = dropdown.querySelector(".dropdown-button");
+            let options = dropdown.querySelector(".dropdown-options");
+
+            // ✅ If click is NOT inside the dropdown, close it
+            if (!button.contains(event.target) && !options.contains(event.target)) {
+                dropdown.classList.remove("active");
             }
         });
-    }
-</script> -->
+    });
+
+</script>
+
 <script>
     function toggleSidebar(event = null) {
         if (event) {
@@ -303,7 +368,7 @@ import frappe
 
     function filterRows() {
         const searchInput = document.getElementById("search-bar").value.toLowerCase();
-        const statusFilter = document.getElementById("status-filter").value.toLowerCase();
+        const statusFilter = document.querySelector(".dropdown-button span:first-child").textContent.toLowerCase();
         const rows = document.querySelectorAll("#row-container .web-list-item");
 
         let visibleCount = 0;
@@ -321,8 +386,8 @@ import frappe
                 itemName.includes(searchInput) ||
                 totalAmount.includes(searchInput);
 
-            // Check if row matches the selected status
-            const matchesStatus = statusFilter === "" || status === statusFilter;
+            // ✅ Fix: Check if status matches the selected filter (ignore "Status" default)
+            const matchesStatus = (statusFilter === "status" || statusFilter === "" || status === statusFilter);
 
             if (matchesSearch && matchesStatus && visibleCount < currentlyVisibleRows) {
                 row.style.display = "block"; // Show matching row
@@ -332,6 +397,7 @@ import frappe
             }
         });
     }
+
 
     function loadMoreRows() {
         currentlyVisibleRows += rowsPerPage; // Increase visible rows by current rowsPerPage count

@@ -48,7 +48,7 @@ from frappe.utils import get_formatted
                         <div class="website-list" data-doctype="Sales Invoice" data-txt="None"
                             style="min-height:90vh;padding-left:1px;">
                             <div class="website-list-filters mb-3">
-                                <div class="dropdown-container">
+                                <!-- <div class="dropdown-container">
                                     <select id="status-filter" class="form-control mb-1" placeholder="status.."
                                         onchange="filterRows()" style="width:100%;border-radius:10px;">
                                         <option value="" disabled selected hidden>Status ..</option>
@@ -70,6 +70,30 @@ from frappe.utils import get_formatted
                                     <span class="dropdown-icon1 material-symbols-outlined">
                                         keyboard_arrow_down
                                     </span>
+                                </div> -->
+                                <div class="dropdown">
+                                    <div class="dropdown-button">
+                                        <span>Status</span>
+                                        <span class="dropdown-icon1 material-symbols-outlined">
+                                            keyboard_arrow_down
+                                        </span> <!-- Down arrow icon -->
+                                    </div>
+                                    <div id="status-filter" class="dropdown-options">
+                                        <div> </div>
+                                        <div>Draft</div>
+                                        <div>Return</div>
+                                        <div>Credit Note Issued</div>
+                                        <div>Submitted</div>
+                                        <div>Paid</div>
+                                        <div>Partly Paid</div>
+                                        <div>Unpaid</div>
+                                        <div>Unpaid and Discounted</div>
+                                        <div>Partly Paid and Discounted</div>
+                                        <div>Overdue and Discounted</div>
+                                        <div>Overdue</div>
+                                        <div>Cancelled</div>
+                                        <div>Internal Transfer</div>
+                                    </div>
                                 </div>
                             </div>
                             <div id="row-container" class="result"
@@ -248,6 +272,92 @@ from frappe.utils import get_formatted
     }
 </script> -->
 <script>
+    document.querySelector('.dropdown-button').addEventListener('click', function () {
+        this.parentNode.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.dropdown-options div').forEach(option => {
+        option.addEventListener('click', function () {
+            //document.querySelector('.dropdown-button').innerText = this.innerText;
+            document.querySelector('.dropdown-button span:first-child').innerText = this.innerText;
+            this.parentNode.parentNode.classList.remove('active');
+            this.closest(".dropdown").classList.remove("active");
+            filterRows();
+        });
+    });
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     fetchStatusOptions(); // Fetch options on page load
+    // });
+
+    // function fetchStatusOptions() {
+    //     frappe.call({
+    //         method: "frappe.client.get_list",
+    //         args: {
+    //             doctype: "Sales Invoice",
+    //             fields: ["status"],
+    //             distinct: true, // Get unique statuses
+    //             order_by: "status asc" // Sort the statuses
+    //         },
+    //         callback: function (response) {
+    //             if (response.message) {
+    //                 let statusDropdown = document.getElementById("status-filter");
+    //                 statusDropdown.innerHTML = ""; // Clear existing options
+
+    //                 // Add a default empty option
+    //                 let defaultOption = document.createElement("div");
+    //                 defaultOption.textContent = " "; // Default to show all statuses
+    //                 statusDropdown.appendChild(defaultOption);
+
+    //                 let uniqueStatuses = new Set(); // Store unique statuses
+
+    //                 response.message.forEach((entry) => {
+    //                     if (!uniqueStatuses.has(entry.status)) {
+    //                         uniqueStatuses.add(entry.status);
+
+    //                         let option = document.createElement("div");
+    //                         option.textContent = entry.status;
+    //                         statusDropdown.appendChild(option);
+    //                     }
+    //                 });
+
+    //                 // Reattach event listeners to the newly added options
+    //                 attachDropdownListeners();
+    //             }
+    //         }
+    //     });
+    // }
+
+    // function attachDropdownListeners() {
+    //     document.querySelectorAll(".dropdown-options div").forEach((option) => {
+    //         option.addEventListener("click", function () {
+    //             document.querySelector(".dropdown-button span:first-child").innerText = this.innerText;
+    //             this.parentNode.parentNode.classList.remove("active");
+
+    //             filterRows(); // ✅ Trigger filtering after selection
+    //         });
+    //     });
+    // }
+
+    // Close dropdown when clicking outside
+    // document.addEventListener('click', function (event) {
+    //     if (!document.querySelector('.dropdown').contains(event.target)) {
+    //         document.querySelector('.dropdown').classList.remove('active');
+    //     }
+    // });
+    document.addEventListener("click", function (event) {
+        document.querySelectorAll(".dropdown").forEach(dropdown => {
+            let button = dropdown.querySelector(".dropdown-button");
+            let options = dropdown.querySelector(".dropdown-options");
+
+            // ✅ If click is NOT inside the dropdown, close it
+            if (!button.contains(event.target) && !options.contains(event.target)) {
+                dropdown.classList.remove("active");
+            }
+        });
+    });
+
+</script>
+<script>
     function toggleSidebar(event = null) {
         if (event) {
             event.stopPropagation(); // Prevent event bubbling
@@ -340,7 +450,8 @@ from frappe.utils import get_formatted
 
     function filterRows() {
         const searchInput = document.getElementById("search-bar").value.toLowerCase();
-        const statusFilter = document.getElementById("status-filter").value.toLowerCase();
+        //const statusFilter = document.getElementById("status-filter").value.toLowerCase();
+        const statusFilter = document.querySelector(".dropdown-button span:first-child").textContent.toLowerCase();
         const rows = document.querySelectorAll("#row-container .web-list-item");
 
         let visibleRowCount = 0; // Track how many rows are visible after filtering
@@ -356,7 +467,8 @@ from frappe.utils import get_formatted
                 itemName.includes(searchInput) ||
                 totalAmount.includes(searchInput);
 
-            const matchesStatus = statusFilter === "" || status === statusFilter;
+            //const matchesStatus = statusFilter === "" || status === statusFilter;
+            const matchesStatus = (statusFilter === "status" || statusFilter === "" || status === statusFilter);
 
             if (matchesSearch && matchesStatus && visibleRowCount < currentlyVisibleRows) {
                 row.style.display = "block"; // Show matching row
