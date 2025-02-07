@@ -22,7 +22,7 @@
             {{ item.icon }}
         </span>
         {% endif %}
-        <span class="label1" style="font-size: 12px;">{{ _(item.title) or _(item.label) }}</span>
+        <span class="label1">{{ _(item.title) or _(item.label) }}</span>
     </a>
 
     {% else %}
@@ -53,13 +53,13 @@
     <li class="sidebar-item">
         <a href="/me" style="display: flex; align-items: center; gap: 0.5rem;">
             <span class="material-symbols-outlined material" style="font-size: 14px;">person</span>
-            <span class="label" style="font-size: 12px;">{{ _("My Account") }}</span>
+            <span class="label1">{{ _("My Account") }}</span>
         </a>
     </li>
     <li class="sidebar-item">
         <a href="javascript:void(0)" onclick="logout1()" style="display: flex; align-items: center; gap: 0.5rem;">
             <span class="material-symbols-outlined material" style="font-size: 14px;">logout</span>
-            <span class="label" style="font-size: 12px;">{{ _("Logout") }}</span>
+            <span class="label1">{{ _("Logout") }}</span>
         </a>
     </li>
 </ul>
@@ -74,8 +74,8 @@
                     style="width:30px;height:30px;object-fit: fill;">
             </div>
             <div class="profile-info">
-                <p class="profile-name" style="font-size: 12px;font-weight: 600;">Helpdesk</p>
-                <p class="profile-role ellipsis ellipsis-width" style="font-size: 12px;padding:0px;margin:0px;">
+                <p class="profile-name" style="font-weight: 600;">Helpdesk</p>
+                <p class="profile-role ellipsis ellipsis-width" style="padding:0px;margin:0px;">
                     {{ frappe.db.get_value("User", frappe.session.user, "full_name") or frappe.session.user }}
                 </p>
             </div>
@@ -89,7 +89,7 @@
             <li class="title">
                 <a href="javascript:void(0)" onclick="logout()"
                     style="display: flex; align-items: center; gap: 0.5rem;">
-                    <span class="material-symbols-outlined" style="font-size:12px">logout</span>
+                    <span class="material-symbols-outlined">logout</span>
                     <span>{{ _("Logout") }}</span>
                 </a>
             </li>

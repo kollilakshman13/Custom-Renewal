@@ -4,7 +4,7 @@ import frappe
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="container">
     <div class="row" id="page-list" data-path="sales_orders">
-        <div class="sidebar-column col-sm-2">
+        <div class="sidebar-column col-sm-2 p-0">
             <div class="web-sidebar">
                 {% include web_sidebar %}
             </div>
@@ -53,7 +53,7 @@ import frappe
                     </div>
                     <div class="page-header-actions-block d-s-n">
                         <a href="/printview?doctype=Sales Order&name={{ d_name.name }}&format=Standard" target="_blank"
-                            rel="noopener noreferrer" class="btn btn-secondary float-right btn-sm"
+                            rel="noopener noreferrer" class="btn btn-secondary float-right btn-sm edit-button mr-2"
                             aria-label="Download sales order" style="border-radius:10px;font-size: 12px;">
                             Download
                         </a>

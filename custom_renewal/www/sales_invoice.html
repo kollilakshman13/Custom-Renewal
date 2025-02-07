@@ -9,7 +9,7 @@ from frappe.utils import get_formatted
 <div class="container">
 
     <div class="row" id="page-list" data-path="sales_invoice">
-        <div class="sidebar-column col-sm-2">
+        <div class="sidebar-column col-sm-2 p-0">
             <div class="web-sidebar">
                 {% include web_sidebar %}
             </div>
@@ -48,35 +48,12 @@ from frappe.utils import get_formatted
                         <div class="website-list" data-doctype="Sales Invoice" data-txt="None"
                             style="min-height:90vh;padding-left:1px;">
                             <div class="website-list-filters mb-3">
-                                <!-- <div class="dropdown-container">
-                                    <select id="status-filter" class="form-control mb-1" placeholder="status.."
-                                        onchange="filterRows()" style="width:100%;border-radius:10px;">
-                                        <option value="" disabled selected hidden>Status ..</option>
-                                        <option value=""></option>
-                                        <option value="Draft">Draft</option>
-                                        <option value="Return">Return</option>
-                                        <option value="Credit Note Issued">Credit Note Issued</option>
-                                        <option value="Submitted">Submitted</option>
-                                        <option value="Paid">Paid</option>
-                                        <option value="Partly Paid">Partly Paid</option>
-                                        <option value="Unpaid">Unpaid</option>
-                                        <option value="Unpaid and Discounted">Unpaid and Discounted</option>
-                                        <option value="Partly Paid and Discounted">Partly Paid and Discounted</option>
-                                        <option value="Overdue and Discounted">Overdue and Discounted</option>
-                                        <option value="Overdue">Overdue</option>
-                                        <option value="Cancelled">Cancelled</option>
-                                        <option value="Internal Transfer">Internal Transfer</option>
-                                    </select>
-                                    <span class="dropdown-icon1 material-symbols-outlined">
-                                        keyboard_arrow_down
-                                    </span>
-                                </div> -->
-                                <div class="dropdown">
+                                <!-- <div class="dropdown">
                                     <div class="dropdown-button">
                                         <span>Status</span>
                                         <span class="dropdown-icon1 material-symbols-outlined">
                                             keyboard_arrow_down
-                                        </span> <!-- Down arrow icon -->
+                                        </span>
                                     </div>
                                     <div id="status-filter" class="dropdown-options">
                                         <div> </div>
@@ -94,7 +71,32 @@ from frappe.utils import get_formatted
                                         <div>Cancelled</div>
                                         <div>Internal Transfer</div>
                                     </div>
+                                </div> -->
+                                {% set sales_invoice_meta = frappe.get_doc("DocType", "Sales Invoice") %}
+                                {% set status_field = sales_invoice_meta.get("fields", []) | selectattr("fieldname",
+                                "equalto", "status") | list %}
+                                {% if status_field %}
+                                {% set status_options = status_field[0].options.split("\n") %}
+                                {% else %}
+                                {% set status_options = [] %}
+                                {% endif %}
+
+                                <div class="dropdown">
+                                    <div class="dropdown-button">
+                                        <span>Status</span>
+                                        <span class="dropdown-icon1 material-symbols-outlined">
+                                            keyboard_arrow_down
+                                        </span> <!-- Down arrow icon -->
+                                    </div>
+                                    <div id="status-filter" class="dropdown-options">
+                                        {% for option in status_options %}
+                                        {% if option.strip() %}
+                                        <div>{{ option }}</div>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
                                 </div>
+
                             </div>
                             <div id="row-container" class="result"
                                 style="background-color: white;box-sizing: border-box;">
@@ -104,7 +106,7 @@ from frappe.utils import get_formatted
                                         <div class="col-sm-3">
                                             <span class="dname d-s-n">ID</span>
                                             <div class="row">
-                                                <div class="col-4 d-l-n">
+                                                <div class="col-5 d-l-n">
                                                     <span class="dname">ID</span>
                                                     <div>
                                                         <span class="list-item-statuss ">Status</span>
@@ -159,7 +161,7 @@ from frappe.utils import get_formatted
                                                         {{d.rounded_total}}
                                                     </div>
                                                 </div>
-                                                <div class="col-1 d-l-n">
+                                                <div class="col-2 d-l-n text-right">
                                                     <a class="edit-button float-right tooltip-btn"
                                                         style="border-radius:10px;"
                                                         onclick="printFile('{{d.custom_invoice_attachment}}')">
@@ -233,129 +235,41 @@ from frappe.utils import get_formatted
 {% endblock %}
 
 {% block script %}
-<!-- <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        fetchStatusOptions();
-    });
 
-    function fetchStatusOptions() {
-        frappe.call({
-            method: "frappe.client.get_list",
-            args: {
-                doctype: "Sales Invoice",
-                filters: [],
-                fields: ["status"],
-                distinct: true,  // Ensures unique values
-                order_by: "status ASC"
-            },
-            callback: function (response) {
-                if (response.message) {
-                    let select = document.getElementById("status-filter");
-                    let uniqueStatuses = new Set();
-
-                    response.message.forEach(item => {
-                        if (item.status) {
-                            uniqueStatuses.add(item.status);
-                        }
-                    });
-
-                    // Append unique status options
-                    uniqueStatuses.forEach(status => {
-                        let option = document.createElement("option");
-                        option.value = status;
-                        option.textContent = status;
-                        select.appendChild(option);
-                    });
-                }
-            }
-        });
-    }
-</script> -->
 <script>
-    document.querySelector('.dropdown-button').addEventListener('click', function () {
-        this.parentNode.classList.toggle('active');
-    });
+    document.addEventListener("DOMContentLoaded", function () {
+        const dropdownButton = document.querySelector(".dropdown-button");
+        const dropdown = dropdownButton.closest(".dropdown");
+        const dropdownOptions = dropdown.querySelector(".dropdown-options");
 
-    document.querySelectorAll('.dropdown-options div').forEach(option => {
-        option.addEventListener('click', function () {
-            //document.querySelector('.dropdown-button').innerText = this.innerText;
-            document.querySelector('.dropdown-button span:first-child').innerText = this.innerText;
-            this.parentNode.parentNode.classList.remove('active');
-            this.closest(".dropdown").classList.remove("active");
-            filterRows();
+        // Open dropdown when clicking the button
+        dropdownButton.addEventListener("click", function (event) {
+            event.stopPropagation(); // Prevent event from reaching document
+            dropdown.classList.toggle("active");
         });
-    });
-    // document.addEventListener("DOMContentLoaded", function () {
-    //     fetchStatusOptions(); // Fetch options on page load
-    // });
 
-    // function fetchStatusOptions() {
-    //     frappe.call({
-    //         method: "frappe.client.get_list",
-    //         args: {
-    //             doctype: "Sales Invoice",
-    //             fields: ["status"],
-    //             distinct: true, // Get unique statuses
-    //             order_by: "status asc" // Sort the statuses
-    //         },
-    //         callback: function (response) {
-    //             if (response.message) {
-    //                 let statusDropdown = document.getElementById("status-filter");
-    //                 statusDropdown.innerHTML = ""; // Clear existing options
-
-    //                 // Add a default empty option
-    //                 let defaultOption = document.createElement("div");
-    //                 defaultOption.textContent = " "; // Default to show all statuses
-    //                 statusDropdown.appendChild(defaultOption);
-
-    //                 let uniqueStatuses = new Set(); // Store unique statuses
-
-    //                 response.message.forEach((entry) => {
-    //                     if (!uniqueStatuses.has(entry.status)) {
-    //                         uniqueStatuses.add(entry.status);
-
-    //                         let option = document.createElement("div");
-    //                         option.textContent = entry.status;
-    //                         statusDropdown.appendChild(option);
-    //                     }
-    //                 });
-
-    //                 // Reattach event listeners to the newly added options
-    //                 attachDropdownListeners();
-    //             }
-    //         }
-    //     });
-    // }
-
-    // function attachDropdownListeners() {
-    //     document.querySelectorAll(".dropdown-options div").forEach((option) => {
-    //         option.addEventListener("click", function () {
-    //             document.querySelector(".dropdown-button span:first-child").innerText = this.innerText;
-    //             this.parentNode.parentNode.classList.remove("active");
-
-    //             filterRows(); // ✅ Trigger filtering after selection
-    //         });
-    //     });
-    // }
-
-    // Close dropdown when clicking outside
-    // document.addEventListener('click', function (event) {
-    //     if (!document.querySelector('.dropdown').contains(event.target)) {
-    //         document.querySelector('.dropdown').classList.remove('active');
-    //     }
-    // });
-    document.addEventListener("click", function (event) {
-        document.querySelectorAll(".dropdown").forEach(dropdown => {
-            let button = dropdown.querySelector(".dropdown-button");
-            let options = dropdown.querySelector(".dropdown-options");
-
-            // ✅ If click is NOT inside the dropdown, close it
-            if (!button.contains(event.target) && !options.contains(event.target)) {
+        // Close dropdown when clicking outside
+        document.addEventListener("click", function (event) {
+            if (!dropdown.contains(event.target)) {
                 dropdown.classList.remove("active");
             }
         });
-    });
 
+        // Handle selecting an option
+        document.querySelectorAll(".dropdown-options div").forEach(option => {
+            option.addEventListener("click", function (event) {
+                event.stopPropagation(); // Prevent event from reaching document
+                const selectedText = this.innerText.trim();
+
+                if (selectedText) {
+                    dropdownButton.querySelector("span:first-child").innerText = selectedText;
+                }
+
+                dropdown.classList.remove("active"); // Close dropdown after selection
+                filterRows(); // Call function to filter rows (if needed)
+            });
+        });
+    });
 </script>
 <script>
     function toggleSidebar(event = null) {

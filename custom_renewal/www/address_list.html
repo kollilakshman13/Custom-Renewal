@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="row" id="page-list" data-path="address_list">
-        <div class="sidebar-column col-sm-2">
+        <div class="sidebar-column col-sm-2 p-0">
             <div class="web-sidebar">
                 {% include web_sidebar %}
             </div>
@@ -67,13 +67,13 @@
                                         </div>
                                         <div class="col-2">
                                             <div class="d-s-n">
-                                                <button class="btn btn-secondary edit-button float-right edit-button1"
+                                                <button class="btn btn-secondary float-right edit-button1"
                                                     style="border-radius: 5px;">
                                                     Edit
                                                 </button>
                                             </div>
                                             <div class="d-l-n">
-                                                <a class="edit-button float-right tooltip-btn" style="border:none;">
+                                                <a class="float-right tooltip-btn edit-button1" style="border:none;">
                                                     <span class="material-symbols-outlined" style="font-size: 14px;">
                                                         Edit
                                                     </span>
@@ -265,7 +265,7 @@
 
 
 <script>
-    document.querySelectorAll(".edit-button").forEach(button => {
+    document.querySelectorAll(".edit-button1").forEach(button => {
         button.addEventListener("click", function () {
             const addressName = this.closest(".web-list-item").querySelector(".address-title").textContent.trim();
             frappe.call({
@@ -386,7 +386,7 @@
 
     // Initialize buttons dynamically if new rows are added
     function initializeEditButtons() {
-        document.querySelectorAll(".edit-button").forEach(button => {
+        document.querySelectorAll(".edit-button1").forEach(button => {
             button.addEventListener("click", function () {
                 const addressName = this.closest(".web-list-item").querySelector(".address-title").textContent.trim();
                 // Fetch address details
