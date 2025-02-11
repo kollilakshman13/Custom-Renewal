@@ -143,15 +143,16 @@
 
 
     <div class="container mt-3">
-        <!-- Nav Tabs -->
-        <ul class="nav nav-tabs" id="eventTabs" style="align-items: center;justify-content: center;border:none;">
+        <ul class="nav nav-tabs" id="eventTabs" style="align-items: center; justify-content: center; border:none;">
             <li class="nav-item">
-                <a class="nav-link active" id="upcoming-tab" data-toggle="tab" href="#upcoming">Upcoming Events</a>
+                <a class="btn nav-link1 active" id="upcoming-tab" data-bs-toggle="tab" href="#upcoming">Upcoming
+                    Events</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" id="previous-tab" data-toggle="tab" href="#previous">Previous Events</a>
+            <li class="btn nav-item">
+                <a class="nav-link1" id="previous-tab" data-bs-toggle="tab" href="#previous">Past Events</a>
             </li>
         </ul>
+
 
         {% set now = frappe.utils.now() %}
 
@@ -192,7 +193,7 @@
             <!-- Previous Events -->
             <div class="tab-pane fade" id="previous">
                 <div style="display: flex; justify-content: center; align-items: center;">
-                    <button class="btn btn-primary mb-3">Previous events</button>
+                    <button class="btn btn-primary mb-3">Past events</button>
                 </div>
                 {% set previous_events = frappe.get_all("Event", filters={'status': 'open', 'event_type': 'public',
                 'starts_on': ['<', now]}, fields=['*'], order_by='starts_on desc' ) %} <div class="row mt-2">
@@ -212,16 +213,12 @@
                     <style>
                         .card {
                             transition: border 0.3s ease, box-shadow 0.3s ease;
-                            /* Smooth transition */
                             border: 2px solid transparent;
-                            /* Default border */
                         }
 
                         .card:hover {
                             border: 5px solid #383838;
-                            /* Change border color to blue on hover */
                             box-shadow: 0 4px 10px #383838(0, 123, 255, 0.3);
-                            /* Optional shadow effect */
                         }
                     </style>
             </div>
@@ -229,10 +226,9 @@
     </div>
     </div>
 
-    <!-- JavaScript to Ensure Proper Tab Switching -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            let tabs = document.querySelectorAll(".nav-link");
+            let tabs = document.querySelectorAll(".nav-link1");
             tabs.forEach(tab => {
                 tab.addEventListener("click", function (event) {
                     event.preventDefault();
@@ -248,8 +244,8 @@
                 });
             });
         });
-    </script>
 
+    </script>
 
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -292,29 +288,6 @@
         });
     </script>
 
-    <!-- <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            new Swiper(".mySwiper", {
-                loop: true,
-                speed: 5000, // Slow speed for smooth scrolling
-                autoplay: {
-                    delay: 0, // No delay between slides
-                    disableOnInteraction: false
-                },
-                slidesPerView: "auto",
-                freeMode: true, // Enables smooth movement
-                loopedSlides: 10, // Ensures infinite smoothness
-                spaceBetween: 10, // Adjust spacing for a smooth feel
-                breakpoints: {
-                    320: { slidesPerView: 2, spaceBetween: 20 },
-                    480: { slidesPerView: 3, spaceBetween: 30 },
-                    640: { slidesPerView: 4, spaceBetween: 40 },
-                    992: { slidesPerView: 6, spaceBetween: 50 }
-                }
-            });
-        });
-    </script> -->
-
 
     <style>
         .swiper {
@@ -336,7 +309,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 2px 4px 10px rgba(225, 225, 225, 1);
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.8);
             border: 1px solid #f0f0f0;
         }
 

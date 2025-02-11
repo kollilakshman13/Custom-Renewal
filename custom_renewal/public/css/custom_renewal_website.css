@@ -8,7 +8,20 @@ html {
     font-family: Inter, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji"
 }
 
-/* @media (min-width: 767px) { */
+body[data-path="issue"],
+body[data-path="ticket"],
+body[data-path="ticket_create"],
+body[data-path="sales_order"],
+body[data-path="sales_orders"],
+body[data-path="sales_invoice"],
+body[data-path="sales_invoices"],
+body[data-path="renewal_list"],
+body[data-path="renewal_lists"],
+body[data-path="address_list"],
+body[data-path="address_create"],
+body[data-path="me"] {
+    font-size: 12px !important;
+}
 
 body[data-path="issue"] .navbar,
 body[data-path="ticket"] .navbar,
@@ -40,7 +53,6 @@ body[data-path="me"] .web-footer {
     display: none !important;
 }
 
-/* } */
 
 
 .label1 {
@@ -874,7 +886,7 @@ li .sidebar-item {
     right: 10px;
     transform: translateY(-50%);
     pointer-events: none;
-    font-size: 12px;
+    font-size: 14px !important;
 }
 
 

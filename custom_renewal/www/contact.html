@@ -7,6 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+    <meta name="csrf-token" content="{{ csrf_token }}">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -157,12 +158,12 @@
                     <div class="text-center mx-auto pb-5" style="max-width: 800px;">
                         <p class="text-uppercase text-secondary fs-5 mb-0">Let’s Connect</p>
                         <h2 class="display-4 text-capitalize mb-3">Send Your Message</h2>
-                        <p class="mb-0">The contact form is currently inactive. Get a functional and working contact
+                        <!-- <p class="mb-0">The contact form is currently inactive. Get a functional and working contact
                             form with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and
                             you're done. <a class="text-primary fw-bold"
-                                href="https://htmlcodex.com/contact-form">Download Now</a>.</p>
+                                href="https://htmlcodex.com/contact-form">Download Now</a>.</p> -->
                     </div>
-                    <form>
+                    <!-- <form>
                         <div class="row g-3">
                             <div class="col-lg-12 col-xl-6">
                                 <div class="form-floating border border-secondary">
@@ -205,7 +206,152 @@
                                 <button class="btn btn-primary w-100 py-3">Send Message</button>
                             </div>
                         </div>
+                    </form> -->
+
+
+                    <form id="contactForm" action="/api/method/custom_renewal.www.contact.handle_contact_form"
+                        method="POST" autocomplete="off">
+                        <div class="row gy-4">
+                            <div class="col-md-6">
+                                <label for="name" class="form-label mt-4"><b>Name *</b></label>
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Your Name"
+                                    required autocomplete="off">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label mt-4"><b>Email *</b></label>
+                                <input type="email" id="email" class="form-control" name="email"
+                                    placeholder="Your Email" required autocomplete="off">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="phoneno" class="form-label mt-4"><b>Phone no *</b></label>
+                                <input type="tel" name="phone_no" id="phoneno" placeholder="Phone number"
+                                    class="form-control" style="width: 100%;" required autocomplete="off"
+                                    pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number.">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="service" class="form-label mt-4"><b>Service *</b></label>
+                                <select name="service_name" id="service" style="width: 100%;" class="form-control"
+                                    required>
+                                    <option value="" disabled selected>Select a service</option>
+                                    <option value="ngfw">Next Generation Firewalls (NGFW)</option>
+                                    <option value="endpoint_protection">Endpoint Protection Solutions</option>
+                                    <option value="data_center_cloud">Data Center&Cloud Solutions</option>
+                                    <option value="hosted_email">Hosted Email Messaging Solutions</option>
+                                    <option value="iam">Identity and Access Management (IAM)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="subject" class="form-label mt-4"><b>Subject</b></label>
+                                <input type="text" class="form-control" id="subject" name="subject"
+                                    placeholder="Subject" required autocomplete="off">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="message" class="form-label mt-4"><b>Message</b></label>
+                                <textarea class="form-control" id="message" name="message" rows="6"
+                                    placeholder="Message" required autocomplete="off"></textarea>
+                            </div>
+                            <div class="col-md-12 mt-3">
+                                <div class="captcha d-flex align-items-center">
+                                    <div class="spinner">
+                                        <label>
+                                            <input type="checkbox" id="notRobot" autocomplete="off">
+                                            <span class="checkmark"><span>&nbsp;</span></span>
+                                        </label>
+                                    </div>
+                                    <div class="text ms-2">I'm not a Robot</div>
+                                    <div class="logo ms-2">
+                                        <img src="/assets1/img/recaptcha-logo-1.png" alt="ReCaptcha Logo"
+                                            style="width: 50px; height: 50px; object-fit: contain;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <div class="loading" style="display: none;">Loading...</div>
+                                <div class="error-message" style="display: none; color: red;"></div>
+                                <div class="sent-message" style="display: none; color: green;">Your message has been
+                                    sent. Thank you!
+                                </div>
+                                <button type="submit" id="submitButton" class="btn btn-primary mt-3">Send
+                                    Message</button>
+                            </div>
+                        </div>
                     </form>
+
+
+                    <script>
+                        function validateForm() {
+                            const checkbox = document.getElementById('notRobot');
+                            if (!checkbox.checked) {
+                                alert('Please confirm that you are not a robot.');
+                                return false;
+                            }
+                            return true;
+                        }
+
+                        document.querySelectorAll("input, select, textarea,text,tel").forEach(field => {
+                            field.setAttribute("autocomplete", "off");
+                        });
+
+
+                        document.addEventListener('DOMContentLoaded', function () {
+                            const form = document.getElementById('contactForm');
+                            const loading = document.querySelector('.loading');
+                            const errorMessage = document.querySelector('.error-message');
+                            const sentMessage = document.querySelector('.sent-message');
+                            const submitButton = document.getElementById('submitButton');
+
+                            form.addEventListener('submit', function (event) {
+                                event.preventDefault();
+
+                                if (!validateForm()) {
+                                    return;
+                                }
+
+                                const formData = new FormData(form);
+                                const csrfToken = document.querySelector('meta[name="csrf-token"]');
+                                if (!csrfToken) {
+                                    alert('CSRF token not found. Please try again.');
+                                    return;
+                                }
+
+                                loading.style.display = 'block';
+                                errorMessage.style.display = 'none';
+                                sentMessage.style.display = 'none';
+                                submitButton.disabled = true;
+
+                                fetch(form.action, {
+                                    method: 'POST',
+                                    headers: {
+                                        'X-Frappe-CSRF-Token': csrfToken.getAttribute('content'),
+                                    },
+                                    body: formData,
+                                })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        loading.style.display = 'none';
+                                        submitButton.disabled = false;
+
+                                        if (data.status === 'success') {
+                                            sentMessage.style.display = 'block';
+                                            form.reset();
+                                        } else {
+                                            errorMessage.textContent = data.message || 'Error submitting the form.';
+                                            errorMessage.style.display = 'block';
+                                        }
+                                    })
+                                    .catch(error => {
+                                        loading.style.display = 'none';
+                                        submitButton.disabled = false;
+                                        errorMessage.textContent = `Error: ${error.message}`;
+                                        errorMessage.style.display = 'block';
+                                    });
+                            });
+                        });
+                    </script>
+
+
                 </div>
                 <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.4s">
                     <div class="contact-map h-100 w-100">
