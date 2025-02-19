@@ -13,9 +13,8 @@ def get_context(context):
         if user_email == "Administrator":
             context.doc = frappe.get_all(
                 "Issue",
-                fields=["*"],
-                order_by="creation desc",
-                limit_page_length=20
+                fields=["name",'status','subject','raised_by','priority','customer'],
+                order_by="creation desc"
             )
             context.message = "Showing all issues for Administrator."
             return context
@@ -36,10 +35,9 @@ def get_context(context):
         if customer:
             context.doc = frappe.get_all(
                 "Issue",
-                fields=["*"],
+                fields=["name",'status','subject','raised_by','priority','customer'],
                 filters={"customer": customer},
-                order_by="creation desc",
-                limit_page_length=20
+                order_by="creation desc"
             )
             context.message = f"Showing issues for customer: {customer}."
         else:

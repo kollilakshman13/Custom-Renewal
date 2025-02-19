@@ -1,14 +1,13 @@
 import frappe
-
+no_cache=1
 def get_context(context):
     user_email = frappe.session.user
 
     if user_email == "Administrator":
         context.doc = frappe.get_all(
             "Renewal List",
-            fields=["*"],
-            order_by="creation desc",
-            limit_page_length=20
+            fields=["name","status","start_date","end_date","total_amount","customer_name"],
+            order_by="creation desc"
         )
         for renewal in context.doc:
             renewal_item = frappe.get_value("Renewal Item", {"parent": renewal.name}, "item_name")
@@ -38,9 +37,8 @@ def get_context(context):
             context.doc = frappe.get_all(
                 "Renewal List",
                 filters={"customer_name": customer},
-                fields=["*"],
+                fields=["name","status","start_date","end_date","total_amount","customer_name"],
                 order_by="creation desc",
-                limit_page_length=20
             )
             for renewal in context.doc:
                 renewal_item = frappe.get_value("Renewal Item", {"parent": renewal.name}, "item_name")

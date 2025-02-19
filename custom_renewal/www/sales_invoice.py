@@ -1,5 +1,5 @@
 import frappe
-
+no_cache=1
 def get_context(context):
     user_email = frappe.session.user
 
@@ -7,9 +7,8 @@ def get_context(context):
     if user_email == "Administrator":
         context.doc = frappe.get_all(
             "Sales Invoice",
-            fields=["*"],
-            order_by="creation desc",
-            limit_page_length=20
+            fields=["name","posting_date","status","custom_invoice_attachment","rounded_total","customer_name"],
+            order_by="creation desc"
         )
         for order in context.doc:
             order.item_name = frappe.get_value(
@@ -42,9 +41,8 @@ def get_context(context):
         context.doc = frappe.get_all(
             "Sales Invoice",
             filters={"customer_name": customer},
-            fields=["*"],
-            order_by="creation desc",
-            limit_page_length=20
+            fields=["name","posting_date","status","custom_invoice_attachment","rounded_total","customer_name"],
+            order_by="creation desc"
         )
         for order in context.doc:
             order.item_name = frappe.get_value(

@@ -841,7 +841,7 @@ li .sidebar-item {
     height: 20px !important;
     padding: 2px !important;
     /* width: 80px !important; */
-    font-size: 12px !important;
+    font-size: 10px !important;
 }
 
 [data-path="sales_order"] h3,

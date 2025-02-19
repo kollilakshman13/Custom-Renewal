@@ -1,6 +1,6 @@
 import frappe
 from frappe import _
-
+no_cache=1
 def get_context(context):
     # Fetch the d_name parameter from the request
     d_name = frappe.form_dict.get('d_name')
@@ -22,7 +22,7 @@ def get_context(context):
     order_items = frappe.get_all(
         'Sales Order Item',
         filters={'parent': d_name},
-        fields=['*']
+        fields=['item_name','item_code','qty','amount','rate']
     )
     for item in order_items:
         if "rate" in item:

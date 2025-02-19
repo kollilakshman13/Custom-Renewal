@@ -1,6 +1,6 @@
 
 import frappe
-
+no_cache=1
 def get_context(context):
     user_email = frappe.session.user
 
@@ -8,7 +8,8 @@ def get_context(context):
     if user_email == "Administrator":
         context.doc = frappe.get_all(
             "Address",
-            fields=["*"],
+            fields=["name","address_title","address_line1","address_line2","city","disabled", 
+                "state","country","pincode","email_id","phone","fax","tax_category"],
             order_by="creation desc"
         )
         context.message = "Showing all Address lists as Administrator."
