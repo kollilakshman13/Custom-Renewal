@@ -124,8 +124,7 @@ body[data-path="me"] .container {
     [data-path="ticket_create"] .sidebar-column,
     [data-path="ticket"] .sidebar-column,
     [data-path="address_create"] .sidebar-column,
-    [data-path="address_list"] .sidebar-column,
-    [data-path="me"] .sidebar-column {
+    [data-path="address_list"] .sidebar-column {
         display: block;
         height: 100vh !important;
         background-color: whitesmoke !important;
@@ -133,6 +132,16 @@ body[data-path="me"] .container {
         width: 15% !important;
         position: fixed !important;
     }
+
+    [data-path="me"] .sidebar-column {
+        width: 16% !important;
+        display: block;
+        height: 100vh !important;
+        background-color: whitesmoke !important;
+        border-right: 1px solid #e0e0e0 !important;
+        position: fixed !important;
+    }
+
 
     [data-path="sales_order"] .main-column,
     [data-path="sales_orders"] .main-column,
@@ -144,9 +153,16 @@ body[data-path="me"] .container {
     [data-path="ticket_create"] .main-column,
     [data-path="ticket"] .main-column,
     [data-path="address_create"] .main-column,
-    [data-path="address_list"] .main-column,
-    [data-path="me"] .main-column {
+    [data-path="address_list"] .main-column {
         width: calc(100% - 16%) !important;
+        height: 100vh !important;
+        padding: 0 !important;
+        margin-left: 18% !important;
+        flex-grow: 1 !important;
+    }
+
+    [data-path="me"] .main-column {
+        width: calc(100%-17%) !important;
         height: 100vh !important;
         padding: 0 !important;
         margin-left: 18% !important;
@@ -331,6 +347,7 @@ li .sidebar-item {
     font-weight: 0 !important;
     color: #383838 !important;
     font-family: 'Material Symbols Outlined' !important;
+    font-display: swap !important;
 }
 
 .account-info {

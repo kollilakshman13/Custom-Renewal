@@ -10,7 +10,7 @@ def get_context(context):
         context.message = _("No Sales Order Name provided.")
         return context
 
-    # Fetch the parent record from the relevant Doctype (e.g., Renewal)
+    # Fetch the parent record from the relevant Doctype (e.g., sales order)
     order_doc = frappe.get_doc('Sales Order', d_name) if frappe.db.exists('Sales Order', d_name) else None
 
     if not order_doc:
@@ -18,7 +18,7 @@ def get_context(context):
         context.message = _("No order found for the provided name.")
         return context
 
-    # Fetch Renewal Items filtered by parent = d_name
+    # Fetch sales order Items filtered by parent = d_name
     order_items = frappe.get_all(
         'Sales Order Item',
         filters={'parent': d_name},
@@ -33,4 +33,4 @@ def get_context(context):
     # Add data to the context for rendering in the template
     context.items = order_items
     context.d_name = order_doc  # Pass the entire document to the template
-
+    

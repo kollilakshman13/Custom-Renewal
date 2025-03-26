@@ -18,7 +18,7 @@ def get_context(context):
         return context
     
     # Fetch comments related to the issue
-    comments = frappe.get_all('Comment', filters={'reference_doctype': 'Issue', 'reference_name': d_name}, fields=['*'])
+    comments = frappe.get_all('Comment', filters={'reference_doctype': 'Issue', 'reference_name': d_name,'comment_type':'Comment'}, fields=['*'])
     
     context.d_name = issue_doc
     context.comments = comments  # Add comments to context

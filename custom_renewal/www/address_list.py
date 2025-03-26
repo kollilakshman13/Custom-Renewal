@@ -6,12 +6,16 @@ def get_context(context):
 
     # Administrator logic
     if user_email == "Administrator":
-        context.doc = frappe.get_all(
-            "Address",
-            fields=["name","address_title","address_line1","address_line2","city","disabled", 
-                "state","country","pincode","email_id","phone","fax","tax_category"],
-            order_by="creation desc"
-        )
+        address = frappe.db.sql("""
+            SELECT 
+                addr.name,addr.address_title, addr.address_line1, addr.address_line2, addr.city,addr.disabled, 
+                addr.state, addr.country, addr.pincode,addr.email_id,addr.phone,addr.fax,addr.tax_category
+            FROM 
+                `tabAddress` AS addr
+            ORDER BY addr.creation DESC
+        """, as_dict=True)
+        
+        context.doc= address
         context.message = "Showing all Address lists as Administrator."
         return context
 
