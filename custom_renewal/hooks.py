@@ -10,7 +10,7 @@ app_license = "MIT"
 
 # include js, css files in header of desk.html
 app_include_css = "/assets/custom_renewal/css/custom_renewal.css"
-app_include_css = "/assets/css/font-awesome.css"
+#app_include_css = "/assets/css/font-awesome.css"
 # app_include_js = "/assets/custom_renewal/js/custom_renewal.js"
 app_include_js = "/assets/custom_renewal/js/page.js"
 
@@ -105,12 +105,7 @@ website_route_rules = [
     {
         "from_route": "/tickets", "to_route": "tickets"
     },
-    # {
-    #     "from_route":"/fixed_sidebar","to_route":"fixed_sidebar"
-    # },
-    # {
-    #     "from_route":"/fixed_sidebar<path:name>","to_route":"fixed_sidebar"
-    # }
+    
     
 ]
 website_context = {

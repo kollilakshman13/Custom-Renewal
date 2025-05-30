@@ -457,7 +457,7 @@ def is_customer():
 def get_profile_data():
     user = frappe.session.user  # Fetch the current logged-in user
     if user == "Guest":
-        frappe.throw(_("You need to be logged in to edit your profile."))
+        frappe.throw(("You need to be logged in to edit your profile."))
 
     user_doc = frappe.get_doc("User", user)  # Fetch the User document
     return {
@@ -474,7 +474,7 @@ def get_profile_data():
 def save_profile_data(first_name, middle_name, last_name, phone, mobile_no,user_image):
     user = frappe.session.user  # Fetch the current logged-in user
     if user == "Guest":
-        frappe.throw(_("You need to be logged in to save your profile."))
+        frappe.throw("You need to be logged in to save your profile.")
 
     user_doc = frappe.get_doc("User", user)
     user_doc.first_name = first_name
@@ -487,3 +487,276 @@ def save_profile_data(first_name, middle_name, last_name, phone, mobile_no,user_
     user_doc.save(ignore_permissions=True)
     frappe.db.commit()
     return {"message":("Profile updated successfully.")}
+
+
+@frappe.whitelist()
+def mark_renewal_lost(renewal_id):
+    renewal = frappe.get_doc("Renewal List", renewal_id)
+    renewal.status = "Lost"
+    renewal.save()
+    frappe.db.commit()
+    return True
+
+
+# in custom_app/api/otp_auth.py
+# import frappe
+# import random
+
+# @frappe.whitelist(allow_guest=True)
+# def send_otp_to_user(email):
+#     otp = str(random.randint(100000, 999999))
+#     frappe.cache().hset("otp_cache", email, otp)
+
+#     full_name = frappe.db.get_value("User", email, "full_name") or "User"
+#     frappe.sendmail(
+#         recipients=[email],
+#         subject="Your Login OTP",
+#         message=f"Hi {full_name},\nYour OTP is {otp}.",
+#     )
+#     return {"message": "OTP sent successfully"}
+
+
+# @frappe.whitelist(allow_guest=True)
+# def verify_otp_and_login(email, input_otp):
+#     real_otp = frappe.cache().hget("otp_cache", email)
+#     if real_otp and real_otp == input_otp:
+#         frappe.cache().hdel("otp_cache", email)
+        
+#         from frappe.auth import LoginManager
+#         login_manager = LoginManager()
+#         login_manager.authenticate(user=email)
+#         login_manager.post_login()
+
+#         return {
+#             "message": "Login successful",
+#             "full_name": frappe.utils.get_fullname(email)
+#         }
+#     else:
+#         frappe.throw("Invalid OTP")
+
+
+# import frappe
+# import random
+# from frappe.auth import LoginManager
+
+# @frappe.whitelist(allow_guest=True)
+# def verify_otp_and_login(email, input_otp):
+#     if not email or not input_otp:
+#         frappe.throw("Missing email or OTP.")
+
+#     real_otp = frappe.cache().hget("otp_cache", email)
+#     if not real_otp:
+#         frappe.throw("OTP has expired or not found.")
+
+#     if real_otp != input_otp:
+#         frappe.throw("Invalid OTP.")
+
+#     # Delete OTP once verified
+#     frappe.cache().hdel("otp_cache", email)
+
+#     # Proceed with login
+#     from frappe.auth import LoginManager
+#     login_manager = LoginManager()
+#     login_manager.authenticate(user=email)
+#     login_manager.post_login()
+
+#     return {
+#         "message": "Login successful",
+#         "full_name": frappe.utils.get_fullname(email)
+#     }
+
+
+import frappe
+import random
+from frappe.auth import LoginManager
+
+@frappe.whitelist(allow_guest=True)
+def validate_credentials_and_send_otp_or_login(email, password):
+    try:
+        # Authenticate credentials first
+        login_manager = LoginManager()
+        login_manager.authenticate(user=email, pwd=password)
+    except Exception:
+        frappe.throw("Invalid email or password.")
+
+    # Fetch user_type from the User doctype
+    user_type = frappe.db.get_value("User", email, "user_type")
+
+    if user_type == "Website User":
+        # Website users get OTP
+        otp = str(random.randint(100000, 999999))
+        frappe.cache().hset("otp_cache", email, otp)
+
+        full_name = frappe.db.get_value("User", email, "full_name") or "User"
+        frappe.sendmail(
+            recipients=[email],
+            subject="Your Login OTP",
+            message=f"Hi {full_name},<br><br>Your OTP is <b>{otp}</b>. It is valid for 5 minutes.<br><br>Regards,<br>Your Company"
+        )
+
+        return {
+            "otp_required": True,
+            "message": "OTP sent to your email."
+        }
+
+    else:
+        # System Users or others: login directly
+        frappe.local.login_manager = login_manager
+        login_manager.post_login()
+
+        return {
+            "otp_required": False,
+            "message": "Login successful",
+            "full_name": frappe.utils.get_fullname(email)
+        }
+
+
+@frappe.whitelist(allow_guest=True)
+def verify_otp_and_login(email, input_otp):
+    if not email or not input_otp:
+        frappe.throw("Missing email or OTP.")
+
+    real_otp = frappe.cache().hget("otp_cache", email)
+    if not real_otp:
+        frappe.throw("OTP has expired or not found.")
+
+    if real_otp != input_otp:
+        frappe.throw("Invalid OTP.")
+
+    # OTP verified: delete it
+    frappe.cache().hdel("otp_cache", email)
+
+    # Login user
+    frappe.local.login_manager = LoginManager()
+    frappe.local.login_manager.user = email
+    frappe.local.login_manager.post_login()
+
+    return {
+        "message": "Login successful",
+        "full_name": frappe.utils.get_fullname(email)
+    }
+
+### share to the sales invoice report data to the salesperson
+import frappe
+import json
+
+@frappe.whitelist()
+def bulk_assign_salesperson_by_user(sales_invoices, user_email):
+    if isinstance(sales_invoices, str):
+        sales_invoices = json.loads(sales_invoices)
+
+    if not frappe.db.exists("User", user_email):
+        frappe.throw(f"User {user_email} does not exist.")
+
+    for inv in sales_invoices:
+        frappe.share.add("Sales Invoice", inv, user_email, read=1, write=0, share=0, everyone=0)
+
+    frappe.db.commit()
+    return "ok"
+
+
+# Share Sales Orders
+# so_names = frappe.get_all("Sales Order", filters={"customer": customer}, pluck="name")
+# for so in so_names:
+#     if so:
+#         try:
+#             frappe.share.add("Sales Order", so, user_email, read=1)
+#         except Exception as e:
+#             frappe.log_error(f"Failed to share Sales Order {so}: {str(e)}")
+
+# Share Sales Invoices
+# si_names = frappe.get_all("Sales Invoice", filters={"customer": customer}, pluck="name")
+# for si in si_names:
+#     if si:
+#         try:
+#             frappe.share.add("Sales Invoice", si, user_email, read=1)
+#         except Exception as e:
+#             frappe.log_error(f"Failed to share Sales Invoice {si}: {str(e)}")
+
+
+# customer report to share permission to user 
+import frappe
+import json
+from frappe import _
+
+@frappe.whitelist()
+def bulk_assign_customer_to_salesperson_by_user(customers, user_email):
+    if isinstance(customers, str):
+        customers = json.loads(customers)
+
+    if not frappe.db.exists("User", user_email):
+        frappe.throw(f"User {user_email} does not exist.")
+
+    for customer in customers:
+        if not frappe.db.exists("Customer", customer):
+            frappe.msgprint(f"Customer {customer} does not exist, skipping.")
+            continue
+
+        # Share the Customer
+        try:
+            frappe.share.add("Customer", customer, user_email, read=1)
+        except Exception as e:
+            frappe.log_error(f"Failed to share Customer {customer}: {str(e)}")
+
+        # Share linked Contacts (via Dynamic Link)
+        contact_names = frappe.db.sql("""
+            SELECT DISTINCT dl.parent AS name
+            FROM `tabDynamic Link` dl
+            JOIN `tabContact` c ON c.name = dl.parent
+            WHERE dl.link_doctype = 'Customer' AND dl.link_name = %s
+        """, (customer,), as_dict=True)
+
+        for cont in contact_names:
+            try:
+                frappe.share.add("Contact", cont.name, user_email, read=1)
+            except Exception as e:
+                frappe.log_error(f"Failed to share Contact {cont.name}: {str(e)}")
+
+        # Share linked Addresses (via Dynamic Link)
+        address_names = frappe.db.sql("""
+            SELECT DISTINCT dl.parent AS name
+            FROM `tabDynamic Link` dl
+            JOIN `tabAddress` a ON a.name = dl.parent
+            WHERE dl.link_doctype = 'Customer' AND dl.link_name = %s
+        """, (customer,), as_dict=True)
+
+        for addr in address_names:
+            try:
+                frappe.share.add("Address", addr.name, user_email, read=1)
+            except Exception as e:
+                frappe.log_error(f"Failed to share Address {addr.name}: {str(e)}")
+
+        # Share Opportunities
+        opportunity_names = frappe.get_all("Opportunity", filters={"party_name": customer}, pluck="name")
+        for opp in opportunity_names:
+            try:
+                frappe.share.add("Opportunity", opp, user_email, read=1)
+            except Exception as e:
+                frappe.log_error(f"Failed to share Opportunity {opp}: {str(e)}")
+                
+        # Share Quotations
+        quotations = frappe.get_all("Quotation", filters={"party_name": customer}, pluck="name")
+        for quo in quotations:
+            try:
+                frappe.share.add("Quotation", quo, user_email, read=1)
+            except Exception as e:
+                frappe.log_error(f"Failed to share Quotation {quo}: {str(e)}")
+
+        # Share Customer Order Forms (COFs)
+        cofs = frappe.get_all("Customer Order Form", filters={"customer": customer}, pluck="name")
+        for cof in cofs:
+            try:
+                frappe.share.add("Customer Order Form", cof, user_email, read=1)
+            except Exception as e:
+                frappe.log_error(f"Failed to share Customer Order Form {cof}: {str(e)}")
+
+        # Share Renewal Lists
+        renewals = frappe.get_all("Renewal List", filters={"customer_name": customer}, pluck="name")
+        for renewal in renewals:
+            try:
+                frappe.share.add("Renewal List", renewal, user_email, read=1)
+            except Exception as e:
+                frappe.log_error(f"Failed to share Renewal List {renewal}: {str(e)}")
+
+    frappe.db.commit()
+    return "ok"

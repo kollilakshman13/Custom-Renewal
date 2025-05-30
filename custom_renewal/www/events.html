@@ -221,9 +221,9 @@
                             box-shadow: 0 4px 10px #383838(0, 123, 255, 0.3);
                         }
                     </style>
-                </div>
             </div>
         </div>
+    </div>
     </div>
 
     <script>
@@ -251,17 +251,16 @@
     <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="swiper mySwiper">
             <div class="swiper-wrapper align-items-center">
-                {% set brand = frappe.get_all("Brand", fields=['*'], order_by="name asc") %}
+                {% set brand = frappe.get_all("Brand", fields=['name', 'image'], order_by="name asc") %}
                 {% for i in brand %}
+                {% if i.image %} {# Only create slide if an image exists #}
                 <div class="swiper-slide">
-                    <div class="circle-container">
-                        {% if i.image %}
-                        <img src="{{i.image}}" alt="Brand Image">
-                        {% endif %}
-                    </div>
+                    <img src="{{ i.image }}" alt="Brand Image">
                 </div>
+                {% endif %}
                 {% endfor %}
             </div>
+
         </div>
     </div>
 

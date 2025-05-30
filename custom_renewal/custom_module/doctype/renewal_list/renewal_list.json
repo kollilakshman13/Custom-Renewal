@@ -92,6 +92,8 @@
   {
    "fieldname": "status",
    "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Status",
    "options": "New Opp\nActive\nDraft\nAwaiting Response\nCofed\nDuplicate\nRenewed\nUpgraded\nVoid\nLost\nCancelled\nCompetitor Sales\nAuto Created\nOut Of Business\nProduct Changed"
   },
@@ -200,7 +202,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-20 18:50:07.106272",
+ "modified": "2025-04-24 13:09:07.333966",
  "modified_by": "Administrator",
  "module": "Custom Module",
  "name": "Renewal List",

@@ -1,0 +1,26 @@
+{
+ "content": null,
+ "creation": "2025-04-22 12:34:01.563830",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2025-04-24 11:33:23.983566",
+ "modified_by": "Administrator",
+ "module": "Custom Renewal",
+ "name": "programming_page",
+ "owner": "Administrator",
+ "page_name": "programming_page",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "jr.Developer"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Demo_page"
+}

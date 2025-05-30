@@ -81,3 +81,17 @@
     margin-top: 10px !important;
 }
 
+/* public/css/custom_customer.css */
+
+input[data-doctype="Customer"][data-fieldname="customer_name"] {
+    background-color: white !important;
+    border-bottom: 1px solid whitesmoke !important;
+    border-radius: 0px !important;
+}
+
+/* When the input is focused (clicked or tabbed into) */
+input[data-doctype="Customer"][data-fieldname="customer_name"]:focus {
+    background-color: white !important;
+    border-bottom: 1px solid black !important;
+}
+

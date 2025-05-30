@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+{% extends "templates/web.html" %}
+import frappe
+{% block page_content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- <div class="container">
+    <h3>Login with OTP</h3>
+
+    <form onsubmit="event.preventDefault(); checkCredentials();">
+        <input type="email" id="email" placeholder="Email" autocomplete="username" required />
+        <input type="password" id="password" placeholder="Password" autocomplete="current-password" required />
+        <button type="submit">Login</button>
+    </form>
+
+    <div id="otp-box" style="display:none; margin-top: 15px;">
+        <input type="text" id="otp" placeholder="Enter OTP" />
+        <button id="verify-btn">Verify OTP</button>
+    </div>
+</div> -->
+
+<div class="container" style="display: flex; justify-content: center; align-items: center; min-height: 70vh;">
+    <div
+        style="background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; max-width: 400px;">
+        <h3 style="text-align: center;"></h3>
+
+        <form onsubmit="event.preventDefault(); checkCredentials();">
+            <div style="margin-bottom: 15px;">
+                <input type="email" id="email" placeholder="Email" autocomplete="username" required
+                    style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;" />
+            </div>
+            <div style="margin-bottom: 15px;">
+                <input type="password" id="password" placeholder="Password" autocomplete="current-password" required
+                    style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;" />
+            </div>
+            <button type="submit"
+                style="width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px;">Login</button>
+        </form>
+
+        <div id="otp-box" style="display:none; margin-top: 20px;">
+            <input type="text" id="otp" placeholder="Enter OTP"
+                style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;" />
+            <button id="verify-btn"
+                style="width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 5px;">Verify
+                OTP</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block script %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let userEmail = "";
+        let userPassword = "";
+
+        window.checkCredentials = function () {
+            const userEmail = document.getElementById("email").value;
+            const userPassword = document.getElementById("password").value;
+
+            if (!userEmail || !userPassword) {
+                frappe.msgprint("Please enter email and password.");
+                return;
+            }
+
+            frappe.call({
+                method: "custom_renewal.api.validate_credentials_and_send_otp_or_login",
+                args: {
+                    email: userEmail,
+                    password: userPassword
+                },
+                callback: function (r) {
+                    if (r.message && r.message.otp_required) {
+                        frappe.msgprint("OTP sent to your email.");
+                        document.getElementById("otp-box").style.display = "block";
+                    } else if (r.message) {
+                        frappe.msgprint("Login successful. Redirecting...");
+                        setTimeout(() => {
+                            window.location.href = "/app";
+                        }, 1000);
+                    }
+                },
+                error: function (r) {
+                    const msg = (r.message || (r.responseJSON && r.responseJSON._error_message)) || "Login failed.";
+                    frappe.msgprint(msg);
+                }
+            });
+        };
+
+
+        document.getElementById("verify-btn").addEventListener("click", function () {
+            const otp = document.getElementById("otp").value;
+            const email = document.getElementById("email").value;
+
+            frappe.call({
+                method: "custom_renewal.api.verify_otp_and_login",
+                args: {
+                    email: email,
+                    input_otp: otp
+                },
+                callback: function (r) {
+                    if (!r.exc) {
+                        frappe.msgprint("Login successful. Redirecting...");
+                        setTimeout(() => {
+                            window.location.href = "/me";
+                        }, 1000);
+                    }
+                },
+                error: function () {
+                    frappe.msgprint("Invalid OTP.");
+                }
+            });
+        });
+    });
+</script>
+
+{%endblock %}
