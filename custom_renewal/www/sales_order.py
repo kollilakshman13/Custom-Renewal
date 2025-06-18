@@ -60,6 +60,8 @@ import frappe
 no_cache = 1
 
 def get_context(context):
+    #context.show_sidebar = True
+    #context.sidebar_template = "custom_renewal/templates/includes/web_sidebar.html"
     user_email = frappe.session.user
     frappe.logger().info(f"User Email: {user_email}")
     context.message1 = f"user email {user_email}"

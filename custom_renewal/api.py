@@ -692,6 +692,54 @@ def bulk_assign_customer_to_salesperson_by_user(customers, user_email):
             frappe.msgprint(f"Customer {customer} does not exist, skipping.")
             continue
 
+        # ✅ Update 'account_manager' field on Customer
+        # try:
+        #     frappe.db.set_value("Customer", customer, "account_manager", user_email)
+        # except Exception as e:
+        #     frappe.log_error(f"Failed to update account_manager for {customer}: {str(e)}")
+
+        # ✅ Update 'account_manager' field on Customer
+        try:
+            frappe.db.set_value("Customer", customer, "account_manager", user_email)
+        except Exception as e:
+            frappe.log_error(f"Failed to update account_manager for {customer}", str(e))
+
+        # ✅ Debugging block to trace Sales Team update issue
+        try:
+            # Step 1: Find Employee linked to user
+            employee = frappe.db.get_value("Employee", {"user_id": user_email}, "name")
+            if not employee:
+                frappe.log_error("Sales Team Debug", f"No Employee linked to user: {user_email}")
+                continue
+            frappe.log_error("Sales Team Debug", f"Found Employee {employee} for user {user_email}")
+
+            # Step 2: Find Sales Person linked to employee
+            sales_person = frappe.db.get_value("Sales Person", {"employee": employee}, "name")
+            if not sales_person:
+                frappe.log_error("Sales Team Debug", f"No Sales Person linked to Employee {employee}")
+                continue
+            frappe.log_error("Sales Team Debug", f"Found Sales Person {sales_person} for Employee {employee}")
+
+            # Step 3: Load and modify Customer doc
+            customer_doc = frappe.get_doc("Customer", customer)
+            frappe.log_error("Sales Team Debug", f"Loaded Customer Doc {customer}")
+
+            # Step 4: Clear and update sales_team
+            customer_doc.sales_team = []
+            customer_doc.append("sales_team", {
+                "sales_person": sales_person,
+                "allocated_percentage": 100
+            })
+            frappe.log_error("Sales Team Debug", f"Updated sales_team with {sales_person} for {customer}")
+
+            # Step 5: Save changes
+            customer_doc.save(ignore_permissions=True)
+            frappe.log_error("Sales Team Debug", f"Customer {customer} saved successfully")
+
+        except Exception as e:
+            frappe.log_error("Sales Team Update Error", f"Customer: {customer} | Error: {str(e)}")
+
+
         # Share the Customer
         try:
             frappe.share.add("Customer", customer, user_email, read=1)
@@ -760,3 +808,129 @@ def bulk_assign_customer_to_salesperson_by_user(customers, user_email):
 
     frappe.db.commit()
     return "ok"
+
+
+
+
+# issue send an email to customer with contact list 
+import frappe
+from frappe.utils import now_datetime, format_datetime
+
+def send_issue_email(doc, method):
+    print("Function called")
+
+    if not doc.custom_issue_contact_list:
+        print("No entries in Issue Contact List")
+        return
+
+    # Gather all email IDs from the child table
+    email_list = []
+    for row in doc.custom_issue_contact_list:
+        if row.email_id:
+            email_list.append(row.email_id)
+            print(f"Found email: {row.email_id}")
+
+    if not email_list:
+        print("No valid email IDs found in Issue Contact List")
+        return
+
+    # Format times
+    current_time = now_datetime()
+    response_time = doc.response_by
+    resolution_time = doc.resolution_by
+
+    def fmt(dt):
+        return format_datetime(dt, "dd-MM-yyyy hh:mm a") if dt else "N/A"
+
+    # Message body
+    # message = f"""
+    # Dear Customer,<br><br>
+
+    # Thank you for reaching out. We have received your support ticket.<br><br>
+
+    # <b>Ticket ID:</b> {doc.name}<br>
+    # <b>Subject:</b> {doc.subject}<br>
+    # <b>Description:</b><br>{doc.description}<br><br>
+
+    # Our support team received your ticket at <b>{fmt(current_time)}</b><br>
+    # and will respond by <b>{fmt(response_time)}</b>.<br><br>
+
+    # Resolution is expected by <b>{fmt(resolution_time)}</b>.<br><br>
+
+    # Regards,<br>
+    # Support Team
+    # """
+
+    message = f"""
+        <html>
+        <head>
+        <style>
+            body {{
+            font-family: Arial, sans-serif;
+            color: #333;
+            font-size: 14px;
+            line-height: 1.6;
+            }}
+            .email-container {{
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+            max-width: 600px;
+            }}
+            .header {{
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            }}
+            .label {{
+            font-weight: bold;
+            }}
+            .footer {{
+            margin-top: 20px;
+            font-size: 13px;
+            color: #777;
+            }}
+        </style>
+        </head>
+        <body>
+        <div class="email-container">
+            <div class="header">Support Ticket Acknowledgement</div>
+
+            <p>Dear Customer,</p>
+
+            <p>Thank you for reaching out. We have received your support ticket.</p>
+
+            <p>
+            <span class="label">Ticket ID:</span> {doc.name}<br>
+            <span class="label">Subject:</span> {doc.subject}<br>
+            <span class="label">Description:</span><br>
+            {doc.description}
+            </p>
+
+            <p>
+            Our support team received your ticket at <b>{fmt(current_time)}</b><br>
+            and will respond by <b>{fmt(response_time)}</b>.<br><br>
+            Resolution is expected by <b>{fmt(resolution_time)}</b>.
+            </p>
+
+            <div class="footer">
+            Regards,<br>
+            Support Team
+            </div>
+        </div>
+        </body>
+        </html>
+    """
+
+    try:
+        frappe.sendmail(
+            recipients=email_list,
+            subject=f"New Issue Created - {doc.name}",
+            message=message,
+            reference_doctype=doc.doctype,
+            reference_name=doc.name
+        )
+        print(f"Email sent to: {', '.join(email_list)}")
+    except Exception as e:
+        print(f"Error sending email: {e}")

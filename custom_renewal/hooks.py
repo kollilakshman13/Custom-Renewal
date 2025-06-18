@@ -264,6 +264,11 @@ website_route_rules = [
 # 	}
 # }
 
+doc_events = {
+    "Issue": {
+        "after_insert": "custom_renewal.api.send_issue_email"
+    }
+}
 
 doc_events = {
     # "Event Registration": {
@@ -320,8 +325,22 @@ doc_events = {
 # 	"frappe.desk.doctype.event.event.get_events": "custom_renewal.event.get_events"
 # }
 #
+# override_whitelisted_methods = {
+#     "frappe.core.doctype.user.user.switch_theme": "custom_renewal.overrides.switch_theme.switch_theme"
+# }
+# override_whitelisted_methods = {
+#     "frappe.twofactor.get_otp_method": "custom_renewal.auth.get_custom_otp_method"
+# }
+
 override_whitelisted_methods = {
-    "frappe.core.doctype.user.user.switch_theme": "custom_renewal.overrides.switch_theme.switch_theme"
+    "frappe.twofactor.get_otp_method": "custom_renewal.auth.get_custom_otp_method",
+    "frappe.twofactor.has_2factor_auth": "custom_renewal.auth.has_custom_2fa"
+}
+
+doc_events = {
+    "*": {
+        "on_session_creation": "custom_renewal.auth_patch.patched_validate_otp"
+    }
 }
 
 # each overriding function accepts a `data` argument;
