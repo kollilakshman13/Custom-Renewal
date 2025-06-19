@@ -784,11 +784,22 @@ frappe.pages['sales-target-dashboa'].on_page_load = function(wrapper) {
 class SalesTargetDashboard {
   constructor(wrapper) {
     this.wrapper = wrapper;
+    // this.page = frappe.ui.make_app_page({
+    //   parent: wrapper,
+    //   title: 'Target Allocation',
+    //   single_column: true
+    // });
     this.page = frappe.ui.make_app_page({
-      parent: wrapper,
-      title: 'Target Allocation',
-      single_column: true
-    });
+  parent: wrapper,
+  title: 'Target Allocation',
+  single_column: true
+});
+// Set Save as primary action (right side of title)
+this.page.set_primary_action('Save', () => this.save_all_data(), 'save');
+
+// Add Cancel button next to it
+this.page.add_inner_button('Cancel', () => location.reload());
+
     this.rowsData = [];
     this.make();
   }
@@ -800,11 +811,9 @@ class SalesTargetDashboard {
   }
   get_html() {
     return `
-      <div style="display: flex; justify-content: flex-end; margin-bottom: 2px; margin-top:1px;">
-        <button class="btn btn-primary" id="save_all_btn">Save</button>
-        <button class="btn btn-secondary ml-2" id="cancel_all_btn">Cancel</button>
-      </div>
+
       <style>
+      
   input[type="text"],select.form-control {
     border: 1px solid #333 !important; /* Thick dark border */
     border-radius: 6px;
@@ -815,9 +824,9 @@ class SalesTargetDashboard {
     outline: none;
   }
 </style>
-      <div class="target-allocation-section" style="padding: 5px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 5px;">
-        <h4>Target Allocation</h4>
-        <div class="form-row" style="display: flex; gap: 20px; flex-wrap: wrap;">
+      <div class="target-allocation-section" style="padding: 2px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 5px;">
+
+        <div class="form-row" style="display: flex; gap: 20px; flex-wrap: wrap;A">
           <div class="form-group" style="flex: 1; min-width: 180px;">
             <label>Salesperson</label>
             <select id="salesperson_select" class="form-control">
@@ -896,8 +905,7 @@ class SalesTargetDashboard {
     $('#add_row_btn').on('click', () => this.add_row());
     $('#delete_row_btn').on('click', () => this.delete_selected_rows());
     $('#cancel_modal_btn').on('click', () => $('#details_container').hide());
-    $('#save_all_btn').on('click', () => this.save_all_data());
-    $('#cancel_all_btn').on('click', () => location.reload());
+    
     $('#select_all_rows').on('change', function () {
       $('input.row-selector').prop('checked', $(this).prop('checked'));
       $('#delete_row_btn').toggle($('input.row-selector:checked').length > 0);

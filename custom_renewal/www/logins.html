@@ -1,37 +1,29 @@
 <!DOCTYPE html>
 {% extends "templates/web.html" %}
 import frappe
+{% block head_include %}
+{{ include_style('login.bundle.css') }}
+{% endblock %}
+
 {% block page_content %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- <div class="container">
-    <h3>Login with OTP</h3>
-
-    <form onsubmit="event.preventDefault(); checkCredentials();">
-        <input type="email" id="email" placeholder="Email" autocomplete="username" required />
-        <input type="password" id="password" placeholder="Password" autocomplete="current-password" required />
-        <button type="submit">Login</button>
-    </form>
-
-    <div id="otp-box" style="display:none; margin-top: 15px;">
-        <input type="text" id="otp" placeholder="Enter OTP" />
-        <button id="verify-btn">Verify OTP</button>
-    </div>
-</div> -->
 
 <div class="container" style="display: flex; justify-content: center; align-items: center; min-height: 70vh;">
     <div
         style="background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; max-width: 400px;">
-        <h3 style="text-align: center;"></h3>
-
+        <h3 style="text-align: center;font-weight:bold;">64Network security Pvt Ltd</h3>
         <form onsubmit="event.preventDefault(); checkCredentials();">
             <div style="margin-bottom: 15px;">
-                <input type="email" id="email" placeholder="Email" autocomplete="username" required
+                <input type="text" id="email" placeholder="Email or Username" autocomplete="username" required
                     style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;" />
             </div>
-            <div style="margin-bottom: 15px;">
+            <div style="margin-bottom: 15px; position: relative;">
                 <input type="password" id="password" placeholder="Password" autocomplete="current-password" required
-                    style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;" />
+                    style="width: 100%; padding: 10px 40px 10px 10px; border-radius: 5px; border: 1px solid #ccc;" />
+                <i class="fa fa-eye" id="togglePassword"
+                    style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; color: #888;"></i>
             </div>
+
             <button type="submit"
                 style="width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px;">Login</button>
         </form>
@@ -43,6 +35,14 @@ import frappe
                 style="width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 5px;">Verify
                 OTP</button>
         </div>
+        <button id="reset-totp-btn" class="hidden"
+            style="margin-top: 10px; background-color: #dc3545; color: white; padding: 8px; border: none; border-radius: 5px; display: none;">
+            Reset Authenticator Setup
+        </button>
+    </div>
+    <div id="qr-instruction" style="display: none; margin-top: 10px; text-align: center;">
+        <p>Scan this QR code in Google Authenticator or any TOTP app:</p>
+        <div id="qrcode" style="margin: auto;"></div>
     </div>
 </div>
 
@@ -71,8 +71,23 @@ import frappe
                 },
                 callback: function (r) {
                     if (r.message && r.message.otp_required) {
-                        frappe.msgprint("OTP sent to your email.");
                         document.getElementById("otp-box").style.display = "block";
+
+                        if (r.message.otp_method === "email") {
+                            frappe.msgprint("OTP sent to your email.");
+                        } else if (r.message.otp_method === "app") {
+                            document.getElementById("reset-totp-btn").style.display = "block";
+                            // Show QR if provided
+                            if (r.message.otp_auth_url) {
+                                document.getElementById("qr-instruction").style.display = "block";
+                                // Clear old QR if needed
+                                document.getElementById("qrcode").innerHTML = "";
+                                new QRCode(document.getElementById("qrcode"), r.message.otp_auth_url);
+                            } else {
+                                frappe.msgprint("Enter the OTP from your Authenticator App.");
+                            }
+                        }
+
                     } else if (r.message) {
                         frappe.msgprint("Login successful. Redirecting...");
                         setTimeout(() => {
@@ -112,6 +127,45 @@ import frappe
             });
         });
     });
+
+    document.getElementById("reset-totp-btn").addEventListener("click", function () {
+        const email = document.getElementById("email").value;
+
+        frappe.call({
+            method: "custom_renewal.api.reset_user_totp",
+            args: {
+                email: email
+            },
+            callback: function (r) {
+                if (r.message && r.message.otp_auth_url) {
+                    document.getElementById("qr-instruction").style.display = "block";
+                    document.getElementById("qrcode").innerHTML = "";
+                    new QRCode(document.getElementById("qrcode"), r.message.otp_auth_url);
+                    frappe.msgprint("New QR code generated. Please scan it again.");
+                }
+            },
+            error: function () {
+                frappe.msgprint("Failed to reset TOTP.");
+            }
+        });
+    });
+
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const passwordInput = document.getElementById("password");
+        const togglePassword = document.getElementById("togglePassword");
+
+        togglePassword.addEventListener("click", function () {
+            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+            passwordInput.setAttribute("type", type);
+            this.classList.toggle("fa-eye");
+            this.classList.toggle("fa-eye-slash");
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
 
 {%endblock %}

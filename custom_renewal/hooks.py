@@ -108,6 +108,13 @@ website_route_rules = [
     
     
 ]
+
+website_route_rules = [
+    {"from_route": "/address", "to_route": "custom_renewal/www/address"},
+    {"from_route": "/fixed_sidebar/<path:path>", "to_route": "fixed_sidebar"},
+    {"from_route": "/login", "to_route": "logins"},  # 👈 NOT a full path or file path
+]
+
 website_context = {
     "web_sidebar": "custom_renewal/templates/includes/web_sidebar.html",
     "web_sidebar1": "custom_renewal/templates/includes/web_sidebar1.html",
@@ -119,12 +126,6 @@ website_context = {
         "filters":"custom_renewal/templates/list/filters.html"
     },
 }
-
-
-website_route_rules = [
-    {"from_route": "/address", "to_route": "custom_renewal/www/address"},
-    {"from_route": "/fixed_sidebar/<path:path>", "to_route": "fixed_sidebar"},
-]
 
 
 # hooks.py
@@ -331,17 +332,6 @@ doc_events = {
 # override_whitelisted_methods = {
 #     "frappe.twofactor.get_otp_method": "custom_renewal.auth.get_custom_otp_method"
 # }
-
-override_whitelisted_methods = {
-    "frappe.twofactor.get_otp_method": "custom_renewal.auth.get_custom_otp_method",
-    "frappe.twofactor.has_2factor_auth": "custom_renewal.auth.has_custom_2fa"
-}
-
-doc_events = {
-    "*": {
-        "on_session_creation": "custom_renewal.auth_patch.patched_validate_otp"
-    }
-}
 
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
