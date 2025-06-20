@@ -498,121 +498,12 @@ def mark_renewal_lost(renewal_id):
     return True
 
 
-# in custom_app/api/otp_auth.py
 # login page to website user opt and system user have otp app to collect the otps 
 
 import frappe
 import random
 import pyotp
 from frappe.auth import LoginManager
-
-# @frappe.whitelist(allow_guest=True)
-# def validate_credentials_and_send_otp_or_login(email, password):
-#     try:
-#         login_manager = LoginManager()
-#         login_manager.authenticate(user=email, pwd=password)
-#     except Exception:
-#         frappe.throw("Invalid email or password.")
-
-#     user = frappe.get_doc("User", email)
-#     user_type = user.user_type
-
-#     if user_type == "Website User":
-#         # Email OTP for Website Users
-#         otp = str(random.randint(100000, 999999))
-#         frappe.cache().hset("otp_cache", email, otp)
-
-#         subject = "Your ERPNext Login OTP"
-#         message = f"""
-#             Hi {user.full_name or 'User'},<br><br>
-#             Your OTP is <b>{otp}</b>. It is valid for 5 minutes.<br><br>
-#             Regards,<br>Your Company
-#         """
-
-#         try:
-#             frappe.enqueue(
-#                 method="frappe.core.doctype.communication.email.make",
-#                 queue='short',
-#                 now=False,
-#                 recipients=email,
-#                 subject=subject,
-#                 content=message,
-#                 communication_type="Communication",
-#                 send_email=True
-#             )
-#         except Exception:
-#             frappe.log_error(frappe.get_traceback(), "Email OTP Send Failed")
-#             frappe.throw("Failed to send OTP email. Please contact support.")
-
-#         return {
-#             "otp_required": True,
-#             "otp_method": "email",
-#             "message": "OTP sent to your email."
-#         }
-
-#     else:
-#         # TOTP for System Users
-#         if not user.get("otp_secret"):
-#             # First-time setup
-#             secret = pyotp.random_base32()
-#             user.otp_secret = secret
-#             user.save(ignore_permissions=True)
-#             frappe.db.commit()
-
-#             otp_uri = pyotp.totp.TOTP(secret).provisioning_uri(
-#                 name=email,
-#                 issuer_name="ERPNext"
-#             )
-
-#             return {
-#                 "otp_required": True,
-#                 "otp_method": "app",
-#                 "message": "Scan the QR code using your Authenticator App",
-#                 "otp_auth_url": otp_uri
-#             }
-
-#         return {
-#             "otp_required": True,
-#             "otp_method": "app",
-#             "message": "Enter the OTP from your Authenticator App"
-#         }
-
-
-# @frappe.whitelist(allow_guest=True)
-# def verify_otp_and_login(email, input_otp):
-#     if not email or not input_otp:
-#         frappe.throw("Missing email or OTP.")
-
-#     user = frappe.get_doc("User", email)
-#     user_type = user.user_type
-
-#     if user_type == "Website User":
-#         real_otp = frappe.cache().hget("otp_cache", email)
-#         if not real_otp:
-#             frappe.throw("OTP expired or not found.")
-#         if real_otp != input_otp:
-#             frappe.throw("Invalid OTP.")
-#         frappe.cache().hdel("otp_cache", email)
-
-#     else:
-#         # Verify TOTP for System Users
-#         otp_secret = user.get("otp_secret")
-#         if not otp_secret:
-#             frappe.throw("Authenticator App not configured for this user.")
-
-#         totp = pyotp.TOTP(otp_secret)
-#         if not totp.verify(input_otp):
-#             frappe.throw("Invalid OTP from Authenticator App.")
-
-#     # Successful login
-#     frappe.local.login_manager = LoginManager()
-#     frappe.local.login_manager.user = email
-#     frappe.local.login_manager.post_login()
-
-#     return {
-#         "message": "Login successful",
-#         "full_name": frappe.utils.get_fullname(email)
-#     }
 
 @frappe.whitelist(allow_guest=True)
 def validate_credentials_and_send_otp_or_login(email, password):
@@ -645,16 +536,11 @@ def validate_credentials_and_send_otp_or_login(email, password):
             Regards,<br>Your Company
         """
 
-        try:
-            frappe.enqueue(
-                method="frappe.core.doctype.communication.email.make",
-                queue='short',
-                now=False,
+        try:                                 
+            frappe.sendmail(
                 recipients=email,
                 subject=subject,
-                content=message,
-                communication_type="Communication",
-                send_email=True
+                message=message
             )
         except Exception:
             frappe.log_error(frappe.get_traceback(), "Email OTP Send Failed")
@@ -679,14 +565,12 @@ def validate_credentials_and_send_otp_or_login(email, password):
                 name=email,
                 issuer_name="ERPNext"
             )
-
             return {
                 "otp_required": True,
                 "otp_method": "app",
                 "message": "Scan the QR code using your Authenticator App",
                 "otp_auth_url": otp_uri
             }
-
         return {
             "otp_required": True,
             "otp_method": "app",
@@ -705,7 +589,8 @@ def verify_otp_and_login(email, input_otp):
         frappe.local.login_manager.post_login()
         return {
             "message": "Login successful (Administrator)",
-            "full_name": frappe.utils.get_fullname(email)
+            "full_name": frappe.utils.get_fullname(email),
+            "user_type": user_type
         }
 
     if not input_otp:
@@ -737,7 +622,8 @@ def verify_otp_and_login(email, input_otp):
 
     return {
         "message": "Login successful",
-        "full_name": frappe.utils.get_fullname(email)
+        "full_name": frappe.utils.get_fullname(email),
+        "user_type": user_type
     }
 
 
