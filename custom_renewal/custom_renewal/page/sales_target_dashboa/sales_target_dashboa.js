@@ -831,6 +831,7 @@ this.page.add_inner_button('Cancel', () => location.reload());
             <label>Salesperson</label>
             <select id="salesperson_select" class="form-control">
             <option value="">select</option>
+            
             </select>
           </div>
           <div class="form-group" style="flex: 1; min-width: 180px;">
